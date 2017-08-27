@@ -9,7 +9,6 @@
   "updateUrl": "https://github.com/bugfroggy/QuickPlay/releases",
   "updateJSON": "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
   "authorList": ["bugfroggy"],
-  "logoFile": "logo.png",
-  "screenshots": [],
+  "logoFile": "logo.png"
 }
 ]
