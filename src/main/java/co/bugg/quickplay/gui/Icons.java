@@ -26,7 +26,7 @@ public class Icons {
     public static LinkedHashMap<String, String> arcadeCommands = new LinkedHashMap<String, String>();
     static {
         arcadeCommands.put("Mini Walls", "arcade_mini_walls");
-        arcadeCommands.put("Soccer", "arcade_soccer");
+        arcadeCommands.put("Football", "arcade_soccer");
     }
     public static final Game ARCADE = new Game("Arcade",1,0,0, 0, "arcade", arcadeCommands);
 
