@@ -13,7 +13,14 @@ import org.lwjgl.input.Keyboard;
 
 import java.util.HashMap;
 
-@Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptedMinecraftVersions = "[1.8,1.8.9]", clientSideOnly = true)
+@Mod(
+        modid = Reference.MOD_ID,
+        name = Reference.MOD_NAME,
+        version = Reference.VERSION,
+        acceptedMinecraftVersions = "[1.8,1.8.9]",
+        clientSideOnly = true,
+        updateJSON = "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
+)
 public class QuickPlay {
 
     public static KeyBinding openGui;
