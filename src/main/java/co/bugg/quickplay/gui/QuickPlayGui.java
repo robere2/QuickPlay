@@ -1,5 +1,6 @@
 package co.bugg.quickplay.gui;
 
+import co.bugg.quickplay.QuickPlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -15,7 +16,8 @@ public class QuickPlayGui extends GuiScreen {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
-        drawString(fontRendererObj, "QuickPlay by bugfroggy", width - fontRendererObj.getStringWidth("QuickPlay by bugfroggy") - 3, 3, 0x00FFFF);
+        // Draw the credits
+        drawString(fontRendererObj, QuickPlay.credit, width - fontRendererObj.getStringWidth(QuickPlay.credit) - 3, 3, 0x00FFFF);
 
         // These get incremented depending on how many icons are on screen
         int xOffset = 0;
@@ -23,6 +25,8 @@ public class QuickPlayGui extends GuiScreen {
 
         for(Map.Entry<Integer, Game> entry : Icons.map.entrySet()) {
 
+            // Checking if drawing this game on this X level would draw it off the screen at all
+            // Have to multiply iconWidth by 1.5 because of the initial 0.5 offset in xImg.
             if(xOffset + Icons.iconWidth * 1.5 > width) {
                 xOffset = 0;
                 yOffset += 80;
@@ -47,7 +51,7 @@ public class QuickPlayGui extends GuiScreen {
 
         for(Map.Entry<Integer, Game> entry : Icons.map.entrySet()) {
 
-            // Checking if drawint this game on this X level would draw it off the screen at all
+            // Checking if drawing this game on this X level would draw it off the screen at all
             // Have to multiply iconWidth by 1.5 because of the initial 0.5 offset in xImg.
             if(xOffset + Icons.iconWidth * 1.5 > width) {
                 xOffset = 0;
@@ -66,11 +70,7 @@ public class QuickPlayGui extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("Solo", "/play solo");
-        map.put("Doubles", "/play doubles");
-        map.put("adfsd", "/play doubles");
-        map.put("asdfasdfasd", "/play doubles");
+        // Open a new GameGui for the game corresponding to the button clicked
         Minecraft.getMinecraft().displayGuiScreen(new GameGui(Icons.map.get(button.id)));
 
         super.actionPerformed(button);
@@ -81,7 +81,6 @@ public class QuickPlayGui extends GuiScreen {
         // Close the GUI whenever a key is pressed.
         closeGui();
 
-
         super.keyTyped(typedChar, keyCode);
     }
 
@@ -90,6 +89,9 @@ public class QuickPlayGui extends GuiScreen {
         return false;
     }
 
+    /**
+     * Sets the open GUI to null, which is the equivalent of closing the GUI.
+     */
     public static void closeGui() {
         Minecraft.getMinecraft().displayGuiScreen(null);
     }

@@ -24,8 +24,9 @@ import java.util.HashMap;
 public class QuickPlay {
 
     public static KeyBinding openGui;
-    public static boolean guiOpen = false;
     public static boolean onHypixel = false;
+
+    public static final String credit = Reference.MOD_NAME + " by @bugfroggy";
 
     // HashMap containing all GUI image files (only one at the moment but in preparation for the future)
     public static final HashMap<Integer, ResourceLocation> icons = new HashMap<Integer, ResourceLocation>();

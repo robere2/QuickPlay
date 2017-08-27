@@ -33,11 +33,10 @@ public class QuickPlayEventHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 
-        // Open GUI key is pressed on Hypixel
+        // If open GUI key is pressed on Hypixel
         if(QuickPlay.openGui.isKeyDown() && QuickPlay.onHypixel) {
             System.out.println("Open GUI key pressed");
             Minecraft.getMinecraft().displayGuiScreen(new QuickPlayGui());
-            QuickPlay.guiOpen = true;
         }
     }
 }
