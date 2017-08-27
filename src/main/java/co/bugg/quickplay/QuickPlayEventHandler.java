@@ -19,8 +19,15 @@ public class QuickPlayEventHandler {
             if (ip.contains(".hypixel.net")) {
                 QuickPlay.onHypixel = true;
                 System.out.println("Currently on Hypixel!");
+            } else {
+                QuickPlay.onHypixel = false;
             }
         }
+    }
+
+    @SubscribeEvent
+    public void onLeave(FMLNetworkEvent.ClientDisconnectionFromServerEvent event) {
+        QuickPlay.onHypixel = false;
     }
 
     @SubscribeEvent
