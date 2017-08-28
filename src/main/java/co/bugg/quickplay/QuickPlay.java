@@ -1,9 +1,9 @@
 package co.bugg.quickplay;
 
 import co.bugg.quickplay.gui.Icons;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +17,7 @@ import java.util.HashMap;
         modid = Reference.MOD_ID,
         name = Reference.MOD_NAME,
         version = Reference.VERSION,
-        acceptedMinecraftVersions = "[1.8,1.8.9]",
+        acceptedMinecraftVersions = "[1.8,1.12.1]",
         clientSideOnly = true,
         updateJSON = "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
 )

@@ -72,6 +72,11 @@ public class GameGui extends GuiScreen {
         // How many columns are required to fit all the buttons in
         double columnCount = Math.ceil(((double)buttonCount / (double)maxButtonPerColumn));
 
+        // When there's no buttons (besides the lobby button), columnCount is 0 which throws an error.
+        if(columnCount < 1) {
+            columnCount = 1;
+        }
+
         // Where the first button is rendered on the X axis (the column furthest to the left)
         int startingX = (width / 2) - ((buttonWidth / 2) + (buttonSpacing * ((int) columnCount - 1) / 2));
 
