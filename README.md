@@ -7,6 +7,7 @@ This is the source code for 1.11 through 1.12.1. Please check other branches for
 
 ## Planned Features
 * "Favorited" modes - Opening the menu automatically brings you to the mode marked as your favorite (if set)
+* Merging all versions of Minecraft into one .jar file 
 
 ## Showcase
 Click the image below to view the video.
