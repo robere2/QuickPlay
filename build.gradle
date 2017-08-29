@@ -22,7 +22,7 @@ plugins {
 */
 version = "0.2"
 group= "co.bugg.quickplay" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "QuickPlay"
+archivesBaseName = "QuickPlay-1.8.9"
 
 minecraft {
     version = "1.8.9-11.15.1.2318-1.8.9"
