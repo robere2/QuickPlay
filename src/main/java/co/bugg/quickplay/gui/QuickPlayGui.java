@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class QuickPlayGui extends GuiScreen {

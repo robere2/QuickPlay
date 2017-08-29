@@ -11,7 +11,7 @@ public class Util {
      * @return String version number
      */
     public static String getMCVersion() {
-        String defaultVersion = "1.12.1";
+        String defaultVersion = "1.8.9";
         try {
             String version = ForgeVersion.class.getField("mcVersion").get("mcVersion").toString();
             if(version != null) {

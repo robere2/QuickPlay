@@ -4,8 +4,6 @@ import co.bugg.quickplay.QuickPlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
 import java.util.HashMap;
