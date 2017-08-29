@@ -1,5 +1,6 @@
 # QuickPlay
 Minecraft mod designed for quickly joining games on the Hypixel Network.
+This is the source code for 1.11 through 1.12.1. Please check other branches for other versions.
 
 ## Features
 * Press the assignable key (Default: R) to open the game GUI

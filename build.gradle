@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "0.2"
 group = "co.bugg.quickplay" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "QuickPlay"
+archivesBaseName = "QuickPlay-1.12"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 compileJava {

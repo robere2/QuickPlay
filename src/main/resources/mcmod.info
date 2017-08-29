@@ -1,16 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "quickplay",
+  "name": "QuickPlay",
+  "description": "Quick join any game on the Hypixel Network",
   "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
-  "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
+  "mcversion": "[1.11, 1.12.1]",
+  "url": "https://github.com/bugfroggy/QuickPlay",
+  "updateUrl": "https://github.com/bugfroggy/QuickPlay/releases",
+  "updateJSON": "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json",
+  "authorList": ["bugfroggy"],
+  "logoFile": "logo.png"
 }
 ]
