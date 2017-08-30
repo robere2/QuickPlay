@@ -29,7 +29,7 @@ public class QuickPlay {
     public static final String credit = Reference.MOD_NAME + " by @bugfroggy";
 
     // HashMap containing all GUI image files (only one at the moment but in preparation for the future)
-    public static final HashMap<Integer, ResourceLocation> icons = new HashMap<Integer, ResourceLocation>();
+    public static final HashMap<Integer, ResourceLocation> icons = new HashMap<>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
