@@ -51,8 +51,8 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> true_combatCommands = new LinkedHashMap<>();
     static {
-        bedwarsCommands.put("Solo", "crazy_walls_solo");
-        bedwarsCommands.put("Teams", "crazy_walls_team");
+        true_combatCommands.put("Solo", "crazy_walls_solo");
+        true_combatCommands.put("Teams", "crazy_walls_team");
     }
     public static final Game TRUE_COMBAT = new Game("Crazy Walls",1, 192, 0, 3, "crazy", true_combatCommands);
 
