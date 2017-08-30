@@ -35,8 +35,4 @@ public class GameButton extends GuiButton {
             drawTexturedModalRect(xPosition, yPosition, this.xTexture, this.yTexture, Icons.iconWidth, Icons.iconHeight);
         }
     }
-
-
-
-
 }

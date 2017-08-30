@@ -49,7 +49,12 @@ public class Icons {
     /* -------------------------------- *
      *           Crazy Walls            *
      * -------------------------------- */
-    public static final Game TRUE_COMBAT = new Game("Crazy Walls",1, 192, 0, 3, "crazy", null);
+    public static LinkedHashMap<String, String> true_combatCommands = new LinkedHashMap<String, String>();
+    static {
+        bedwarsCommands.put("Solo", "crazy_walls_solo");
+        bedwarsCommands.put("Teams", "crazy_walls_team");
+    }
+    public static final Game TRUE_COMBAT = new Game("Crazy Walls",1, 192, 0, 3, "crazy", true_combatCommands);
 
     /* -------------------------------- *
      *          Cops & Crims            *
