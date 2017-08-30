@@ -4,7 +4,7 @@
   "name": "QuickPlay",
   "description": "Quick join any game on the Hypixel Network",
   "version": "${version}",
-  "mcversion": "[1.8, 1.12.1]",
+  "mcversion": "[1.8, 1.10.2]",
   "url": "https://github.com/bugfroggy/QuickPlay",
   "updateUrl": "https://github.com/bugfroggy/QuickPlay/releases",
   "updateJSON": "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json",
