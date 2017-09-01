@@ -6,6 +6,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class QuickPlayEventHandler {
 
     @SubscribeEvent
@@ -15,8 +18,13 @@ public class QuickPlayEventHandler {
         boolean singleplayer = Minecraft.getMinecraft().isSingleplayer();
 
         if(!singleplayer) {
+
             String ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
-            if (ip != null && (ip.matches("/^\\w+.hypixel\\.net$/") || ip.matches("/^209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99)$/"))) {
+
+            Pattern hypixelPattern = Pattern.compile("^(?:\\w+.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))$");
+            Matcher matcher = hypixelPattern.matcher(ip);
+
+            if (matcher.find()) {
                 QuickPlay.onHypixel = true;
                 System.out.println("Currently on Hypixel!");
             } else {

@@ -222,6 +222,16 @@ public class Icons {
      * Called at preInit
      */
     public static void registerFiles() {
-        QuickPlay.icons.put(1, new ResourceLocation(Reference.MOD_ID, "textures/gui/game-icons1.png"));
+        registerFile(1, "games1.png");
+    }
+
+    /**
+     * Register a single file to the list of game GUI files.
+     * @param id File ID that was provided in the Game class constructor
+     * @param name Name of the file (including file type, e.g. "game.png")
+     */
+    private static void registerFile(int id, String name) {
+        System.out.println("Registering file: " + name);
+        QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));
     }
 }
