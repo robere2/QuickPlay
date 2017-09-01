@@ -16,7 +16,7 @@ public class QuickPlayEventHandler {
 
         if(!singleplayer) {
             String ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
-            if (ip.contains(".hypixel.net")) {
+            if (ip != null && (ip.matches("/^\\w+.hypixel\\.net$/") || ip.matches("/^209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99)$/"))) {
                 QuickPlay.onHypixel = true;
                 System.out.println("Currently on Hypixel!");
             } else {
