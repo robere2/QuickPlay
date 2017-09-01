@@ -6,7 +6,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class QuickPlayGui extends GuiScreen {
@@ -61,7 +60,7 @@ public class QuickPlayGui extends GuiScreen {
             int yImg = (int) (height * 0.05 + yOffset);
             int xImg = xOffset + Icons.iconWidth / 2;
 
-            buttonList.add(entry.getValue().button(xImg, yImg));
+            buttonList.add(entry.getValue().getButton(xImg, yImg));
 
             xOffset += 70;
         }

@@ -51,7 +51,7 @@ public class Game {
      * @param y Y position on the GUI
      * @return GameButton extension of GuiButton with custom texture
      */
-    public GuiButton button(int x, int y) {
+    public GuiButton getButton(int x, int y) {
         return new GameButton(this.buttonID, x, y, this.xStart, this.yStart, this.fileID);
     }
 }
