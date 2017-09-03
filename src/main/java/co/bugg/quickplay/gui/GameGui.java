@@ -4,6 +4,7 @@ import co.bugg.quickplay.QuickPlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -88,9 +89,9 @@ public class GameGui extends GuiScreen {
         String lobbyButtonText;
         // Create the lobby button
         if(game.lobbyName.equals("home")) {
-            lobbyButtonText = "Go Home";
+            lobbyButtonText = new TextComponentTranslation("quickplay.buttons.home").getFormattedText();
         } else {
-            lobbyButtonText = "Go To Lobby";
+            lobbyButtonText = new TextComponentTranslation("quickplay.buttons.lobby").getFormattedText();
         }
 
         buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, lobbyButtonText));

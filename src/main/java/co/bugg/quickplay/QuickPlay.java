@@ -3,6 +3,7 @@ package co.bugg.quickplay;
 import co.bugg.quickplay.gui.Icons;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -26,7 +27,7 @@ public class QuickPlay {
     public static KeyBinding openGui;
     public static boolean onHypixel = false;
 
-    public static final String credit = Reference.MOD_NAME + " by @bugfroggy";
+    public static final String credit = Reference.MOD_NAME + " v" + Reference.VERSION + " by @bugfroggy";
 
     // HashMap containing all GUI image files (only one at the moment but in preparation for the future)
     public static final HashMap<Integer, ResourceLocation> icons = new HashMap<>();
@@ -36,7 +37,7 @@ public class QuickPlay {
         // Add the icon files to the HashMap
         Icons.registerFiles();
 
-        openGui = new KeyBinding("Open " + Reference.MOD_NAME, Keyboard.KEY_R, "key.categories.misc");
+        openGui = new KeyBinding(new TextComponentTranslation("quickplay.controls.open").getFormattedText(), Keyboard.KEY_R, "key.categories.misc");
         ClientRegistry.registerKeyBinding(openGui);
 
         MinecraftForge.EVENT_BUS.register(new QuickPlayEventHandler());

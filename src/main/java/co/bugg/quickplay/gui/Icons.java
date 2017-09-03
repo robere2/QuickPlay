@@ -176,7 +176,7 @@ public class Icons {
         tntgamesCommands.put("TNT Run", "tnt_tntrun");
         tntgamesCommands.put("PVP Run", "tnt_pvprun");
         tntgamesCommands.put("Bow Spleef", "tnt_bowspleef");
-        tntgamesCommands.put("TNT Tag", "tnt_tnttag");
+        tntgamesCommands.put("TNT Tag", "tnt_tntag");
         tntgamesCommands.put("TNT Wizards", "tnt_capture");
     }
     public static final Game TNTGAMES = new Game("TNT Games",1, 64, 192, 13, "tnt", tntgamesCommands);
