@@ -15,22 +15,18 @@ public class QuickPlayEventHandler {
     public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
         // Check if the connection is to the Hypixel network.
 
-        boolean singleplayer = Minecraft.getMinecraft().isSingleplayer();
+       String ip = Util.getIP();
 
-        if(!singleplayer) {
+        Pattern hypixelPattern = Pattern.compile("^(?:\\w+.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))$");
+        Matcher matcher = hypixelPattern.matcher(ip);
 
-            String ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
-
-            Pattern hypixelPattern = Pattern.compile("^(?:\\w+.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))$");
-            Matcher matcher = hypixelPattern.matcher(ip);
-
-            if (matcher.find()) {
-                QuickPlay.onHypixel = true;
-                System.out.println("Currently on Hypixel!");
-            } else {
-                QuickPlay.onHypixel = false;
-            }
+        if (matcher.find()) {
+            QuickPlay.onHypixel = true;
+            System.out.println("Currently on Hypixel!");
+        } else {
+            QuickPlay.onHypixel = false;
         }
+
     }
 
     @SubscribeEvent

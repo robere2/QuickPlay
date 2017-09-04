@@ -23,7 +23,7 @@ public class Icons {
     /* -------------------------------- *
      *             Arcade               *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> arcadeCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> arcadeCommands = new LinkedHashMap<>();
     static {
         arcadeCommands.put("Mini Walls", "arcade_mini_walls");
         arcadeCommands.put("Football", "arcade_soccer");
@@ -33,7 +33,7 @@ public class Icons {
     /* -------------------------------- *
      *            Bed Wars              *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> bedwarsCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> bedwarsCommands = new LinkedHashMap<>();
     static {
         bedwarsCommands.put("Solo", "bedwars_eight_one");
         bedwarsCommands.put("Doubles", "bedwars_eight_two");
@@ -49,7 +49,7 @@ public class Icons {
     /* -------------------------------- *
      *           Crazy Walls            *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> true_combatCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> true_combatCommands = new LinkedHashMap<>();
     static {
         true_combatCommands.put("Solo", "crazy_walls_solo");
         true_combatCommands.put("Teams", "crazy_walls_team");
@@ -75,7 +75,7 @@ public class Icons {
     /* -------------------------------- *
      *            Prototype             *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<>();
     static {
         prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
 
@@ -102,7 +102,7 @@ public class Icons {
     /* -------------------------------- *
      *            Blitz SG              *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<>();
     static {
         survival_gamesCommands.put("Solo", "blitz_solo_normal");
         survival_gamesCommands.put("Teams", "blitz_teams_normal");
@@ -113,7 +113,7 @@ public class Icons {
     /* -------------------------------- *
      *            SkyClash              *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> skyclashCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> skyclashCommands = new LinkedHashMap<>();
     static {
         skyclashCommands.put("Solo", "skyclash_solo");
         skyclashCommands.put("Doubles", "skyclash_doubles");
@@ -124,7 +124,7 @@ public class Icons {
     /* -------------------------------- *
      *             Skywars              *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> skywarsCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> skywarsCommands = new LinkedHashMap<>();
     static {
         skywarsCommands.put("Solo Normal", "solo_normal");
         skywarsCommands.put("Solo Insane", "solo_insane");
@@ -147,7 +147,7 @@ public class Icons {
     /* -------------------------------- *
      *          Smash Heroes            *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<>();
     static {
         super_smashCommands.put("Solo", "super_smash_solo_normal");
         super_smashCommands.put("Teams", "super_smash_teams_normal");
@@ -159,7 +159,7 @@ public class Icons {
     /* -------------------------------- *
      *            Speed UHC             *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> speed_uhcCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> speed_uhcCommands = new LinkedHashMap<>();
     static {
         speed_uhcCommands.put("Solo Normal", "speed_solo_normal");
         speed_uhcCommands.put("Solo Insane", "speed_solo_insane");
@@ -171,12 +171,12 @@ public class Icons {
     /* -------------------------------- *
      *            TNT Games             *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> tntgamesCommands = new LinkedHashMap<String, String>();
+    public static LinkedHashMap<String, String> tntgamesCommands = new LinkedHashMap<>();
     static {
         tntgamesCommands.put("TNT Run", "tnt_tntrun");
         tntgamesCommands.put("PVP Run", "tnt_pvprun");
         tntgamesCommands.put("Bow Spleef", "tnt_bowspleef");
-        tntgamesCommands.put("TNT Tag", "tnt_tnttag");
+        tntgamesCommands.put("TNT Tag", "tnt_tntag");
         tntgamesCommands.put("TNT Wizards", "tnt_capture");
     }
     public static final Game TNTGAMES = new Game("TNT Games",1, 64, 192, 13, "tnt", tntgamesCommands);
@@ -191,7 +191,7 @@ public class Icons {
      * -------------------------------- */
     public static final Game BATTLEGROUND = new Game("Warlords",1, 192, 192, 15, "warlords", null);
 
-    public static LinkedHashMap<Integer, Game> map = new LinkedHashMap<Integer, Game>();
+    public static LinkedHashMap<Integer, Game> map = new LinkedHashMap<>();
     static {
         map.put(ARCADE.buttonID, ARCADE);
         map.put(BEDWARS.buttonID, BEDWARS);

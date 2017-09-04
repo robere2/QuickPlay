@@ -1,12 +1,16 @@
 package co.bugg.quickplay;
 
+import co.bugg.quickplay.command.QpDebugCommand;
 import co.bugg.quickplay.gui.Icons;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.lwjgl.input.Keyboard;
 
@@ -28,16 +32,21 @@ public class QuickPlay {
     public static final String credit = Reference.MOD_NAME + " by @bugfroggy";
 
     // HashMap containing all GUI image files (only one at the moment but in preparation for the future)
-    public static final HashMap<Integer, ResourceLocation> icons = new HashMap<Integer, ResourceLocation>();
+    public static final HashMap<Integer, ResourceLocation> icons = new HashMap<>();
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         // Add the icon files to the HashMap
         Icons.registerFiles();
 
-        openGui = new KeyBinding("Open " + Reference.MOD_NAME, Keyboard.KEY_R, "key.categories.misc");
+        openGui = new KeyBinding(new ChatComponentTranslation("quickplay.controls.open").getFormattedText(), Keyboard.KEY_R, "key.categories.misc");
         ClientRegistry.registerKeyBinding(openGui);
 
         MinecraftForge.EVENT_BUS.register(new QuickPlayEventHandler());
+    }
+
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        ClientCommandHandler.instance.registerCommand(new QpDebugCommand());
     }
 }
