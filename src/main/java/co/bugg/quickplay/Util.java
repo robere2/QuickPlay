@@ -1,6 +1,7 @@
 package co.bugg.quickplay;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.common.ForgeVersion;
 
 import java.lang.reflect.Field;
@@ -77,7 +78,8 @@ public class Util {
         if(singleplayer) {
             ip = "N/A";
         } else {
-            ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
+            ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
+            ip = (serverData == null) ? null : serverData.serverIP;
         }
 
         return ip;
