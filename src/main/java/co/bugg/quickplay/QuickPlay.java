@@ -1,14 +1,16 @@
 package co.bugg.quickplay;
 
+import co.bugg.quickplay.command.QpDebugCommand;
 import co.bugg.quickplay.gui.Icons;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.common.ForgeVersion;
+import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.lwjgl.input.Keyboard;
 
@@ -18,7 +20,7 @@ import java.util.HashMap;
         modid = Reference.MOD_ID,
         name = Reference.MOD_NAME,
         version = Reference.VERSION,
-        acceptedMinecraftVersions = "[1.12,1.12.1]",
+        acceptedMinecraftVersions = "[" + Reference.COMPATIBLE_MC_VERSION_MIN + "," + Reference.COMPATIBLE_MC_VERSION_MAX + "]",
         clientSideOnly = true,
         updateJSON = "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
 )
@@ -41,5 +43,10 @@ public class QuickPlay {
         ClientRegistry.registerKeyBinding(openGui);
 
         MinecraftForge.EVENT_BUS.register(new QuickPlayEventHandler());
+    }
+
+    @EventHandler
+    public void init(FMLInitializationEvent event) {
+        ClientCommandHandler.instance.registerCommand(new QpDebugCommand());
     }
 }
