@@ -9,7 +9,8 @@ import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.command.ICommandSender;
+import net.minecraftforge.client.ClientCommandHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -106,15 +107,8 @@ public class GameGui extends GuiScreen {
         buttons.put(buttonId, null);
         buttonId++;
 
-        String lobbyButtonText;
         // Create the lobby button
-        if(game.lobbyName.equals("home")) {
-            lobbyButtonText = new TextComponentTranslation("quickplay.buttons.home").getFormattedText();
-        } else {
-            lobbyButtonText = new TextComponentTranslation("quickplay.buttons.lobby").getFormattedText();
-        }
-
-        buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, lobbyButtonText));
+        buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, game.lobbyButtonString));
         // Register the button's ID
         buttons.put(buttonId, null);
         buttonId++;
@@ -162,9 +156,9 @@ public class GameGui extends GuiScreen {
 
             // If the button is the lobby button
             case 2:
-                // if this GUI is for housing
-                if(game.lobbyName.equals("home")) {
-                    Minecraft.getMinecraft().player.sendChatMessage("/home");
+                // If the lobby string is a command
+                if(game.lobbyName.startsWith("/")) {
+                    Minecraft.getMinecraft().player.sendChatMessage(game.lobbyName);
                 } else {
                     Minecraft.getMinecraft().player.sendChatMessage("/lobby " + game.lobbyName);
                 }
@@ -175,7 +169,31 @@ public class GameGui extends GuiScreen {
             default:
                 String command = game.commands.get(buttons.get(button.id));
 
-                Minecraft.getMinecraft().player.sendChatMessage("/play " + command);
+                // If the game command is an actual command
+                if (command.startsWith("/")) {
+
+                    final boolean[] clientCommand = {false};
+                    // Check whether command is a mod command. If so then execute its client command
+                    // instead of the command on the server
+                    ClientCommandHandler.instance.getCommands().forEach((key, value) -> {
+                        // Delete the slash from the beginning of the string
+                        if(new StringBuilder(command).deleteCharAt(0).toString().equals(key)) {
+                            clientCommand[0] = true;
+                        }
+                    });
+
+                    // If the command is a client command, then execute it as a client command
+                    if(clientCommand[0]) {
+                        ICommandSender sender = Minecraft.getMinecraft().player.getCommandSenderEntity();
+                        if(sender != null) {
+                            ClientCommandHandler.instance.executeCommand(sender, command);
+                        }
+                    } else {
+                        Minecraft.getMinecraft().player.sendChatMessage(command);
+                    }
+                } else {
+                    Minecraft.getMinecraft().player.sendChatMessage("/play " + command);
+                }
                 MainGui.closeGui();
                 break;
         }

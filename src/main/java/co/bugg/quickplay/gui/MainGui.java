@@ -13,6 +13,22 @@ import java.util.Map;
 
 public class MainGui extends GuiScreen {
 
+    /**
+     * When all the buttons don't fit on the page, multiple
+     * pages have to be made with back and forward buttons
+     * on the bottom. This number is for what page this GUI is.
+     */
+    int pageNumber = 1;
+
+    public MainGui() {
+        super();
+    }
+
+    public MainGui(int pageNumber) {
+        super();
+        this.pageNumber = pageNumber;
+    }
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();

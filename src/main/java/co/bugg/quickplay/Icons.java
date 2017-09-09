@@ -1,6 +1,7 @@
 package co.bugg.quickplay;
 
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.LinkedHashMap;
 
@@ -18,6 +19,14 @@ public class Icons {
     public static int iconWidth = 64;
     public static int iconHeight = 64;
 
+    /* -------------------------------- *
+     *            Main Lobby            *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> mainCommands = new LinkedHashMap<>();
+    static {
+        mainCommands.put("Limbo", "/qplimbo");
+    }
+    public static final Game MAIN = new Game("Main Lobby",2,0,0, -1, "main", mainCommands);
     /* -------------------------------- *
      *             Arcade               *
      * -------------------------------- */
@@ -43,6 +52,11 @@ public class Icons {
     /* -------------------------------- *
      *             Classic              *
      * -------------------------------- */
+    public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
+    static {
+        classicCommands.put("Quake Solo", "quake_solo");
+        classicCommands.put("Quake Teams", "quake_teams");
+    }
     public static final Game LEGACY = new Game("Classic",1,128, 0, 2, "classic", null);
     /* -------------------------------- *
      *           Crazy Walls            *
@@ -63,7 +77,7 @@ public class Icons {
      *             Housing              *
      * -------------------------------- */
     // Housing is a special case. "Home" will be recognized as the lobby name and it'll assign the appropriate command.
-    public static final Game HOUSING = new Game("Housing",1, 64, 64, 5, "home", null);
+    public static final Game HOUSING = new Game("Housing",1, 64, 64, 5, "/home", new TextComponentTranslation("quickplay.buttons.home").getFormattedText(), null);
 
     /* -------------------------------- *
      *           Mega Walls             *
@@ -192,6 +206,8 @@ public class Icons {
 
     public static LinkedHashMap<Integer, Game> map = new LinkedHashMap<>();
     static {
+        map.put(MAIN.buttonID, MAIN);
+
         map.put(ARCADE.buttonID, ARCADE);
         map.put(BEDWARS.buttonID, BEDWARS);
         map.put(LEGACY.buttonID, LEGACY);
@@ -222,6 +238,7 @@ public class Icons {
      */
     public static void registerFiles() {
         registerFile(1, "games1.png");
+        registerFile(2, "games2.png");
     }
 
     /**
@@ -229,7 +246,6 @@ public class Icons {
      * @param id File ID that was provided in the Game class constructor
      * @param name Name of the file (including file type, e.g. "game.png")
      */
-    @SuppressWarnings("SameParameterValue")
     private static void registerFile(int id, String name) {
         System.out.println("Registering file: " + name);
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));

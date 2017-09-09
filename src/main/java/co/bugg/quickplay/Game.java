@@ -2,6 +2,7 @@ package co.bugg.quickplay;
 
 import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.HashMap;
 
@@ -32,6 +33,11 @@ public class Game {
      */
     public String lobbyName;
     /**
+     * What text to put as the lobby button. Defaults to the quickplay.buttons.lobby translation.
+     * Main use at the moment is for Housing.
+     */
+    public String lobbyButtonString = new TextComponentTranslation("quickplay.buttons.lobby").getFormattedText();
+    /**
      * HashMap containing all /play commands
      */
     public HashMap<String, String> commands;
@@ -43,6 +49,16 @@ public class Game {
         this.yStart = yStart;
         this.buttonID = buttonID;
         this.lobbyName = lobbyName;
+        this.commands = commands;
+    }
+    public Game(String name, int fileID, int xStart, int yStart, int buttonID, String lobbyName, String lobbyButtonString, HashMap<String, String> commands) {
+        this.name = name;
+        this.fileID = fileID;
+        this.xStart = xStart;
+        this.yStart = yStart;
+        this.buttonID = buttonID;
+        this.lobbyName = lobbyName;
+        this.lobbyButtonString = lobbyButtonString;
         this.commands = commands;
     }
 
