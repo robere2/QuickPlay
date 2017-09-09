@@ -1,11 +1,15 @@
 package co.bugg.quickplay;
 
-import co.bugg.quickplay.gui.QuickPlayGui;
+import co.bugg.quickplay.gui.MainGui;
+import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,9 +23,13 @@ public class QuickPlayEventHandler {
 
         if(!singleplayer) {
 
-            String ip = Minecraft.getMinecraft().getCurrentServerData().serverIP;
+            ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
+            String ip = "";
+            if(serverData != null) {
+                ip = serverData.serverIP;
+            }
 
-            Pattern hypixelPattern = Pattern.compile("^(?:\\w+.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))$");
+            Pattern hypixelPattern = Pattern.compile("^(?:\\w+\\.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = hypixelPattern.matcher(ip);
 
             if (matcher.find()) {
@@ -44,7 +52,21 @@ public class QuickPlayEventHandler {
         // If open GUI key is pressed on Hypixel
         if(QuickPlay.openGui.isKeyDown() && QuickPlay.onHypixel) {
             System.out.println("Open GUI key pressed");
-            Minecraft.getMinecraft().displayGuiScreen(new QuickPlayGui());
+            Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+        }
+    }
+
+    @SubscribeEvent
+    public void onGameTick(TickEvent.ClientTickEvent event) {
+
+        if(QuickPlay.onHypixel) {
+            for (HashMap.Entry<String, QuickPlayColor> entry : QuickPlay.configManager.getConfig().colors.entrySet()) {
+                if (entry.getValue().getIsChroma()) {
+                    int rgb = QuickPlayColor.nextChromaFrame(entry.getValue());
+
+                    entry.setValue(new QuickPlayColor(rgb, entry.getValue().getUnlocalizedName(), entry.getValue().getIsChroma()));
+                }
+            }
         }
     }
 }

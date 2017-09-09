@@ -1,13 +1,19 @@
-package co.bugg.quickplay.gui;
+package co.bugg.quickplay.gui.button;
 
+import co.bugg.quickplay.Icons;
 import co.bugg.quickplay.QuickPlay;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * Extension of GuiButton that allows for 64x64 buttons (or any size really)
  * with a custom texture background. Used for the main GUI buttons
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class GameButton extends GuiButton {
 
     /**

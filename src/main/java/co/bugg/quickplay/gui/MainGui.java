@@ -1,6 +1,9 @@
 package co.bugg.quickplay.gui;
 
+import co.bugg.quickplay.Game;
+import co.bugg.quickplay.Icons;
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -8,7 +11,7 @@ import net.minecraft.client.gui.GuiScreen;
 import java.io.IOException;
 import java.util.Map;
 
-public class QuickPlayGui extends GuiScreen {
+public class MainGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -16,7 +19,8 @@ public class QuickPlayGui extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
 
         // Draw the credits
-        drawString(fontRenderer, QuickPlay.credit, width - fontRenderer.getStringWidth(QuickPlay.credit) - 3, 3, 0x00FFFF);
+        drawString(fontRenderer, QuickPlay.credit, width - fontRenderer.getStringWidth(QuickPlay.credit) - 3, 3, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
+        GlUtil.resetGlColor();
 
         // These get incremented depending on how many icons are on screen
         int xOffset = 0;
@@ -34,7 +38,8 @@ public class QuickPlayGui extends GuiScreen {
             int yText = (int) (height * 0.05 + 68 + yOffset);
             int xText = xOffset + Icons.iconWidth;
 
-            drawCenteredString(fontRenderer, entry.getValue().name, xText, yText, 0xFFFFFF);
+            drawCenteredString(fontRenderer, entry.getValue().name, xText, yText, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
+            GlUtil.resetGlColor();
 
             xOffset += 70;
         }

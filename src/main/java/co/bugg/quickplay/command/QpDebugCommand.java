@@ -2,9 +2,8 @@ package co.bugg.quickplay.command;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
-import co.bugg.quickplay.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiIngame;
+import co.bugg.quickplay.util.GameUtil;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -17,9 +16,12 @@ import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class QpDebugCommand implements ICommand {
 
     @Override
@@ -49,17 +51,17 @@ public class QpDebugCommand implements ICommand {
         debugHeader.setStyle(headerStyle);
 
         ITextComponent debugMsg = new TextComponentString("MC Version: ");
-        debugMsg.appendText(Util.getMCVersion() + "\n");
+        debugMsg.appendText(GameUtil.getMCVersion() + "\n");
         debugMsg.appendText("MCP Version: ");
-        debugMsg.appendText(Util.getMCPVersion() + "\n");
+        debugMsg.appendText(GameUtil.getMCPVersion() + "\n");
         debugMsg.appendText("Forge Version: ");
-        debugMsg.appendText(Util.getForgeVersion() + "\n");
+        debugMsg.appendText(GameUtil.getForgeVersion() + "\n");
         debugMsg.appendText("Mod Version: ");
         debugMsg.appendText(Reference.VERSION + " (" + Reference.COMPATIBLE_MC_VERSION_MIN + "-" + Reference.COMPATIBLE_MC_VERSION_MAX + ")\n");
         debugMsg.appendText("Mod ID: ");
         debugMsg.appendText(Reference.MOD_ID + "\n");
         debugMsg.appendText("Connected To: ");
-        debugMsg.appendText(Util.getIP() + "\n");
+        debugMsg.appendText(GameUtil.getIP() + "\n");
         debugMsg.appendText("Is Enabled: ");
         debugMsg.appendText(Boolean.toString(QuickPlay.onHypixel) + " (" + Keyboard.getKeyName(QuickPlay.openGui.getKeyCode()) + ")\n");
         debugMsg.appendText("OS: ");
@@ -84,7 +86,7 @@ public class QpDebugCommand implements ICommand {
 
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

@@ -1,7 +1,5 @@
-package co.bugg.quickplay.gui;
+package co.bugg.quickplay;
 
-import co.bugg.quickplay.QuickPlay;
-import co.bugg.quickplay.Reference;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.LinkedHashMap;
@@ -77,7 +75,6 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<>();
     static {
-        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
 
         prototypeCommands.put("Duels - Classic", "prototype_duels:classic_duel");
         prototypeCommands.put("Duels - Bow", "prototype_duels:bow_duel");
@@ -96,6 +93,8 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (Normal)", "prototype_zombies_endless_normal");
         prototypeCommands.put("Zombies - Endless (Hard)", "prototype_zombies_endless_hard");
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
+
+        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, 7, "prototype", prototypeCommands);
 
@@ -230,6 +229,7 @@ public class Icons {
      * @param id File ID that was provided in the Game class constructor
      * @param name Name of the file (including file type, e.g. "game.png")
      */
+    @SuppressWarnings("SameParameterValue")
     private static void registerFile(int id, String name) {
         System.out.println("Registering file: " + name);
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));

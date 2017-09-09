@@ -1,4 +1,16 @@
 quickplay.buttons.lobby=Go To Lobby
 quickplay.buttons.home=Go Home
 
+quickplay.color.name.primary=Primary Color
+quickplay.color.name.secondary=Secondary Color
+
+quickplay.color.red=Red
+quickplay.color.green=Green
+quickplay.color.blue=Blue
+quickplay.color.chroma=Chroma
+
+quickplay.config.enabled=Enabled
+quickplay.config.disabled=Disabled
+quickplay.config.save=Save
+
 quickplay.controls.open=Open QuickPlay

@@ -1,5 +1,6 @@
-package co.bugg.quickplay.gui;
+package co.bugg.quickplay;
 
+import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
 
 import java.util.HashMap;

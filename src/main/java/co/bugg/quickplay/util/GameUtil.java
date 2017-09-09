@@ -1,4 +1,4 @@
-package co.bugg.quickplay;
+package co.bugg.quickplay.util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -9,9 +9,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * Miscellaneous Utilities
+ * Misc utilities relating to Minecraft itself
  */
-public class Util {
+public abstract class GameUtil {
     /**
      * Get the version of Minecraft this client is using
      * @return String version number
@@ -31,7 +31,7 @@ public class Util {
     public static String getForgeVersion() {
         String defaultValue = "Unknown";
         try {
-            Method versionMethod = getMethod(ForgeVersion.class, "getVersion");
+            Method versionMethod = ReflectUtil.getMethod(ForgeVersion.class, "getVersion");
 
             if(versionMethod == null) {
                 return defaultValue;
@@ -53,7 +53,7 @@ public class Util {
      */
     public static String getForgeVersionField(String fieldName, String defaultValue) {
         try {
-            Field valueField = getField(ForgeVersion.class, fieldName);
+            Field valueField = ReflectUtil.getField(ForgeVersion.class, fieldName);
 
             if(valueField == null) {
                 return defaultValue;
@@ -83,39 +83,5 @@ public class Util {
         }
 
         return ip;
-    }
-
-    /**
-     * Get the field of a class reflectively at runtime.
-     * @param theClass The class to get the field from
-     * @param fieldName The field to get
-     * @return Field that was requested
-     */
-    public static Field getField(Class<?> theClass, String fieldName) {
-        try {
-            Field field = theClass.getField(fieldName);
-            field.setAccessible(true);
-            return field;
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * Get the method of a class reflectively at runtime.
-     * @param theClass The class to get the field from
-     * @param methodName The method to get
-     * @return Method that was requested
-     */
-    public static Method getMethod(Class<?> theClass, String methodName, Class<?>... args) {
-        try {
-            Method method = theClass.getMethod(methodName, args);
-            method.setAccessible(true);
-            return method;
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 }
