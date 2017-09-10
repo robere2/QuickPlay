@@ -1,7 +1,9 @@
 package co.bugg.quickplay.gui.button;
 
+import co.bugg.quickplay.Game;
 import co.bugg.quickplay.Icons;
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.util.GlUtil;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -17,28 +19,28 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class GameButton extends GuiButton {
 
     /**
-     * xTexture and yTexture correspond to the coordinates in the
-     * icons image file where the top left corner of the icon is
+     * The game this button is for
      */
-    private int xTexture;
-    private int yTexture;
-    /**
-     * Which file the icon texture is in
-     */
-    private int fileID;
+    private Game game;
 
-    public GameButton(int buttonId, int x, int y, int xTexture, int yTexture, int fileID) {
+    public GameButton(int buttonId, int x, int y, Game game) {
         super(buttonId, x, y, Icons.iconWidth, Icons.iconHeight, "");
-        this.xTexture = xTexture;
-        this.yTexture = yTexture;
-        this.fileID = fileID;
+        this.game = game;
     }
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if(this.visible) {
-            mc.renderEngine.bindTexture(QuickPlay.icons.get(this.fileID));
-            drawTexturedModalRect(x, y, this.xTexture, this.yTexture, Icons.iconWidth, Icons.iconHeight);
+            mc.renderEngine.bindTexture(QuickPlay.icons.get(this.game.fileID));
+            drawTexturedModalRect(x, y, this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
+
+            // Draw the string as well
+            drawCenteredString(Minecraft.getMinecraft().fontRenderer, game.name, x + Icons.iconWidth / 2, y + Icons.iconHeight + 2, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
+            GlUtil.resetGlColor();
         }
+    }
+
+    public Game getGame() {
+        return game;
     }
 }

@@ -29,8 +29,20 @@ public class GameGui extends GuiScreen {
      */
     private HashMap<Integer, String> buttons = new HashMap<>();
 
+    /**
+     * The page of the main GUI that the user came from.
+     * Is used by the back button to send them back to
+     * the page they were just at.
+     */
+    private int cameFromPage = 1;
+
     public GameGui(Game game) {
         this.game = game;
+    }
+
+    public GameGui(Game game, int cameFromPage) {
+        this.game = game;
+        this.cameFromPage = cameFromPage;
     }
 
     @Override
@@ -39,9 +51,9 @@ public class GameGui extends GuiScreen {
         mc.renderEngine.bindTexture(QuickPlay.icons.get(this.game.fileID));
         // Draw this games icon at the top
         drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (float) (height * 0.05), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
-        // Draw the credits
 
-        drawString(fontRenderer, QuickPlay.credit, width - fontRenderer.getStringWidth(QuickPlay.credit) - 3, 3, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
+        // Draw the credits
+        drawString(fontRenderer, QuickPlay.credit, width / 2 - fontRenderer.getStringWidth(QuickPlay.credit) / 2, height - 10, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
         GlUtil.resetGlColor();
 
         super.drawScreen(mouseX, mouseY, partialTicks);
@@ -145,7 +157,7 @@ public class GameGui extends GuiScreen {
         switch(button.id) {
             // If the button is the back button
             case 0:
-                mc.displayGuiScreen(new MainGui());
+                mc.displayGuiScreen(new MainGui(cameFromPage));
                 break;
 
             // If the button is the star button
