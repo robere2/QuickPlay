@@ -117,6 +117,7 @@ public class GameGui extends GuiScreen {
         // Set whether or not the star is toggled on
         // (i.e. whether this gamemode is the user's favorite)
         boolean starOn;
+        //noinspection SimplifiableIfStatement
         if(QuickPlay.configManager.getConfig().favoriteGame != null) {
             starOn = game.name.equals(QuickPlay.configManager.getConfig().favoriteGame.name);
         } else {
