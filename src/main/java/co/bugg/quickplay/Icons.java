@@ -1,10 +1,11 @@
-package co.bugg.quickplay.gui;
+package co.bugg.quickplay;
 
-import co.bugg.quickplay.QuickPlay;
-import co.bugg.quickplay.Reference;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 
 /**
@@ -21,6 +22,14 @@ public class Icons {
     public static int iconHeight = 64;
 
     /* -------------------------------- *
+     *            Main Lobby            *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> mainCommands = new LinkedHashMap<>();
+    static {
+        mainCommands.put("Limbo", "/qplimbo");
+    }
+    public static final Game MAIN = new Game("Main Lobby",2,0,0,  "main", mainCommands);
+    /* -------------------------------- *
      *             Arcade               *
      * -------------------------------- */
     public static LinkedHashMap<String, String> arcadeCommands = new LinkedHashMap<>();
@@ -28,7 +37,7 @@ public class Icons {
         arcadeCommands.put("Mini Walls", "arcade_mini_walls");
         arcadeCommands.put("Football", "arcade_soccer");
     }
-    public static final Game ARCADE = new Game("Arcade",1,0,0, 0, "arcade", arcadeCommands);
+    public static final Game ARCADE = new Game("Arcade",1,0,0,  "arcade", arcadeCommands);
 
     /* -------------------------------- *
      *            Bed Wars              *
@@ -40,12 +49,17 @@ public class Icons {
         bedwarsCommands.put("3v3v3v3", "bedwars_four_three");
         bedwarsCommands.put("4v4v4v4", "bedwars_four_four");
     }
-    public static final Game BEDWARS = new Game("Bed Wars",1, 64,  0,  1, "bedwars", bedwarsCommands);
+    public static final Game BEDWARS = new Game("Bed Wars",1, 64,  0, "bedwars", bedwarsCommands);
 
     /* -------------------------------- *
      *             Classic              *
      * -------------------------------- */
-    public static final Game LEGACY = new Game("Classic",1,128, 0, 2, "classic", null);
+    public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
+    static {
+        classicCommands.put("Quake Solo", "quake_solo");
+        classicCommands.put("Quake Teams", "quake_teams");
+    }
+    public static final Game LEGACY = new Game("Classic",1,128, 0, "classic", null);
     /* -------------------------------- *
      *           Crazy Walls            *
      * -------------------------------- */
@@ -54,30 +68,29 @@ public class Icons {
         true_combatCommands.put("Solo", "crazy_walls_solo");
         true_combatCommands.put("Teams", "crazy_walls_team");
     }
-    public static final Game TRUE_COMBAT = new Game("Crazy Walls",1, 192, 0, 3, "crazy", true_combatCommands);
+    public static final Game TRUE_COMBAT = new Game("Crazy Walls",1, 192, 0,  "crazy", true_combatCommands);
 
     /* -------------------------------- *
      *          Cops & Crims            *
      * -------------------------------- */
-    public static final Game MCGO = new Game("Cops and Crims",1,0, 64, 4, "cvc", null);
+    public static final Game MCGO = new Game("Cops and Crims",1,0, 64, "cvc", null);
 
     /* -------------------------------- *
      *             Housing              *
      * -------------------------------- */
     // Housing is a special case. "Home" will be recognized as the lobby name and it'll assign the appropriate command.
-    public static final Game HOUSING = new Game("Housing",1, 64, 64, 5, "home", null);
+    public static final Game HOUSING = new Game("Housing",1, 64, 64,  "/home", new ChatComponentTranslation("quickplay.buttons.home").getFormattedText(), null);
 
     /* -------------------------------- *
      *           Mega Walls             *
      * -------------------------------- */
-    public static final Game WALLS3 = new Game("Mega Walls",1,128, 64, 6, "megawalls", null);
+    public static final Game WALLS3 = new Game("Mega Walls",1,128, 64,  "megawalls", null);
 
     /* -------------------------------- *
      *            Prototype             *
      * -------------------------------- */
     public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<>();
     static {
-        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
 
         prototypeCommands.put("Duels - Classic", "prototype_duels:classic_duel");
         prototypeCommands.put("Duels - Bow", "prototype_duels:bow_duel");
@@ -96,8 +109,10 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (Normal)", "prototype_zombies_endless_normal");
         prototypeCommands.put("Zombies - Endless (Hard)", "prototype_zombies_endless_hard");
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
+
+        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
     }
-    public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, 7, "prototype", prototypeCommands);
+    public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
     /* -------------------------------- *
      *            Blitz SG              *
@@ -108,7 +123,7 @@ public class Icons {
         survival_gamesCommands.put("Teams", "blitz_teams_normal");
         survival_gamesCommands.put("No Kits", "blitz_solo_nokits");
     }
-    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, 8, "blitz", survival_gamesCommands);
+    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
 
     /* -------------------------------- *
      *            SkyClash              *
@@ -119,7 +134,7 @@ public class Icons {
         skyclashCommands.put("Doubles", "skyclash_doubles");
         skyclashCommands.put("Team War", "skyclash_team_war");
     }
-    public static final Game SKYCLASH = new Game("SkyClash",1,64, 128,9, "skyclash", skyclashCommands);
+    public static final Game SKYCLASH = new Game("SkyClash",1,64, 128, "skyclash", skyclashCommands);
 
     /* -------------------------------- *
      *             Skywars              *
@@ -142,7 +157,7 @@ public class Icons {
         skywarsCommands.put("Teams Rush", "teams_insane_rush");
         skywarsCommands.put("Teams Slime", "teams_insane_slime");
     }
-    public static final Game SKYWARS = new Game("SkyWars",1,128, 128, 10, "skywars", skywarsCommands);
+    public static final Game SKYWARS = new Game("SkyWars",1,128, 128,  "skywars", skywarsCommands);
 
     /* -------------------------------- *
      *          Smash Heroes            *
@@ -150,11 +165,12 @@ public class Icons {
     public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<>();
     static {
         super_smashCommands.put("Solo", "super_smash_solo_normal");
-        super_smashCommands.put("Teams", "super_smash_teams_normal");
+        super_smashCommands.put("2v2", " super_smash_2v2_normal");
+        super_smashCommands.put("2v2v2", "super_smash_teams_normal");
         super_smashCommands.put("Friends", "super_smash_friends_normal");
     }
 
-    public static final Game SUPER_SMASH = new Game("Smash Heroes",1,192, 128,11, "smash", super_smashCommands);
+    public static final Game SUPER_SMASH = new Game("Smash Heroes",1,192, 128, "smash", super_smashCommands);
 
     /* -------------------------------- *
      *            Speed UHC             *
@@ -166,7 +182,7 @@ public class Icons {
         speed_uhcCommands.put("Teams Normal", "speed_team_normal");
         speed_uhcCommands.put("Teams Insane", "speed_team_insane");
     }
-    public static final Game SPEED_UHC = new Game("Speed UHC",1,0, 192,12, "speeduhc", speed_uhcCommands);
+    public static final Game SPEED_UHC = new Game("Speed UHC",1,0, 192, "speeduhc", speed_uhcCommands);
 
     /* -------------------------------- *
      *            TNT Games             *
@@ -179,39 +195,41 @@ public class Icons {
         tntgamesCommands.put("TNT Tag", "tnt_tntag");
         tntgamesCommands.put("TNT Wizards", "tnt_capture");
     }
-    public static final Game TNTGAMES = new Game("TNT Games",1, 64, 192, 13, "tnt", tntgamesCommands);
+    public static final Game TNTGAMES = new Game("TNT Games",1, 64, 192, "tnt", tntgamesCommands);
 
     /* -------------------------------- *
      *          UHC Champions           *
      * -------------------------------- */
-    public static final Game UHC = new Game("UHC Champions",1,128, 192, 14, "uhc", null);
+    public static final Game UHC = new Game("UHC Champions",1,128, 192, "uhc", null);
 
     /* -------------------------------- *
      *             Warlords             *
      * -------------------------------- */
-    public static final Game BATTLEGROUND = new Game("Warlords",1, 192, 192, 15, "warlords", null);
+    public static final Game BATTLEGROUND = new Game("Warlords",1, 192, 192, "warlords", null);
 
-    public static LinkedHashMap<Integer, Game> map = new LinkedHashMap<>();
+    public static LinkedList<Game> list = new LinkedList<>();
     static {
-        map.put(ARCADE.buttonID, ARCADE);
-        map.put(BEDWARS.buttonID, BEDWARS);
-        map.put(LEGACY.buttonID, LEGACY);
-        map.put(TRUE_COMBAT.buttonID, TRUE_COMBAT);
+        list.add(MAIN);
 
-        map.put(MCGO.buttonID, MCGO);
-        map.put(HOUSING.buttonID, HOUSING);
-        map.put(WALLS3.buttonID, WALLS3);
-        map.put(PROTOTYPE.buttonID, PROTOTYPE);
+        list.add(ARCADE);
+        list.add(BEDWARS);
+        list.add(LEGACY);
+        list.add(TRUE_COMBAT);
 
-        map.put(SURVIVAL_GAMES.buttonID, SURVIVAL_GAMES);
-        map.put(SKYCLASH.buttonID, SKYCLASH);
-        map.put(SKYWARS.buttonID, SKYWARS);
-        map.put(SUPER_SMASH.buttonID, SUPER_SMASH);
+        list.add(MCGO);
+        list.add(HOUSING);
+        list.add(WALLS3);
+        list.add(PROTOTYPE);
 
-        map.put(SPEED_UHC.buttonID, SPEED_UHC);
-        map.put(TNTGAMES.buttonID, TNTGAMES);
-        map.put(UHC.buttonID, UHC);
-        map.put(BATTLEGROUND.buttonID, BATTLEGROUND);
+        list.add(SURVIVAL_GAMES);
+        list.add(SKYCLASH);
+        list.add(SKYWARS);
+        list.add(SUPER_SMASH);
+
+        list.add(SPEED_UHC);
+        list.add(TNTGAMES);
+        list.add(UHC);
+        list.add(BATTLEGROUND);
     }
 
     /**
@@ -223,6 +241,7 @@ public class Icons {
      */
     public static void registerFiles() {
         registerFile(1, "games1.png");
+        registerFile(2, "games2.png");
     }
 
     /**

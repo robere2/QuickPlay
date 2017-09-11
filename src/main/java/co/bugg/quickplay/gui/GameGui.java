@@ -1,10 +1,16 @@
 package co.bugg.quickplay.gui;
 
+import co.bugg.quickplay.Game;
+import co.bugg.quickplay.Icons;
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.gui.button.ArrowButton;
+import co.bugg.quickplay.gui.button.StarButton;
+import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.command.ICommandSender;
+import net.minecraftforge.client.ClientCommandHandler;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,10 +27,22 @@ public class GameGui extends GuiScreen {
     /**
      * HashMap mapping join button IDs to which join button they are
      */
-    private HashMap<Integer, String> buttons = new HashMap<Integer, String>();
+    private HashMap<Integer, String> buttons = new HashMap<>();
+
+    /**
+     * The page of the main GUI that the user came from.
+     * Is used by the back button to send them back to
+     * the page they were just at.
+     */
+    private int cameFromPage = 1;
 
     public GameGui(Game game) {
         this.game = game;
+    }
+
+    public GameGui(Game game, int cameFromPage) {
+        this.game = game;
+        this.cameFromPage = cameFromPage;
     }
 
     @Override
@@ -33,12 +51,18 @@ public class GameGui extends GuiScreen {
         mc.renderEngine.bindTexture(QuickPlay.icons.get(this.game.fileID));
         // Draw this games icon at the top
         drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (float) (height * 0.05), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
+
         // Draw the credits
-        drawString(fontRendererObj, QuickPlay.credit, width - fontRendererObj.getStringWidth(QuickPlay.credit) - 3, 3, 0x00FFFF);
+        drawString(fontRendererObj, QuickPlay.credit, width / 2 - fontRendererObj.getStringWidth(QuickPlay.credit) / 2, height - 10, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
+        GlUtil.resetGlColor();
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
+    /**
+     * Create all the buttons!
+     * It's lengthy!
+     */
     @Override
     public void initGui() {
         super.initGui();
@@ -52,7 +76,6 @@ public class GameGui extends GuiScreen {
         // Dynamic sizes (Change depending on number of buttons, which button is
         // currently being rendered, etc)
         int buttonWidth = defaultButtonWidth;
-        int buttonHeight = defaultButtonHeight;
         // How far apart each button should be
         int buttonSpacing = 5;
 
@@ -61,13 +84,13 @@ public class GameGui extends GuiScreen {
         int lobbyX = (width / 2) - ((buttonWidth / 2));
 
         // What Y position dynamic (all but lobby) buttons are not created above
-        int startingHeight = (int) ((height * 0.05) + Icons.iconHeight + 10 + buttonHeight + buttonSpacing);
+        int startingHeight = (int) ((height * 0.05) + Icons.iconHeight + 10 + defaultButtonHeight + buttonSpacing);
 
         // buttonId incremented by 1 every time a button is added
         int buttonId = 0;
         int trueHeight = height - startingHeight;
         // How many buttons can fit on the screen in one column
-        int maxButtonPerColumn = trueHeight / (buttonHeight + buttonSpacing);
+        int maxButtonPerColumn = trueHeight / (defaultButtonHeight + buttonSpacing);
         // How many columns are required to fit all the buttons in
         double columnCount = Math.ceil(((double)buttonCount / (double)maxButtonPerColumn));
 
@@ -86,17 +109,30 @@ public class GameGui extends GuiScreen {
         int buttonY = startingHeight;
         int buttonX = startingX;
 
-        String lobbyButtonText;
-        // Create the lobby button
-        if(game.lobbyName.equals("home")) {
-            lobbyButtonText = new ChatComponentTranslation("quickplay.buttons.home").getFormattedText();
+        // Create the back button
+        buttonList.add(new ArrowButton(buttonId, (width / 2) - (Icons.iconWidth / 2 + ArrowButton.width + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - ArrowButton.height / 2, 0));
+        buttons.put(buttonId, null);
+        buttonId++;
+
+        // Set whether or not the star is toggled on
+        // (i.e. whether this gamemode is the user's favorite)
+        boolean starOn;
+        //noinspection SimplifiableIfStatement
+        if(QuickPlay.configManager.getConfig().favoriteGame != null) {
+            starOn = game.name.equals(QuickPlay.configManager.getConfig().favoriteGame.name);
         } else {
-            lobbyButtonText = new ChatComponentTranslation("quickplay.buttons.lobby").getFormattedText();
+            starOn = false;
         }
 
-        buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, lobbyButtonText));
+        // Create the star button
+        buttonList.add(new StarButton(buttonId, (width / 2) + (Icons.iconWidth / 2 + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - StarButton.height / 2, starOn));
+        buttons.put(buttonId, null);
+        buttonId++;
+
+        // Create the lobby button
+        buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, game.lobbyButtonString));
         // Register the button's ID
-        buttons.put(buttonId, lobbyButtonText);
+        buttons.put(buttonId, null);
         buttonId++;
 
         // if any play commands exist
@@ -110,10 +146,10 @@ public class GameGui extends GuiScreen {
                     buttonX = startingX;
 
                     // Move one button position lower
-                    buttonY += (buttonHeight + buttonSpacing);
+                    buttonY += (defaultButtonHeight + buttonSpacing);
                 }
 
-                buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, buttonHeight, entry.getKey()));
+                buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, entry.getKey()));
                 // Register the button's ID
                 buttons.put(buttonId, entry.getKey());
                 buttonId++;
@@ -127,28 +163,78 @@ public class GameGui extends GuiScreen {
 
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
-        // If the button is the lobby button
-        if(button.id == 0) {
-            // if this GUI is for housing
-            if(game.lobbyName.equals("home")) {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/home");
-            } else {
-                Minecraft.getMinecraft().thePlayer.sendChatMessage("/lobby " + game.lobbyName);
-            }
-        } else {
-            String command = game.commands.get(buttons.get(button.id));
 
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command);
+        switch(button.id) {
+            // If the button is the back button
+            case 0:
+                mc.displayGuiScreen(new MainGui(cameFromPage));
+                break;
+
+            // If the button is the star button
+            case 1:
+                StarButton starButton = (StarButton) button;
+                starButton.on = !starButton.on;
+
+                if(starButton.on) {
+                    QuickPlay.configManager.getConfig().favoriteGame = game;
+                } else {
+                    QuickPlay.configManager.getConfig().favoriteGame = null;
+                }
+
+                QuickPlay.configManager.saveConfig();
+                break;
+
+            // If the button is the lobby button
+            case 2:
+                // If the lobby string is a command
+                if(game.lobbyName.startsWith("/")) {
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage(game.lobbyName);
+                } else {
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/lobby " + game.lobbyName);
+                }
+                MainGui.closeGui();
+                break;
+
+            // Handle like a normal button
+            default:
+                String command = game.commands.get(buttons.get(button.id));
+
+                // If the game command is an actual command
+                if (command.startsWith("/")) {
+
+                    final boolean[] clientCommand = {false};
+                    // Check whether command is a mod command. If so then execute its client command
+                    // instead of the command on the server
+                    ClientCommandHandler.instance.getCommands().forEach((key, value) -> {
+                        // Delete the slash from the beginning of the string
+                        if(new StringBuilder(command).deleteCharAt(0).toString().equals(key)) {
+                            clientCommand[0] = true;
+                        }
+                    });
+
+                    // If the command is a client command, then execute it as a client command
+                    if(clientCommand[0]) {
+                        ICommandSender sender = Minecraft.getMinecraft().thePlayer.getCommandSenderEntity();
+                        if(sender != null) {
+                            ClientCommandHandler.instance.executeCommand(sender, command);
+                        }
+                    } else {
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage(command);
+                    }
+                } else {
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command);
+                }
+                MainGui.closeGui();
+                break;
         }
 
-        QuickPlayGui.closeGui();
         super.actionPerformed(button);
     }
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         // Close the GUI whenever a key is pressed.
-        QuickPlayGui.closeGui();
+        MainGui.closeGui();
 
         super.keyTyped(typedChar, keyCode);
     }
