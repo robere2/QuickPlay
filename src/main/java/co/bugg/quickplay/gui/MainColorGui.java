@@ -5,7 +5,7 @@ import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ public class MainColorGui extends GuiScreen {
         int buttonId = 0;
 
         for(HashMap.Entry<String, QuickPlayColor> entry : QuickPlay.configManager.getConfig().colors.entrySet()) {
-            buttonList.add(new GuiButton(buttonId, width / 2 - 100, (int) (height * 0.4) - 10 + (25 * buttonId), new ChatComponentText("quickplay.color.name." + entry.getValue().getUnlocalizedName()).getFormattedText()));
+            buttonList.add(new GuiButton(buttonId, width / 2 - 100, (int) (height * 0.4) - 10 + (25 * buttonId), new ChatComponentTranslation("quickplay.color.name." + entry.getValue().getUnlocalizedName()).getFormattedText()));
             buttonIds.put(buttonId, entry.getValue());
             buttonId++;
         }
