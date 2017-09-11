@@ -1,6 +1,7 @@
 package co.bugg.quickplay.command;
 
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.Reference;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.command.CommandException;
@@ -9,6 +10,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -36,16 +38,16 @@ public class QpDestroyConfig implements ICommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(args.length < 1) {
-            sender.sendMessage(new TextComponentString(ChatFormatting.RED + "Are you sure you want to reset your QuickPlay configuration? Type \"/" + getName() + " yes\" if so."));
+            sender.sendMessage(new TextComponentString(new TextComponentTranslation("quickplay.message.config_reset_confirm", ChatFormatting.RED + Reference.MOD_NAME, ChatFormatting.AQUA + "/" + getName() + " yes").getFormattedText()));
         } else if(args.length == 1) {
             for(String arg: args) {
                 if(arg.equals("yes")) {
                     QuickPlay.configManager.resetConfig();
-                    sender.sendMessage(new TextComponentString(ChatFormatting.GREEN + "Configuration reset! You may have to restart your game."));
+                    sender.sendMessage(new TextComponentString(new TextComponentTranslation("quickplay.message.config_reset").getFormattedText()));
                 }
             }
         } else {
-            sender.sendMessage(new TextComponentString(ChatFormatting.RED + "Invalid syntax! " + getUsage(sender)));
+            sender.sendMessage(new TextComponentString(new TextComponentTranslation("quickplay.message.invalid_syntax").getFormattedText() + " " + getUsage(sender)));
         }
     }
 

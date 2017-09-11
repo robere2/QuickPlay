@@ -10,6 +10,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,7 +42,7 @@ public class QpLimbo implements ICommand {
             // sending them to limbo.
             Minecraft.getMinecraft().player.sendChatMessage("§");
         } else {
-            sender.sendMessage(new TextComponentString(ChatFormatting.RED + "You need to be on mc.hypixel.net to use this command!"));
+            sender.sendMessage(new TextComponentString(new TextComponentTranslation("quickplay.message.not_on_hypixel").getFormattedText()));
         }
     }
 

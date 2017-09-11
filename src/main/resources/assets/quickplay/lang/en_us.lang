@@ -13,6 +13,11 @@ quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
 
+quickplay.message.not_on_hypixel=§cYou need to be on mc.hypixel.net to use this command!
+quickplay.message.invalid_syntax=§cInvalid syntax!
+quickplay.message.config_reset=§aConfiguration reset! You may have to restart your game.
+quickplay.message.config_reset_confirm=§cAre you sure you want to reset your %s§c configuration? Type "%s§c" if so.
+
 quickplay.controls.open=Open Main GUI
 quickplay.controls.favorite=Open Favorite
 

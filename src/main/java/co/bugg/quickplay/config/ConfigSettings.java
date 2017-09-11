@@ -11,7 +11,7 @@ public class ConfigSettings implements Serializable {
 
     public ConfigSettings() {
         colors.put("primary", new QuickPlayColor(0, 255, 255, "primary", false));
-        colors.put("secondary", new QuickPlayColor(255, 0, 255, "secondary", false));
+        colors.put("secondary", new QuickPlayColor(255, 255,  0, "secondary", false));
     }
 
     /*******************
