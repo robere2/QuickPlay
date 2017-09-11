@@ -114,8 +114,17 @@ public class GameGui extends GuiScreen {
         buttons.put(buttonId, null);
         buttonId++;
 
+        // Set whether or not the star is toggled on
+        // (i.e. whether this gamemode is the user's favorite)
+        boolean starOn;
+        if(QuickPlay.configManager.getConfig().favoriteGame != null) {
+            starOn = game.name.equals(QuickPlay.configManager.getConfig().favoriteGame.name);
+        } else {
+            starOn = false;
+        }
+
         // Create the star button
-        buttonList.add(new StarButton(buttonId, (width / 2) + (Icons.iconWidth / 2 + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - StarButton.height / 2, false));
+        buttonList.add(new StarButton(buttonId, (width / 2) + (Icons.iconWidth / 2 + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - StarButton.height / 2, starOn));
         buttons.put(buttonId, null);
         buttonId++;
 
@@ -164,6 +173,14 @@ public class GameGui extends GuiScreen {
             case 1:
                 StarButton starButton = (StarButton) button;
                 starButton.on = !starButton.on;
+
+                if(starButton.on) {
+                    QuickPlay.configManager.getConfig().favoriteGame = game;
+                } else {
+                    QuickPlay.configManager.getConfig().favoriteGame = null;
+                }
+
+                QuickPlay.configManager.saveConfig();
                 break;
 
             // If the button is the lobby button

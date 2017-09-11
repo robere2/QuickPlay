@@ -13,4 +13,7 @@ quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
 
-quickplay.controls.open=Open QuickPlay
+quickplay.controls.open=Open Main GUI
+quickplay.controls.favorite=Open Favorite
+
+key.categories.quickplay=QuickPlay

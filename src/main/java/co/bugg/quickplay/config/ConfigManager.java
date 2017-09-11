@@ -80,6 +80,7 @@ public class ConfigManager {
             // Update keybinds
             {
                 config.openGuiKey = QuickPlay.openGui.getKeyCode();
+                config.openFavoriteKey = QuickPlay.openFavorite.getKeyCode();
             }
 
             saveConfig();

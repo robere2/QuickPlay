@@ -1,5 +1,6 @@
 package co.bugg.quickplay.config;
 
+import co.bugg.quickplay.Game;
 import co.bugg.quickplay.util.QuickPlayColor;
 import org.lwjgl.input.Keyboard;
 
@@ -9,8 +10,8 @@ import java.util.LinkedHashMap;
 public class ConfigSettings implements Serializable {
 
     public ConfigSettings() {
-        colors.put("primary", new QuickPlayColor(0, 255, 255, "primary", true));
-        colors.put("secondary", new QuickPlayColor(0, 255, 0, "secondary", true));
+        colors.put("primary", new QuickPlayColor(0, 255, 255, "primary", false));
+        colors.put("secondary", new QuickPlayColor(255, 0, 255, "secondary", false));
     }
 
     /*******************
@@ -36,4 +37,11 @@ public class ConfigSettings implements Serializable {
     // TODO: Make this key not be the default, but instead
     // TODO: set the key to the key code
     public int openGuiKey = Keyboard.KEY_R;
+    public int openFavoriteKey = Keyboard.KEY_G;
+
+    /*******************
+     *    Favorites    *
+     *******************/
+
+    public Game favoriteGame = null;
 }

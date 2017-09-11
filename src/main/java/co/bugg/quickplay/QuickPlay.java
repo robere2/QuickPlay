@@ -7,7 +7,6 @@ import co.bugg.quickplay.command.QpLimbo;
 import co.bugg.quickplay.config.ConfigManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -29,6 +28,7 @@ import java.util.HashMap;
 public class QuickPlay {
 
     public static KeyBinding openGui;
+    public static KeyBinding openFavorite;
     public static boolean onHypixel = false;
 
     public static ConfigManager configManager;
@@ -46,8 +46,10 @@ public class QuickPlay {
         // Add the icon files to the HashMap
         Icons.registerFiles();
 
-        openGui = new KeyBinding(new TextComponentTranslation("quickplay.controls.open").getFormattedText(), configManager.getConfig().openGuiKey, "key.categories.misc");
+        openGui = new KeyBinding("quickplay.controls.open", configManager.getConfig().openGuiKey, "key.categories.quickplay");
+        openFavorite = new KeyBinding("quickplay.controls.favorite", configManager.getConfig().openFavoriteKey, "key.categories.quickplay");
         ClientRegistry.registerKeyBinding(openGui);
+        ClientRegistry.registerKeyBinding(openFavorite);
 
         MinecraftForge.EVENT_BUS.register(new QuickPlayEventHandler());
     }

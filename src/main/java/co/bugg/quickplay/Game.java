@@ -4,12 +4,13 @@ import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.text.TextComponentTranslation;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Class that contains information about games, such as their lobby name, icon position, and /play commands.
  */
-public class Game {
+public class Game implements Serializable {
 
     /**
      * Formatted name of the game

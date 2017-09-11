@@ -7,7 +7,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.awt.*;
 import java.io.IOException;
@@ -27,6 +30,8 @@ public class ColorGui extends GuiScreen {
     public ColorGui(int id, QuickPlayColor color) {
         this.color = color;
         this.id = id;
+
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     int sampleWidth = 50;
@@ -98,7 +103,7 @@ public class ColorGui extends GuiScreen {
             // Chroma button was pressed
             if(button.id == 3) {
                 color.setIsChroma(!color.getIsChroma());
-                buttonList.get(3).displayString = "Chroma: " + (color.getIsChroma() ? "Enabled" : "Disabled");
+                buttonList.get(3).displayString = new TextComponentTranslation("quickplay.color.chroma").getFormattedText() + ": " + (color.getIsChroma() ? new TextComponentTranslation("quickplay.config.enabled").getFormattedText() : new TextComponentTranslation("quickplay.config.disabled").getFormattedText());
             } else
             // Save button was pressed
             if(button.id == 4) {
@@ -121,5 +126,19 @@ public class ColorGui extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
+    }
+
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        MinecraftForge.EVENT_BUS.unregister(this);
+    }
+
+    @SubscribeEvent
+    public void onGameTick(TickEvent.ClientTickEvent event) {
+        // Update the draw color to the next chroma frame if chroma is enabled
+        if(color.getIsChroma() && drawColor != null) {
+            drawColor = new QuickPlayColor(QuickPlayColor.nextChromaFrame(drawColor), drawColor.getUnlocalizedName(), drawColor.getIsChroma());
+        }
     }
 }

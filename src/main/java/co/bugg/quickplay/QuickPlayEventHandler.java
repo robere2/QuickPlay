@@ -1,5 +1,6 @@
 package co.bugg.quickplay;
 
+import co.bugg.quickplay.gui.GameGui;
 import co.bugg.quickplay.gui.MainGui;
 import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ public class QuickPlayEventHandler {
                 ip = serverData.serverIP;
             }
 
-            Pattern hypixelPattern = Pattern.compile("^(?:\\w+\\.hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
+            Pattern hypixelPattern = Pattern.compile("^(?:(?:(?:\\w+\\.)?hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99)))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = hypixelPattern.matcher(ip);
 
             if (matcher.find()) {
@@ -50,10 +51,25 @@ public class QuickPlayEventHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 
-        // If open GUI key is pressed on Hypixel
-        if(QuickPlay.openGui.isKeyDown() && QuickPlay.onHypixel) {
-            System.out.println("Open GUI key pressed");
-            Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+        if(QuickPlay.onHypixel) {
+            // If open GUI key is pressed
+            if (QuickPlay.openGui.isKeyDown()) {
+                System.out.println("Open GUI key pressed");
+                Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+
+            // If the open Favorite GUI key is pressed
+            } else if(QuickPlay.openFavorite.isKeyDown()) {
+                System.out.println("Open Favorite key pressed");
+
+                // Check if the user even has a favorite game
+                if(QuickPlay.configManager.getConfig().favoriteGame == null) {
+                    // If not then open the main GUI
+                    Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+                } else {
+                    // Otherwise open the game
+                    Minecraft.getMinecraft().displayGuiScreen(new GameGui(QuickPlay.configManager.getConfig().favoriteGame));
+                }
+            }
         }
     }
 
