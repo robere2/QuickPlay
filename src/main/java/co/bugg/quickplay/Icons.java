@@ -1,8 +1,7 @@
 package co.bugg.quickplay;
 
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -79,7 +78,7 @@ public class Icons {
      *             Housing              *
      * -------------------------------- */
     // Housing is a special case. "Home" will be recognized as the lobby name and it'll assign the appropriate command.
-    public static final Game HOUSING = new Game("Housing",1, 64, 64,  "/home", new ChatComponentTranslation("quickplay.buttons.home").getFormattedText(), null);
+    public static final Game HOUSING = new Game("Housing",1, 64, 64,  "/home", new TextComponentTranslation("quickplay.buttons.home").getFormattedText(), null);
 
     /* -------------------------------- *
      *           Mega Walls             *

@@ -2,8 +2,7 @@ package co.bugg.quickplay;
 
 import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public class Game implements Serializable {
      * What text to put as the lobby button. Defaults to the quickplay.buttons.lobby translation.
      * Main use at the moment is for Housing.
      */
-    public String lobbyButtonString = new ChatComponentTranslation("quickplay.buttons.lobby").getFormattedText();
+    public String lobbyButtonString = new TextComponentTranslation("quickplay.buttons.lobby").getFormattedText();
     /**
      * HashMap containing all /play commands
      */

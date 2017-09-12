@@ -6,7 +6,7 @@ import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -63,7 +63,7 @@ public class ColorGui extends GuiScreen {
 
         // Draw the sample view
         drawRect((width / 2) - (sampleWidth / 2), (int) (height * 0.2) - (sampleHeight / 2), (width / 2) + (sampleWidth / 2), (int) (height * 0.2) + (sampleHeight / 2), drawColor.getRGB());
-        drawCenteredString(fontRendererObj, new ChatComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 12, drawColor.getRGB());
+        drawCenteredString(fontRendererObj, new TextComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 12, drawColor.getRGB());
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -75,18 +75,18 @@ public class ColorGui extends GuiScreen {
         int sliderSpacing = 5;
         int buttonId = 0;
 
-        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new ChatComponentTranslation("quickplay.color.red").getFormattedText() + ": ", "", 0, 255, color.getRed(), false, true));
+        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new TextComponentTranslation("quickplay.color.red").getFormattedText() + ": ", "", 0, 255, color.getRed(), false, true));
         buttonId++;
-        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new ChatComponentTranslation("quickplay.color.green").getFormattedText() + ": ", "", 0, 255, color.getGreen(), false, true));
+        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new TextComponentTranslation("quickplay.color.green").getFormattedText() + ": ", "", 0, 255, color.getGreen(), false, true));
         buttonId++;
-        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new ChatComponentTranslation("quickplay.color.blue").getFormattedText() + ": ", "", 0, 255, color.getBlue(), false, true));
+        buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new TextComponentTranslation("quickplay.color.blue").getFormattedText() + ": ", "", 0, 255, color.getBlue(), false, true));
         buttonId++;
 
         // Chroma Button
-        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new ChatComponentTranslation("quickplay.color.chroma").getFormattedText()+ ": " + (color.getIsChroma() ? new ChatComponentTranslation("quickplay.config.enabled").getFormattedText() : new ChatComponentTranslation("quickplay.config.disabled").getFormattedText())));
+        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new TextComponentTranslation("quickplay.color.chroma").getFormattedText()+ ": " + (color.getIsChroma() ? new TextComponentTranslation("quickplay.config.enabled").getFormattedText() : new TextComponentTranslation("quickplay.config.disabled").getFormattedText())));
         buttonId++;
         // Save button
-        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new ChatComponentTranslation("quickplay.config.save").getFormattedText()));
+        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new TextComponentTranslation("quickplay.config.save").getFormattedText()));
         buttonId++;
 
         // Create the back button
@@ -100,7 +100,7 @@ public class ColorGui extends GuiScreen {
             // Chroma button was pressed
             if(button.id == 3) {
                 color.setIsChroma(!color.getIsChroma());
-                buttonList.get(3).displayString = new ChatComponentTranslation("quickplay.color.chroma").getFormattedText() + ": " + (color.getIsChroma() ? new ChatComponentTranslation("quickplay.config.enabled").getFormattedText() : new ChatComponentTranslation("quickplay.config.disabled").getFormattedText());
+                buttonList.get(3).displayString = new TextComponentTranslation("quickplay.color.chroma").getFormattedText() + ": " + (color.getIsChroma() ? new TextComponentTranslation("quickplay.config.enabled").getFormattedText() : new TextComponentTranslation("quickplay.config.disabled").getFormattedText());
             } else
             // Save button was pressed
             if(button.id == 4) {

@@ -3,18 +3,26 @@ package co.bugg.quickplay.command;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.GameUtil;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.*;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class QpDebugCommand implements ICommand {
     @Override
     public String getCommandName() {
@@ -36,13 +44,13 @@ public class QpDebugCommand implements ICommand {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        IChatComponent debugHeader = new ChatComponentText("-------- " + Reference.MOD_NAME + " Debug --------\n");
-        ChatStyle headerStyle = new ChatStyle();
-        headerStyle.setColor(EnumChatFormatting.DARK_AQUA);
-        debugHeader.setChatStyle(headerStyle);
+    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        ITextComponent debugHeader = new TextComponentString("-------- " + Reference.MOD_NAME + " Debug --------\n");
+        Style headerStyle = new Style();
+        headerStyle.setColor(TextFormatting.DARK_AQUA);
+        debugHeader.setStyle(headerStyle);
 
-        IChatComponent debugMsg = new ChatComponentText("MC Version: ");
+        ITextComponent debugMsg = new TextComponentString("MC Version: ");
         debugMsg.appendText(GameUtil.getMCVersion() + "\n");
         debugMsg.appendText("MCP Version: ");
         debugMsg.appendText(GameUtil.getMCPVersion() + "\n");
@@ -61,10 +69,10 @@ public class QpDebugCommand implements ICommand {
         debugMsg.appendText("Java Version: ");
         debugMsg.appendText(System.getProperty("java.version"));
 
-        ChatStyle textStyle = new ChatStyle();
-        textStyle.setColor(EnumChatFormatting.AQUA);
+        Style textStyle = new Style();
+        textStyle.setColor(TextFormatting.AQUA);
 
-        debugMsg.setChatStyle(textStyle);
+        debugMsg.setStyle(textStyle);
 
         debugHeader.appendSibling(debugMsg);
 
@@ -72,12 +80,12 @@ public class QpDebugCommand implements ICommand {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;
     }
 
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+    public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos pos) {
         return new ArrayList<>();
     }
 

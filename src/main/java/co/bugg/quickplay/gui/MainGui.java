@@ -10,10 +10,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+@ParametersAreNonnullByDefault
 public class MainGui extends GuiScreen {
 
     /**
