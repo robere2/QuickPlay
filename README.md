@@ -12,4 +12,4 @@ This is the source code for 1.12 through 1.12.1. Please check other branches for
 ## Showcase
 Click the image below to view the video.
 
-[![Image Not Displaying](https://i.ytimg.com/vi/KCEjuds20c8/hqdefault.jpg)](https://www.youtube.com/watch?v=KCEjuds20c8)
+[![Image Not Displaying](https://i.ytimg.com/vi/krTXy7gUqKo/hqdefault.jpg)](https://www.youtube.com/watch?v=krTXy7gUqKo)
