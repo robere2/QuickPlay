@@ -87,11 +87,20 @@ public class Icons {
     public static final Game WALLS3 = new Game("Mega Walls",1,128, 64,  "megawalls", null);
 
     /* -------------------------------- *
+     *         Murder Mystery           *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> murderMysteryCommands = new LinkedHashMap<>();
+    static {
+        murderMysteryCommands.put("Classic", "murder_classic");
+        murderMysteryCommands.put("Assassins", "murder_assassins");
+        murderMysteryCommands.put("Hardcore", "murder_hardcore");
+    }
+    public static final Game MURDERMYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
+    /* -------------------------------- *
      *            Prototype             *
      * -------------------------------- */
     public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<>();
     static {
-
         prototypeCommands.put("Duels - Classic", "prototype_duels:classic_duel");
         prototypeCommands.put("Duels - Bow", "prototype_duels:bow_duel");
         prototypeCommands.put("Duels - Potion", "prototype_duels:potion_duel");
@@ -109,8 +118,6 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (Normal)", "prototype_zombies_endless_normal");
         prototypeCommands.put("Zombies - Endless (Hard)", "prototype_zombies_endless_hard");
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
-
-        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
@@ -213,22 +220,24 @@ public class Icons {
 
         list.add(ARCADE);
         list.add(BEDWARS);
+        list.add(SURVIVAL_GAMES);
         list.add(LEGACY);
-        list.add(TRUE_COMBAT);
 
+        list.add(TRUE_COMBAT);
         list.add(MCGO);
         list.add(HOUSING);
         list.add(WALLS3);
-        list.add(PROTOTYPE);
 
-        list.add(SURVIVAL_GAMES);
+        list.add(MURDERMYSTERY);
+        list.add(PROTOTYPE);
         list.add(SKYCLASH);
         list.add(SKYWARS);
-        list.add(SUPER_SMASH);
 
+        list.add(SUPER_SMASH);
         list.add(SPEED_UHC);
         list.add(TNTGAMES);
         list.add(UHC);
+
         list.add(BATTLEGROUND);
     }
 
