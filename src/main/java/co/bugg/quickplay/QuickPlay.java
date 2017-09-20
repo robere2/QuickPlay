@@ -22,7 +22,7 @@ import java.util.HashMap;
         modid = Reference.MOD_ID,
         name = Reference.MOD_NAME,
         version = Reference.VERSION,
-        acceptedMinecraftVersions = "[" + Reference.COMPATIBLE_MC_VERSION_MIN + "," + Reference.COMPATIBLE_MC_VERSION_MAX + "]",
+        acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
         clientSideOnly = true,
         updateJSON = "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
 )
