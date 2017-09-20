@@ -3,10 +3,8 @@ package co.bugg.quickplay;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -86,6 +84,17 @@ public class Icons {
      *           Mega Walls             *
      * -------------------------------- */
     public static final Game WALLS3 = new Game("Mega Walls",1,128, 64,  "megawalls", null);
+
+    /* -------------------------------- *
+     *         Murder Mystery           *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> murderMysteryCommands = new LinkedHashMap<>();
+    static {
+        murderMysteryCommands.put("Classic", "murder_classic");
+        murderMysteryCommands.put("Assassins", "murder_assassins");
+        murderMysteryCommands.put("Hardcore", "murder_hardcore");
+    }
+    public static final Game MURDERMYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
 
     /* -------------------------------- *
      *            Prototype             *
@@ -214,22 +223,24 @@ public class Icons {
 
         list.add(ARCADE);
         list.add(BEDWARS);
+        list.add(SURVIVAL_GAMES);
         list.add(LEGACY);
-        list.add(TRUE_COMBAT);
 
+        list.add(TRUE_COMBAT);
         list.add(MCGO);
         list.add(HOUSING);
         list.add(WALLS3);
-        list.add(PROTOTYPE);
 
-        list.add(SURVIVAL_GAMES);
+        list.add(MURDERMYSTERY);
+        list.add(PROTOTYPE);
         list.add(SKYCLASH);
         list.add(SKYWARS);
-        list.add(SUPER_SMASH);
 
+        list.add(SUPER_SMASH);
         list.add(SPEED_UHC);
         list.add(TNTGAMES);
         list.add(UHC);
+
         list.add(BATTLEGROUND);
     }
 
