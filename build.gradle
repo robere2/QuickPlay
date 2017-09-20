@@ -14,13 +14,18 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle.forge'
 
+jar {
+    // Add the license to the jar
+    from "LICENSE"
+}
+
 /*
 // for people who want stable - not yet functional for MC 1.8.8 - we require the forgegradle 2.1 snapshot
 plugins {
     id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 */
-version = "1.0"
+version = "1.0.1"
 group= "co.bugg.quickplay" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "QuickPlay-1.8.9"
 
