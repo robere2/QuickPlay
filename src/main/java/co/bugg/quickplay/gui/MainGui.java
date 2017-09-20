@@ -95,6 +95,8 @@ public class MainGui extends GuiScreen {
         // Initially set the button ID
         int buttonId = 0;
 
+        System.out.println(grid.toString());
+
         // How many icons can fit on the page
         iconsPerPage = grid.get("columns") * grid.get("rowsPerPage");
 
@@ -176,16 +178,10 @@ public class MainGui extends GuiScreen {
             int iconWidthWithSpacing = Icons.iconWidth + iconXSpacing;
             int columnCount = trueWidth / iconWidthWithSpacing;
 
-            // If there are not enough icons to fill a single row
-            if(columnCount > iconCount) {
-                // We can assume there's only 1 row, with all the icons
-                grid.put("columns", iconCount);
-                grid.put("rows", 1);
+            // Total number of columns that can fit on the screen
+            System.out.println(columnCount);
+            grid.put("columns", columnCount);
 
-                return grid;
-            } else {
-                grid.put("columns", columnCount);
-            }
         }
 
         // Now calculate how many rows there will be
@@ -232,6 +228,10 @@ public class MainGui extends GuiScreen {
         int x = marginSides + getUnusedSpace(getIconCountInRow(row * pageNumber, grid), grid.get("columns")) / 2;
         int y = marginTop;
 
+        System.out.println(x);
+        System.out.println(marginSides);
+        System.out.println(getIconCountInRow(row * pageNumber, grid));
+
         {
             int columnWidth = Icons.iconWidth + iconXSpacing;
             x += columnWidth * (column - 1);
@@ -269,7 +269,8 @@ public class MainGui extends GuiScreen {
         if(grid.get("rows") > row) {
             return grid.get("columns");
         } else {
-            return iconCount % grid.get("columns");
+            int iconModulus = iconCount % grid.get("columns");
+            return (iconModulus == 0) ? iconCount : iconModulus;
         }
     }
 
