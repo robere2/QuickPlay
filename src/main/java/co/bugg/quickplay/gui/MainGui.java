@@ -180,16 +180,8 @@ public class MainGui extends GuiScreen {
             int iconWidthWithSpacing = Icons.iconWidth + iconXSpacing;
             int columnCount = trueWidth / iconWidthWithSpacing;
 
-            // If there are not enough icons to fill a single row
-            if(columnCount > iconCount) {
-                // We can assume there's only 1 row, with all the icons
-                grid.put("columns", iconCount);
-                grid.put("rows", 1);
-
-                return grid;
-            } else {
-                grid.put("columns", columnCount);
-            }
+            // Total number of columns that can fit on the screen
+            grid.put("columns", columnCount);
         }
 
         // Now calculate how many rows there will be
@@ -273,7 +265,8 @@ public class MainGui extends GuiScreen {
         if(grid.get("rows") > row) {
             return grid.get("columns");
         } else {
-            return iconCount % grid.get("columns");
+            int iconModulus = iconCount % grid.get("columns");
+            return (iconModulus == 0) ? iconCount : iconModulus;
         }
     }
 
