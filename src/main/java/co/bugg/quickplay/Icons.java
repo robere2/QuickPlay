@@ -1,6 +1,5 @@
 package co.bugg.quickplay;
 
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ResourceLocation;
 
@@ -95,7 +94,7 @@ public class Icons {
         murderMysteryCommands.put("Assassins", "murder_assassins");
         murderMysteryCommands.put("Hardcore", "murder_hardcore");
     }
-    public static final Game MURDERMYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
+    public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
     /* -------------------------------- *
      *            Prototype             *
      * -------------------------------- */
@@ -228,7 +227,7 @@ public class Icons {
         list.add(HOUSING);
         list.add(WALLS3);
 
-        list.add(MURDERMYSTERY);
+        list.add(MURDER_MYSTERY);
         list.add(PROTOTYPE);
         list.add(SKYCLASH);
         list.add(SKYWARS);
