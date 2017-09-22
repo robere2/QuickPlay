@@ -11,7 +11,10 @@ import java.lang.reflect.Method;
 /**
  * Misc utilities relating to Minecraft itself
  */
-public abstract class GameUtil {
+public class GameUtil {
+
+    private GameUtil() {}
+
     /**
      * Get the version of Minecraft this client is using
      * @return String version number

@@ -5,7 +5,9 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 /**
  * OpenGL Utilities
  */
-public abstract class GlUtil {
+public class GlUtil {
+
+    private GlUtil() {}
 
     /**
      * Reset
