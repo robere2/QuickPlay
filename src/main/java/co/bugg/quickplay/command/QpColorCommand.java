@@ -1,12 +1,12 @@
 package co.bugg.quickplay.command;
 
-import co.bugg.quickplay.gui.MainColorGui;
-import co.bugg.quickplay.util.TickDelay;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class QpColorCommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        new TickDelay(() -> Minecraft.getMinecraft().displayGuiScreen(new MainColorGui()), 2);
+        sender.addChatMessage(new ChatComponentText("This command is deprecated. Please use /qp color instead.").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     @Override

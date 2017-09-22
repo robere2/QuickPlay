@@ -211,17 +211,26 @@ public class GameGui extends GuiScreen {
 
             // Handle like a normal button
             default:
-                String command = game.commands.get(buttons.get(button.id));
+                final String[] command = {game.commands.get(buttons.get(button.id))};
 
                 // If the game command is an actual command
-                if (command.startsWith("/")) {
+                if (command[0].startsWith("/")) {
 
                     final boolean[] clientCommand = {false};
                     // Check whether command is a mod command. If so then execute its client command
                     // instead of the command on the server
                     ClientCommandHandler.instance.getCommands().forEach((key, value) -> {
+                        String parsedCommand = command[0];
+                        StringBuilder builder = new StringBuilder(parsedCommand);
+
                         // Delete the slash from the beginning of the string
-                        if(new StringBuilder(command).deleteCharAt(0).toString().equals(key)) {
+                        builder.deleteCharAt(0);
+                        // Also delete any arguments
+                        if(command[0].contains(" ")) {
+                            builder.delete(command[0].indexOf(" ") - 1, command[0].length() - 1);
+                        }
+
+                        if(builder.toString().equals(key)) {
                             clientCommand[0] = true;
                         }
                     });
@@ -230,13 +239,13 @@ public class GameGui extends GuiScreen {
                     if(clientCommand[0]) {
                         ICommandSender sender = Minecraft.getMinecraft().thePlayer.getCommandSenderEntity();
                         if(sender != null) {
-                            ClientCommandHandler.instance.executeCommand(sender, command);
+                            ClientCommandHandler.instance.executeCommand(sender, command[0].substring(1, command[0].length()));
                         }
                     } else {
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage(command);
+                        Minecraft.getMinecraft().thePlayer.sendChatMessage(command[0]);
                     }
                 } else {
-                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command);
+                    Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command[0]);
                 }
                 MainGui.closeGui();
                 break;
