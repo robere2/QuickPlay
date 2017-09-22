@@ -17,4 +17,4 @@ You can visit the main thread for this Mod at <a href=https://hypixel.net/thread
 ## Showcase
 Click the image below to view the video.
 
-[![Image Not Displaying](https://i.ytimg.com/vi/krTXy7gUqKo/hqdefault.jpg)](https://www.youtube.com/watch?v=krTXy7gUqKo)
+[![Image Not Displaying](https://i.ytimg.com/vi/eR2JP8M8tqE/hqdefault.jpg)](https://www.youtube.com/watch?v=eR2JP8M8tqE)
