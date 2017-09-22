@@ -5,9 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class FileUtil {
+public final class FileUtil {
 
-    private FileUtil() {}
+    private FileUtil() { throw new AssertionError(); }
 
     /**
      * Create a directory with the path passed
