@@ -51,6 +51,17 @@ public class Icons {
     public static final Game BEDWARS = new Game("Bed Wars",1, 64,  0, "bedwars", bedwarsCommands);
 
     /* -------------------------------- *
+     *            Blitz SG              *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<>();
+    static {
+        survival_gamesCommands.put("Solo", "blitz_solo_normal");
+        survival_gamesCommands.put("Teams", "blitz_teams_normal");
+        survival_gamesCommands.put("No Kits", "blitz_solo_nokits");
+    }
+    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
+
+    /* -------------------------------- *
      *             Classic              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
@@ -88,13 +99,13 @@ public class Icons {
     /* -------------------------------- *
      *         Murder Mystery           *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> murderMysteryCommands = new LinkedHashMap<>();
+    public static LinkedHashMap<String, String> murder_mysteryCommands = new LinkedHashMap<>();
     static {
-        murderMysteryCommands.put("Classic", "murder_classic");
-        murderMysteryCommands.put("Assassins", "murder_assassins");
-        murderMysteryCommands.put("Hardcore", "murder_hardcore");
+        murder_mysteryCommands.put("Classic", "murder_classic");
+        murder_mysteryCommands.put("Assassins", "murder_assassins");
+        murder_mysteryCommands.put("Hardcore", "murder_hardcore");
     }
-    public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
+    public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murder_mysteryCommands);
     /* -------------------------------- *
      *            Prototype             *
      * -------------------------------- */
@@ -119,17 +130,6 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
-
-    /* -------------------------------- *
-     *            Blitz SG              *
-     * -------------------------------- */
-    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<>();
-    static {
-        survival_gamesCommands.put("Solo", "blitz_solo_normal");
-        survival_gamesCommands.put("Teams", "blitz_teams_normal");
-        survival_gamesCommands.put("No Kits", "blitz_solo_nokits");
-    }
-    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
 
     /* -------------------------------- *
      *            SkyClash              *
