@@ -6,7 +6,10 @@ import java.lang.reflect.Method;
 /**
  * Class for reflection (getting class values at runtime)
  */
-public abstract class ReflectUtil {
+public class ReflectUtil {
+
+    private ReflectUtil() {}
+
     /**
      * Get the field of a class reflectively at runtime.
      * @param theClass The class to get the field from
