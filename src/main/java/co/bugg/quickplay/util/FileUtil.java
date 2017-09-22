@@ -5,7 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public abstract class FileUtil {
+public class FileUtil {
+
+    private FileUtil() {}
+
     /**
      * Create a directory with the path passed
      * @param dir Path of the directory

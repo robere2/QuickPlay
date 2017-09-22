@@ -11,7 +11,10 @@ import java.lang.reflect.Method;
 /**
  * Misc utilities relating to Minecraft itself
  */
-public abstract class GameUtil {
+public class GameUtil {
+
+    private GameUtil() {}
+
     /**
      * Get the version of Minecraft this client is using
      * @return String version number
@@ -71,6 +74,7 @@ public abstract class GameUtil {
      * Get the IP of the current server the player is on
      * @return IP, N/A if single player, or null if not on server
      */
+    @SuppressWarnings("ConstantConditions")
     public static String getIP() {
         boolean singleplayer = Minecraft.getMinecraft().isSingleplayer();
         String ip;
