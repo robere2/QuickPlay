@@ -69,7 +69,7 @@ public class Icons {
         classicCommands.put("Quake Solo", "quake_solo");
         classicCommands.put("Quake Teams", "quake_teams");
     }
-    public static final Game LEGACY = new Game("Classic",1,128, 0, "classic", null);
+    public static final Game LEGACY = new Game("Classic",1,128, 0, "classic", classicCommands);
     /* -------------------------------- *
      *           Crazy Walls            *
      * -------------------------------- */
