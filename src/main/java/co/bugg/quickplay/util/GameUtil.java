@@ -11,9 +11,9 @@ import java.lang.reflect.Method;
 /**
  * Misc utilities relating to Minecraft itself
  */
-public class GameUtil {
+public final class GameUtil {
 
-    private GameUtil() {}
+    private GameUtil() { throw new AssertionError(); }
 
     /**
      * Get the version of Minecraft this client is using

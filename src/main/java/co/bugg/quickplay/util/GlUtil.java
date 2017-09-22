@@ -5,9 +5,9 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 /**
  * OpenGL Utilities
  */
-public class GlUtil {
+public final class GlUtil {
 
-    private GlUtil() {}
+    private GlUtil() { throw new AssertionError(); }
 
     /**
      * Reset
