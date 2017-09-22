@@ -51,6 +51,17 @@ public class Icons {
     public static final Game BEDWARS = new Game("Bed Wars",1, 64,  0, "bedwars", bedwarsCommands);
 
     /* -------------------------------- *
+     *            Blitz SG              *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<>();
+    static {
+        survival_gamesCommands.put("Solo", "blitz_solo_normal");
+        survival_gamesCommands.put("Teams", "blitz_teams_normal");
+        survival_gamesCommands.put("No Kits", "blitz_solo_nokits");
+    }
+    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
+
+    /* -------------------------------- *
      *             Classic              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
@@ -123,17 +134,6 @@ public class Icons {
         prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
-
-    /* -------------------------------- *
-     *            Blitz SG              *
-     * -------------------------------- */
-    public static LinkedHashMap<String, String> survival_gamesCommands = new LinkedHashMap<>();
-    static {
-        survival_gamesCommands.put("Solo", "blitz_solo_normal");
-        survival_gamesCommands.put("Teams", "blitz_teams_normal");
-        survival_gamesCommands.put("No Kits", "blitz_solo_nokits");
-    }
-    public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
 
     /* -------------------------------- *
      *            SkyClash              *
