@@ -6,9 +6,9 @@ import java.lang.reflect.Method;
 /**
  * Class for reflection (getting class values at runtime)
  */
-public class ReflectUtil {
+public final class ReflectUtil {
 
-    private ReflectUtil() {}
+    private ReflectUtil() { throw new AssertionError(); }
 
     /**
      * Get the field of a class reflectively at runtime.
