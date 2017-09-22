@@ -5,6 +5,7 @@ import co.bugg.quickplay.Icons;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.gui.button.StarButton;
+import co.bugg.quickplay.util.GameUtil;
 import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -13,7 +14,9 @@ import net.minecraft.command.ICommandSender;
 import net.minecraftforge.client.ClientCommandHandler;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +60,17 @@ public class GameGui extends GuiScreen {
         GlUtil.resetGlColor();
 
         super.drawScreen(mouseX, mouseY, partialTicks);
+
+        for (GuiButton button : buttonList) {
+            // If the button ends with ellipsis
+            if(button.displayString.matches("^.*\\.\\.\\.$")) {
+                if(mouseX > button.x && mouseX < button.x + button.width && mouseY > button.y && mouseY < button.y + button.height) {
+                    List<String> hoverText = new ArrayList<>();
+                    hoverText.add(buttons.get(button.id));
+                    drawHoveringText(hoverText, mouseX, mouseY);
+                }
+            }
+        }
     }
 
     /**
@@ -149,7 +163,7 @@ public class GameGui extends GuiScreen {
                     buttonY += (defaultButtonHeight + buttonSpacing);
                 }
 
-                buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, entry.getKey()));
+                buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getButtonTextWithEllipsis(buttonWidth, entry.getKey())));
                 // Register the button's ID
                 buttons.put(buttonId, entry.getKey());
                 buttonId++;
