@@ -258,12 +258,21 @@ public class MainGui extends GuiScreen {
      * @return int of how many icons are in the row
      */
     public int getIconCountInRow(int row, HashMap<String, Integer> grid) {
-        // If not on the last row
-        if(grid.get("rows") > row) {
-            return grid.get("columns");
+
+        int columnCount = grid.get("columns");
+        int leftoverIcons = iconCount % columnCount;
+
+        if(leftoverIcons == 0) {
+            // All rows are full, there are no rows that have missing icons
+            return columnCount;
         } else {
-            int iconModulus = iconCount % grid.get("columns");
-            return (iconModulus == 0) ? iconCount : iconModulus;
+            // The last row contains an uneven number of icons
+            // If not on the last row
+            if(grid.get("rows") > row) {
+                return columnCount;
+            } else {
+                return leftoverIcons;
+            }
         }
     }
 
