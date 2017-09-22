@@ -88,13 +88,13 @@ public class Icons {
     /* -------------------------------- *
      *         Murder Mystery           *
      * -------------------------------- */
-    public static LinkedHashMap<String, String> murderMysteryCommands = new LinkedHashMap<>();
+    public static LinkedHashMap<String, String> murder_mysteryCommands = new LinkedHashMap<>();
     static {
-        murderMysteryCommands.put("Classic", "murder_classic");
-        murderMysteryCommands.put("Assassins", "murder_assassins");
-        murderMysteryCommands.put("Hardcore", "murder_hardcore");
+        murder_mysteryCommands.put("Classic", "murder_classic");
+        murder_mysteryCommands.put("Assassins", "murder_assassins");
+        murder_mysteryCommands.put("Hardcore", "murder_hardcore");
     }
-    public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murderMysteryCommands);
+    public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murder_mysteryCommands);
 
     /* -------------------------------- *
      *            Prototype             *
