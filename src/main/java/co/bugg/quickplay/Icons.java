@@ -132,8 +132,6 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (Normal)", "prototype_zombies_endless_normal");
         prototypeCommands.put("Zombies - Endless (Hard)", "prototype_zombies_endless_hard");
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
-
-        prototypeCommands.put("Murder Mystery", "prototype_murder_mystery");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
