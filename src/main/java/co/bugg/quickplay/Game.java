@@ -35,7 +35,7 @@ public class Game implements Serializable {
      */
     public String lobbyButtonString = new TextComponentTranslation("quickplay.buttons.lobby").getFormattedText();
     /**
-     * HashMap containing all /play commands
+     * HashMap containing all /play commands and their titles
      */
     public HashMap<String, String> commands;
 

@@ -5,7 +5,9 @@ import co.bugg.quickplay.util.QuickPlayColor;
 import org.lwjgl.input.Keyboard;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class ConfigSettings implements Serializable {
 
@@ -44,4 +46,10 @@ public class ConfigSettings implements Serializable {
      *******************/
 
     public Game favoriteGame = null;
+
+    /*******************
+     *   Party Mode    *
+     *******************/
+
+    public List<String> enabledPartyCommands = new ArrayList<>();
 }

@@ -25,7 +25,7 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> mainCommands = new LinkedHashMap<>();
     static {
-        mainCommands.put("Limbo", "/qplimbo");
+        mainCommands.put("Limbo", "/qp limbo");
     }
     public static final Game MAIN = new Game("Main Lobby",2,0,0,  "main", mainCommands);
     /* -------------------------------- *
@@ -136,6 +136,12 @@ public class Icons {
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
     /* -------------------------------- *
+     *            Party Mode            *
+     * -------------------------------- */
+
+    public static final Game PARTY = new Game("Party Mode",2,128, 0, null, null);
+
+    /* -------------------------------- *
      *            SkyClash              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> skyclashCommands = new LinkedHashMap<>();
@@ -175,7 +181,7 @@ public class Icons {
     public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<>();
     static {
         super_smashCommands.put("Solo", "super_smash_solo_normal");
-        super_smashCommands.put("2v2", " super_smash_2v2_normal");
+        super_smashCommands.put("2v2", "super_smash_2v2_normal");
         super_smashCommands.put("2v2v2", "super_smash_teams_normal");
         super_smashCommands.put("Friends", "super_smash_friends_normal");
     }
@@ -232,15 +238,16 @@ public class Icons {
         list.add(WALLS3);
 
         list.add(MURDER_MYSTERY);
+        list.add(PARTY);
         list.add(PROTOTYPE);
         list.add(SKYCLASH);
-        list.add(SKYWARS);
 
+        list.add(SKYWARS);
         list.add(SUPER_SMASH);
         list.add(SPEED_UHC);
         list.add(TNTGAMES);
-        list.add(UHC);
 
+        list.add(UHC);
         list.add(BATTLEGROUND);
     }
 
@@ -264,5 +271,19 @@ public class Icons {
     private static void registerFile(int id, String name) {
         System.out.println("Registering file: " + name);
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));
+    }
+
+    /**
+     * Get the Game object with the provided name in Icons.list
+     * @param title Title of the game to search for
+     * @return Game, or null if non-existent
+     */
+    public static Game getGame(String title) {
+        for(Game game : list) {
+            if(game.name.equalsIgnoreCase(title)) {
+                return game;
+            }
+        }
+        return null;
     }
 }
