@@ -6,7 +6,6 @@ import co.bugg.quickplay.command.QpSubCommand;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 
 public class PartyCommand extends QpSubCommand {
@@ -25,7 +24,7 @@ public class PartyCommand extends QpSubCommand {
                 sender.addChatMessage(new ChatComponentTranslation("quickplay.party.no_games"));
             }
         } else {
-            sender.addChatMessage(new ChatComponentText(new ChatComponentTranslation("quickplay.command.not_on_hypixel").getFormattedText()));
+            sender.addChatMessage(new ChatComponentTranslation("quickplay.command.not_on_hypixel"));
         }
     }
 }
