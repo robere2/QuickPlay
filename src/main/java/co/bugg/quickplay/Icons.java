@@ -136,6 +136,12 @@ public class Icons {
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
     /* -------------------------------- *
+     *            Party Mode            *
+     * -------------------------------- */
+
+    public static final Game PARTY = new Game("Party Mode",2,128, 0, null, null);
+
+    /* -------------------------------- *
      *            SkyClash              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> skyclashCommands = new LinkedHashMap<>();
@@ -233,14 +239,15 @@ public class Icons {
 
         list.add(MURDER_MYSTERY);
         list.add(PROTOTYPE);
+        list.add(PARTY);
         list.add(SKYCLASH);
-        list.add(SKYWARS);
 
+        list.add(SKYWARS);
         list.add(SUPER_SMASH);
         list.add(SPEED_UHC);
         list.add(TNTGAMES);
-        list.add(UHC);
 
+        list.add(UHC);
         list.add(BATTLEGROUND);
     }
 
