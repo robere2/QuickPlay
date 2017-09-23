@@ -25,7 +25,7 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> mainCommands = new LinkedHashMap<>();
     static {
-        mainCommands.put("Limbo", "/qplimbo");
+        mainCommands.put("Limbo", "/qp limbo");
     }
     public static final Game MAIN = new Game("Main Lobby",2,0,0,  "main", mainCommands);
     /* -------------------------------- *
