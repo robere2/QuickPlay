@@ -238,8 +238,8 @@ public class Icons {
         list.add(WALLS3);
 
         list.add(MURDER_MYSTERY);
-        list.add(PROTOTYPE);
         list.add(PARTY);
+        list.add(PROTOTYPE);
         list.add(SKYCLASH);
 
         list.add(SKYWARS);
