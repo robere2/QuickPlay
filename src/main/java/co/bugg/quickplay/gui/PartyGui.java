@@ -9,10 +9,7 @@ import co.bugg.quickplay.util.GlUtil;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -179,14 +176,17 @@ public class PartyGui extends GuiScreen {
 
             // If the button is the play button
             case 1:
-                mc.thePlayer.addChatMessage(new ChatComponentText("Picking random gamemode...").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GREEN)));
-                sendChatMessage("/play " + PartyUtil.getRandomPlayCommand());
+                if(QuickPlay.configManager.getConfig().enabledPartyCommands.size() > 0) {
+                    mc.thePlayer.addChatMessage(new ChatComponentTranslation("quickplay.party.joining"));
+                    sendChatMessage("/play " + PartyUtil.getRandomPlayCommand());
+                } else {
+                    mc.thePlayer.addChatMessage(new ChatComponentTranslation("quickplay.party.no_games"));
+                }
                 MainGui.closeGui();
                 break;
 
-            // Handle like a normal button
+            // Handle like a game button
             default:
-                System.out.println("User clicked on " + button.displayString + " button!");
                 mc.displayGuiScreen(new GameGui(Icons.getGame(buttons.get(button.id)), cameFromPage, true));
                 break;
         }

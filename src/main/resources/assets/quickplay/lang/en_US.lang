@@ -25,5 +25,7 @@ quickplay.controls.open=Open Main GUI
 quickplay.controls.favorite=Open Favorite
 
 quickplay.party.start=Start
+quickplay.party.no_games=§cParty Mode has not been set up! Please select at least one game in the Party Mode menu.
+quickplay.party.joining=§aJoining a random game...
 
 key.categories.quickplay=QuickPlay

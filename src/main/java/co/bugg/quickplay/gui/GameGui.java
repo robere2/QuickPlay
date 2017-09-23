@@ -218,7 +218,7 @@ public class GameGui extends GuiScreen {
                     break;
                 default:
                     String command = game.commands.get(buttons.get(button.id));
-                    QuickPlay.configManager.togglePartyCommand(command, ((GuiCheckBox) button).enabled);
+                    QuickPlay.configManager.togglePartyCommand(command, ((GuiCheckBox) button).isChecked());
                     break;
             }
         } else {
