@@ -271,6 +271,11 @@ public class Icons {
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));
     }
 
+    /**
+     * Get the Game object with the provided name in Icons.list
+     * @param title Title of the game to search for
+     * @return Game, or null if non-existent
+     */
     public static Game getGame(String title) {
         for(Game game : list) {
             if(game.name.equalsIgnoreCase(title)) {

@@ -4,7 +4,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -36,7 +36,7 @@ public class QpColorCommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        sender.addChatMessage(new ChatComponentText("This command is deprecated. Please use /qp color instead.").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+        sender.addChatMessage(new ChatComponentTranslation("quickplay.command.deprecated").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     @Override

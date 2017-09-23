@@ -20,6 +20,7 @@ quickplay.command.help.title=§7QuickPlay Commands:
 quickplay.command.not_on_hypixel=§cYou need to be on mc.hypixel.net to use this command!
 quickplay.command.unknown=§cUnknown command!
 quickplay.command.separator=-----------------------------------------------------
+quickplay.command.deprecated=This command is deprecated. Please use %s instead.
 
 quickplay.controls.open=Open Main GUI
 quickplay.controls.favorite=Open Favorite
