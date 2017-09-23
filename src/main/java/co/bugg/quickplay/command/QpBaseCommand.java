@@ -7,7 +7,9 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -55,7 +57,7 @@ public class QpBaseCommand implements ICommand {
                 command.run(sender, args);
             } else {
                 // Command not found
-                sender.addChatMessage(new TextComponentTranslation("quickplay.command.unknown"));
+                sender.addChatMessage(new TextComponentTranslation("quickplay.command.unknown").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         } else {
             // No args provided, run the help command if possible
@@ -63,7 +65,7 @@ public class QpBaseCommand implements ICommand {
             if(helpCommand != null) {
                 helpCommand.run(sender, args);
             } else {
-                sender.addChatMessage(new TextComponentTranslation("quickplay.command.unknown"));
+                sender.addChatMessage(new TextComponentTranslation("quickplay.command.unknown").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         }
     }

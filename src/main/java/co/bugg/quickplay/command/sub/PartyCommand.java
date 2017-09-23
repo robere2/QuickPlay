@@ -6,7 +6,9 @@ import co.bugg.quickplay.command.QpSubCommand;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 public class PartyCommand extends QpSubCommand {
 
@@ -18,13 +20,13 @@ public class PartyCommand extends QpSubCommand {
     public void run(ICommandSender sender, String[] args) {
         if(QuickPlay.onHypixel) {
             if(QuickPlay.configManager.getConfig().enabledPartyCommands.size() > 0) {
-                sender.addChatMessage(new TextComponentTranslation("quickplay.party.joining"));
+                sender.addChatMessage(new TextComponentTranslation("quickplay.party.joining").setStyle(new Style().setColor(TextFormatting.GREEN)));
                 ((EntityPlayerSP) sender).sendChatMessage("/play " + PartyUtil.getRandomPlayCommand());
             } else {
-                sender.addChatMessage(new TextComponentTranslation("quickplay.party.no_games"));
+                sender.addChatMessage(new TextComponentTranslation("quickplay.party.no_games").setStyle(new Style().setColor(TextFormatting.RED)));
             }
         } else {
-            sender.addChatMessage(new TextComponentTranslation("quickplay.command.not_on_hypixel"));
+            sender.addChatMessage(new TextComponentTranslation("quickplay.command.not_on_hypixel").setStyle(new Style().setColor(TextFormatting.RED)));
         }
     }
 }
