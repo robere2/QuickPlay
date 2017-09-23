@@ -64,7 +64,7 @@ public class GameGui extends GuiScreen {
         drawDefaultBackground();
         mc.renderEngine.bindTexture(QuickPlay.icons.get(this.game.fileID));
         // Draw this games icon at the top
-        drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (float) (height * 0.05), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
+        drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (height * 0.05f), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
 
         // Draw the credits
         drawString(fontRendererObj, QuickPlay.credit, width / 2 - fontRendererObj.getStringWidth(QuickPlay.credit) / 2, height - 10, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
