@@ -54,8 +54,13 @@ public class QpBaseCommand implements ICommand {
                 sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
             }
         } else {
-            // No args provided, run the help command
-            getCommand("help").run(sender, args);
+            // No args provided, run the help command if possible
+            QpSubCommand helpCommand = getCommand("help");
+            if(helpCommand != null) {
+                helpCommand.run(sender, args);
+            } else {
+                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
+            }
         }
     }
 
