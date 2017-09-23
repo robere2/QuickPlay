@@ -6,6 +6,8 @@ import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class QpBaseCommand implements ICommand {
                 command.run(sender, args);
             } else {
                 // Command not found
-                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
+                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             }
         } else {
             // No args provided, run the help command if possible
@@ -59,7 +61,7 @@ public class QpBaseCommand implements ICommand {
             if(helpCommand != null) {
                 helpCommand.run(sender, args);
             } else {
-                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
+                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             }
         }
     }

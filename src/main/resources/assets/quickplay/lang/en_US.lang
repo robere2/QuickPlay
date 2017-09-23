@@ -13,12 +13,12 @@ quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
 
-quickplay.command.destroyconfig.config_reset=§aConfiguration reset! You may have to restart your game.
-quickplay.command.destroyconfig.config_reset_confirm=§cAre you sure you want to reset your %s§c configuration? Type "%s§c" if so.
-quickplay.command.help.title=§7QuickPlay Commands:
+quickplay.command.destroyconfig.config_reset=Configuration reset! You may have to restart your game.
+quickplay.command.destroyconfig.config_reset_confirm=Are you sure you want to reset your %s configuration? Type "%s" if so.
+quickplay.command.help.title=QuickPlay Commands:
 
-quickplay.command.not_on_hypixel=§cYou need to be on mc.hypixel.net to use this command!
-quickplay.command.unknown=§cUnknown command!
+quickplay.command.not_on_hypixel=You need to be on mc.hypixel.net to use this command!
+quickplay.command.unknown=Unknown command!
 quickplay.command.separator=-----------------------------------------------------
 quickplay.command.deprecated=This command is deprecated. Please use %s instead.
 
@@ -26,7 +26,7 @@ quickplay.controls.open=Open Main GUI
 quickplay.controls.favorite=Open Favorite
 
 quickplay.party.start=Start
-quickplay.party.no_games=§cParty Mode has not been set up! Please select at least one game in the Party Mode menu.
-quickplay.party.joining=§aJoining a random game...
+quickplay.party.no_games=Party Mode has not been set up! Please select at least one game in the Party Mode menu.
+quickplay.party.joining=Joining a random game...
 
 key.categories.quickplay=QuickPlay

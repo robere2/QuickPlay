@@ -6,6 +6,8 @@ import co.bugg.quickplay.command.QpSubCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumChatFormatting;
 
 public class LimboCommand extends QpSubCommand {
 
@@ -20,7 +22,7 @@ public class LimboCommand extends QpSubCommand {
             // sending them to limbo.
             Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
         } else {
-            sender.addChatMessage(new ChatComponentTranslation("quickplay.command.not_on_hypixel"));
+            sender.addChatMessage(new ChatComponentTranslation("quickplay.command.not_on_hypixel").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
         }
     }
 }

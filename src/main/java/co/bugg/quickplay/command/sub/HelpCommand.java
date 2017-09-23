@@ -23,7 +23,7 @@ public class HelpCommand extends QpSubCommand {
 
             helpMessage.appendSibling(separator);
             helpMessage.appendText("\n");
-            helpMessage.appendSibling(new ChatComponentTranslation("quickplay.command.help.title"));
+            helpMessage.appendSibling(new ChatComponentTranslation("quickplay.command.help.title").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
             helpMessage.appendText("\n");
 
             for (QpSubCommand command : this.getParent().subCommands) {
@@ -36,7 +36,7 @@ public class HelpCommand extends QpSubCommand {
         } else {
             QpSubCommand command = getParent().getCommand(args[1]);
             if(command == null) {
-                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
+                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             } else {
                 sender.addChatMessage(command.getFormattedUsage());
             }
