@@ -53,10 +53,6 @@ public class GameGui extends GuiScreen {
         this.cameFromPage = cameFromPage;
     }
 
-    public GameGui(Game game, boolean partyMode) {
-        this.game = game;
-        this.partyMode = partyMode;
-    }
     public GameGui(Game game, int cameFromPage, boolean partyMode) {
         this.game = game;
         this.cameFromPage = cameFromPage;
