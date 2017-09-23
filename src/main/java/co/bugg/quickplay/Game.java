@@ -2,7 +2,6 @@ package co.bugg.quickplay;
 
 import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class Game implements Serializable {
      */
     public String lobbyButtonString = new ChatComponentTranslation("quickplay.buttons.lobby").getFormattedText();
     /**
-     * HashMap containing all /play commands
+     * HashMap containing all /play commands and their titles
      */
     public HashMap<String, String> commands;
 

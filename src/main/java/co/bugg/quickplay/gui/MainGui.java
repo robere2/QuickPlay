@@ -82,6 +82,14 @@ public class MainGui extends GuiScreen {
      * Whether a forward button currently is drawn on the screen
      */
     boolean forwardButtonExists = false;
+    /**
+     * Button ID for the Party Mode icon
+     */
+    int partyModeId;
+    /**
+     * Whether the party mode button is currently drawn on the screen
+     */
+    boolean partyModeButtonExists = false;
 
     @Override
     public void initGui() {
@@ -137,6 +145,10 @@ public class MainGui extends GuiScreen {
             // A map of the x, y position to put the button at
             HashMap<String, Integer> pos = getPos(currentColumn, currentRow, grid);
 
+            if(entry.name.equalsIgnoreCase("Party Mode")) {
+                partyModeId = buttonId;
+                partyModeButtonExists = true;
+            }
             buttonList.add(entry.getButton(buttonId, pos.get("x"), pos.get("y")));
             buttonId++;
 
@@ -285,6 +297,10 @@ public class MainGui extends GuiScreen {
         // forward button pressed
         } else if(forwardButtonExists && button.id == forwardButtonId) {
             Minecraft.getMinecraft().displayGuiScreen(new MainGui(++pageNumber));
+
+        // Party Mode icon pressed
+        } else if(partyModeButtonExists && button.id == partyModeId) {
+            Minecraft.getMinecraft().displayGuiScreen(new PartyGui(pageNumber));
 
         // (presumably) normal game button pressed
         } else {

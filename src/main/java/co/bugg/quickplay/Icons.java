@@ -134,6 +134,12 @@ public class Icons {
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
     /* -------------------------------- *
+     *            Party Mode            *
+     * -------------------------------- */
+
+    public static final Game PARTY = new Game("Party Mode",2,128, 0, null, null);
+
+    /* -------------------------------- *
      *            SkyClash              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> skyclashCommands = new LinkedHashMap<>();
@@ -230,6 +236,7 @@ public class Icons {
         list.add(WALLS3);
 
         list.add(MURDER_MYSTERY);
+        list.add(PARTY);
         list.add(PROTOTYPE);
         list.add(SKYCLASH);
         list.add(SKYWARS);
@@ -262,5 +269,14 @@ public class Icons {
     private static void registerFile(int id, String name) {
         System.out.println("Registering file: " + name);
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));
+    }
+
+    public static Game getGame(String title) {
+        for(Game game : list) {
+            if(game.name.equalsIgnoreCase(title)) {
+                return game;
+            }
+        }
+        return null;
     }
 }

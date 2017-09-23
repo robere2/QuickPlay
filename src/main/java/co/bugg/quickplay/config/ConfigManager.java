@@ -109,4 +109,15 @@ public class ConfigManager {
         config = new ConfigSettings();
         saveConfig();
     }
+
+    public void togglePartyCommand(String command, boolean enabled) {
+        // Only change the value if it's not already set correctly
+        if(enabled && !getConfig().enabledPartyCommands.contains(command)) {
+            getConfig().enabledPartyCommands.add(command);
+        } else if(!enabled && getConfig().enabledPartyCommands.contains(command)) {
+            getConfig().enabledPartyCommands.remove(command);
+        }
+
+        saveConfig();
+    }
 }

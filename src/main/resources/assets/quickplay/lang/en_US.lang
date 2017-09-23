@@ -24,4 +24,6 @@ quickplay.command.separator=----------------------------------------------------
 quickplay.controls.open=Open Main GUI
 quickplay.controls.favorite=Open Favorite
 
+quickplay.party.start=Start
+
 key.categories.quickplay=QuickPlay
