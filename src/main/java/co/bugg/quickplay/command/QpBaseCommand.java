@@ -66,7 +66,13 @@ public class QpBaseCommand implements ICommand {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
-        return new ArrayList<>();
+        List<String> tabCompletions = new ArrayList<>();
+
+        for(QpSubCommand subCommand : this.subCommands) {
+            tabCompletions.add(subCommand.getName());
+        }
+
+        return tabCompletions;
     }
 
     @Override
