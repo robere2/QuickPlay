@@ -175,7 +175,7 @@ public class Icons {
     public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<>();
     static {
         super_smashCommands.put("Solo", "super_smash_solo_normal");
-        super_smashCommands.put("2v2", " super_smash_2v2_normal");
+        super_smashCommands.put("2v2", "super_smash_2v2_normal");
         super_smashCommands.put("2v2v2", "super_smash_teams_normal");
         super_smashCommands.put("Friends", "super_smash_friends_normal");
     }
@@ -264,5 +264,19 @@ public class Icons {
     private static void registerFile(int id, String name) {
         System.out.println("Registering file: " + name);
         QuickPlay.icons.put(id, new ResourceLocation(Reference.MOD_ID, "textures/gui/button/" + name));
+    }
+
+    /**
+     * Get the Game object with the provided name in Icons.list
+     * @param title Title of the game to search for
+     * @return Game, or null if non-existent
+     */
+    public static Game getGame(String title) {
+        for(Game game : list) {
+            if(game.name.equalsIgnoreCase(title)) {
+                return game;
+            }
+        }
+        return null;
     }
 }

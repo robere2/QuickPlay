@@ -12,6 +12,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.client.ClientCommandHandler;
+import net.minecraftforge.fml.client.config.GuiCheckBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class GameGui extends GuiScreen {
      * Which game this GUI screen instance is for
      */
     Game game;
+    /**
+     * Whether or not this GUI is currently for customizing Party Mode settings
+     */
+    boolean partyMode = false;
     /**
      * HashMap mapping join button IDs to which join button they are
      */
@@ -48,12 +53,18 @@ public class GameGui extends GuiScreen {
         this.cameFromPage = cameFromPage;
     }
 
+    public GameGui(Game game, int cameFromPage, boolean partyMode) {
+        this.game = game;
+        this.cameFromPage = cameFromPage;
+        this.partyMode = partyMode;
+    }
+
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         mc.renderEngine.bindTexture(QuickPlay.icons.get(this.game.fileID));
         // Draw this games icon at the top
-        drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (float) (height * 0.05), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
+        drawTexturedModalRect((width / 2 - Icons.iconWidth / 2), (height * 0.05f), this.game.xStart, this.game.yStart, Icons.iconWidth, Icons.iconHeight);
 
         // Draw the credits
         drawString(fontRenderer, QuickPlay.credit, width / 2 - fontRenderer.getStringWidth(QuickPlay.credit) / 2, height - 10, QuickPlay.configManager.getConfig().colors.get("primary").getRGB());
@@ -138,16 +149,22 @@ public class GameGui extends GuiScreen {
             starOn = false;
         }
 
-        // Create the star button
-        buttonList.add(new StarButton(buttonId, (width / 2) + (Icons.iconWidth / 2 + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - StarButton.height / 2, starOn));
-        buttons.put(buttonId, null);
-        buttonId++;
+        // Star button should only be added if not party mode
+        if(!partyMode) {
+            // Create the star button
+            buttonList.add(new StarButton(buttonId, (width / 2) + (Icons.iconWidth / 2 + 5), (int) (height * 0.05) + Icons.iconHeight / 2 - StarButton.height / 2, starOn));
+            buttons.put(buttonId, null);
+            buttonId++;
+        }
 
-        // Create the lobby button
-        buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, game.lobbyButtonString));
-        // Register the button's ID
-        buttons.put(buttonId, null);
-        buttonId++;
+        // Lobby button should only be added if not party mode
+        if(!partyMode) {
+            // Create the lobby button
+            buttonList.add(new GuiButton(buttonId, lobbyX, lobbyY, defaultButtonWidth, defaultButtonHeight, game.lobbyButtonString));
+            // Register the button's ID
+            buttons.put(buttonId, null);
+            buttonId++;
+        }
 
         // if any play commands exist
         if(game.commands != null) {
@@ -163,7 +180,22 @@ public class GameGui extends GuiScreen {
                     buttonY += (defaultButtonHeight + buttonSpacing);
                 }
 
-                buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getButtonTextWithEllipsis(buttonWidth, entry.getKey())));
+                String shortenedString = GameUtil.getButtonTextWithEllipsis(buttonWidth, entry.getKey());
+
+                // Whether check boxes or buttons should be displayed
+                if(partyMode) {
+                    // How wide each check box is in pixels
+                    // Useful in (approximately) centering checkboxes
+                    int checkBoxWidth = 13;
+
+                    // Move the icon over a little bit, centering it in it's dedicated space
+                    buttonX = buttonX + (buttonWidth / 2) - ((checkBoxWidth + fontRenderer.getStringWidth(shortenedString)) / 2);
+
+                    buttonList.add(new GuiCheckBox(buttonId, buttonX, buttonY, shortenedString, QuickPlay.configManager.getConfig().enabledPartyCommands.contains(game.commands.get(entry.getKey()))));
+
+                } else {
+                    buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, shortenedString));
+                }
                 // Register the button's ID
                 buttons.put(buttonId, entry.getKey());
                 buttonId++;
@@ -178,68 +210,90 @@ public class GameGui extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
 
-        switch(button.id) {
-            // If the button is the back button
-            case 0:
-                mc.displayGuiScreen(new MainGui(cameFromPage));
-                break;
+        if(partyMode) {
+            switch(button.id) {
+                // If the button is the back button
+                case 0:
+                    mc.displayGuiScreen(new PartyGui(cameFromPage));
+                    break;
+                default:
+                    String command = game.commands.get(buttons.get(button.id));
+                    QuickPlay.configManager.togglePartyCommand(command, ((GuiCheckBox) button).enabled);
+                    break;
+            }
+        } else {
+            switch (button.id) {
+                // If the button is the back button
+                case 0:
+                    mc.displayGuiScreen(new MainGui(cameFromPage));
+                    break;
 
-            // If the button is the star button
-            case 1:
-                StarButton starButton = (StarButton) button;
-                starButton.on = !starButton.on;
+                // If the button is the star button
+                case 1:
+                    StarButton starButton = (StarButton) button;
+                    starButton.on = !starButton.on;
 
-                if(starButton.on) {
-                    QuickPlay.configManager.getConfig().favoriteGame = game;
-                } else {
-                    QuickPlay.configManager.getConfig().favoriteGame = null;
-                }
+                    if (starButton.on) {
+                        QuickPlay.configManager.getConfig().favoriteGame = game;
+                    } else {
+                        QuickPlay.configManager.getConfig().favoriteGame = null;
+                    }
 
-                QuickPlay.configManager.saveConfig();
-                break;
+                    QuickPlay.configManager.saveConfig();
+                    break;
 
-            // If the button is the lobby button
-            case 2:
-                // If the lobby string is a command
-                if(game.lobbyName.startsWith("/")) {
-                    Minecraft.getMinecraft().player.sendChatMessage(game.lobbyName);
-                } else {
-                    Minecraft.getMinecraft().player.sendChatMessage("/lobby " + game.lobbyName);
-                }
-                MainGui.closeGui();
-                break;
+                // If the button is the lobby button
+                case 2:
+                    // If the lobby string is a command
+                    if (game.lobbyName.startsWith("/")) {
+                        Minecraft.getMinecraft().player.sendChatMessage(game.lobbyName);
+                    } else {
+                        Minecraft.getMinecraft().player.sendChatMessage("/lobby " + game.lobbyName);
+                    }
+                    MainGui.closeGui();
+                    break;
 
-            // Handle like a normal button
-            default:
-                String command = game.commands.get(buttons.get(button.id));
+                // Handle like a normal button
+                default:
+                    final String[] command = {game.commands.get(buttons.get(button.id))};
 
-                // If the game command is an actual command
-                if (command.startsWith("/")) {
+                    // If the game command is an actual command
+                    if (command[0].startsWith("/")) {
 
-                    final boolean[] clientCommand = {false};
-                    // Check whether command is a mod command. If so then execute its client command
-                    // instead of the command on the server
-                    ClientCommandHandler.instance.getCommands().forEach((key, value) -> {
-                        // Delete the slash from the beginning of the string
-                        if(new StringBuilder(command).deleteCharAt(0).toString().equals(key)) {
-                            clientCommand[0] = true;
-                        }
-                    });
+                        final boolean[] clientCommand = {false};
+                        // Check whether command is a mod command. If so then execute its client command
+                        // instead of the command on the server
+                        ClientCommandHandler.instance.getCommands().forEach((key, value) -> {
+                            String parsedCommand = command[0];
+                            StringBuilder builder = new StringBuilder(parsedCommand);
 
-                    // If the command is a client command, then execute it as a client command
-                    if(clientCommand[0]) {
-                        ICommandSender sender = Minecraft.getMinecraft().player.getCommandSenderEntity();
-                        if(sender != null) {
-                            ClientCommandHandler.instance.executeCommand(sender, command);
+                            // Delete the slash from the beginning of the string
+                            builder.deleteCharAt(0);
+                            // Also delete any arguments
+                            if (command[0].contains(" ")) {
+                                builder.delete(command[0].indexOf(" ") - 1, command[0].length() - 1);
+                            }
+
+                            if (builder.toString().equals(key)) {
+                                clientCommand[0] = true;
+                            }
+                        });
+
+                        // If the command is a client command, then execute it as a client command
+                        if (clientCommand[0]) {
+                            ICommandSender sender = Minecraft.getMinecraft().player.getCommandSenderEntity();
+                            if (sender != null) {
+                                ClientCommandHandler.instance.executeCommand(sender, command[0].substring(1, command[0].length()));
+                            }
+                        } else {
+                            Minecraft.getMinecraft().player.sendChatMessage(command[0]);
                         }
                     } else {
-                        Minecraft.getMinecraft().player.sendChatMessage(command);
+                        Minecraft.getMinecraft().player.sendChatMessage("/play " + command[0]);
                     }
-                } else {
-                    Minecraft.getMinecraft().player.sendChatMessage("/play " + command);
-                }
-                MainGui.closeGui();
-                break;
+                    MainGui.closeGui();
+                    break;
+            }
         }
 
         super.actionPerformed(button);

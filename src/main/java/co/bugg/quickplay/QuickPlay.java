@@ -1,9 +1,7 @@
 package co.bugg.quickplay;
 
+import co.bugg.quickplay.command.QpBaseCommand;
 import co.bugg.quickplay.command.QpColorCommand;
-import co.bugg.quickplay.command.QpDebugCommand;
-import co.bugg.quickplay.command.QpDestroyConfig;
-import co.bugg.quickplay.command.QpLimbo;
 import co.bugg.quickplay.config.ConfigManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.util.ResourceLocation;
@@ -57,8 +55,6 @@ public class QuickPlay {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         ClientCommandHandler.instance.registerCommand(new QpColorCommand());
-        ClientCommandHandler.instance.registerCommand(new QpDebugCommand());
-        ClientCommandHandler.instance.registerCommand(new QpDestroyConfig());
-        ClientCommandHandler.instance.registerCommand(new QpLimbo());
+        ClientCommandHandler.instance.registerCommand(new QpBaseCommand());
     }
 }
