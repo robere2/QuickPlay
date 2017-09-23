@@ -36,7 +36,7 @@ public class QpColorCommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-        sender.addChatMessage(new ChatComponentTranslation("quickplay.command.deprecated").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
+        sender.addChatMessage(new ChatComponentTranslation("quickplay.command.deprecated","/qp color").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
     }
 
     @Override
