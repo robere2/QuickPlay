@@ -9,7 +9,9 @@ import co.bugg.quickplay.util.GlUtil;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -177,10 +179,10 @@ public class PartyGui extends GuiScreen {
             // If the button is the play button
             case 1:
                 if(QuickPlay.configManager.getConfig().enabledPartyCommands.size() > 0) {
-                    mc.player.sendMessage(new TextComponentTranslation("quickplay.party.joining"));
+                    mc.player.sendMessage(new TextComponentTranslation("quickplay.party.joining").setStyle(new Style().setColor(TextFormatting.GREEN)));
                     sendChatMessage("/play " + PartyUtil.getRandomPlayCommand());
                 } else {
-                    mc.player.sendMessage(new TextComponentTranslation("quickplay.party.no_games"));
+                    mc.player.sendMessage(new TextComponentTranslation("quickplay.party.no_games").setStyle(new Style().setColor(TextFormatting.RED)));
                 }
                 MainGui.closeGui();
                 break;
