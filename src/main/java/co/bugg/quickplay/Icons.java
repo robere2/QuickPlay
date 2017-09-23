@@ -179,7 +179,7 @@ public class Icons {
     public static LinkedHashMap<String, String> super_smashCommands = new LinkedHashMap<>();
     static {
         super_smashCommands.put("Solo", "super_smash_solo_normal");
-        super_smashCommands.put("2v2", " super_smash_2v2_normal");
+        super_smashCommands.put("2v2", "super_smash_2v2_normal");
         super_smashCommands.put("2v2v2", "super_smash_teams_normal");
         super_smashCommands.put("Friends", "super_smash_friends_normal");
     }
