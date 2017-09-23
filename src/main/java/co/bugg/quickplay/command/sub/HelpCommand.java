@@ -34,7 +34,12 @@ public class HelpCommand extends QpSubCommand {
 
             sender.addChatMessage(helpMessage);
         } else {
-            sender.addChatMessage(getParent().getCommand(args[1]).getFormattedUsage());
+            QpSubCommand command = getParent().getCommand(args[1]);
+            if(command == null) {
+                sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown"));
+            } else {
+                sender.addChatMessage(command.getFormattedUsage());
+            }
         }
     }
 }
