@@ -20,7 +20,7 @@ public class LimboCommand extends QpSubCommand {
         if(QuickPlay.onHypixel) {
             // Sending this chat message will kick the player, therefore
             // sending them to limbo.
-            Minecraft.getMinecraft().thePlayer.sendChatMessage("§");
+            Minecraft.getMinecraft().thePlayer.sendChatMessage("/achat §");
         } else {
             sender.addChatMessage(new TextComponentTranslation("quickplay.command.not_on_hypixel").setStyle(new Style().setColor(TextFormatting.RED)));
         }
