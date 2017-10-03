@@ -66,9 +66,14 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
     static {
+        classicCommands.put("Arena 1v1", "arena_1v1");
+        classicCommands.put("Arena 2v2", "arena_2v2");
+        classicCommands.put("Arena 4v4", "arena_4v4");
+        classicCommands.put("Paintball", "paintball");
         classicCommands.put("Quake Solo", "quake_solo");
         classicCommands.put("Quake Teams", "quake_teams");
         classicCommands.put("The Walls", "walls");
+        classicCommands.put("Turbo Kart Racers", "tkr");
         classicCommands.put("VampireZ", "vampirez");
     }
     public static final Game LEGACY = new Game("Classic",1,128, 0, "classic", classicCommands);
