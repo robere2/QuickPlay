@@ -249,7 +249,7 @@ public class GameGui extends GuiScreen {
                     if (game.lobbyName.startsWith("/")) {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage(game.lobbyName);
                     } else {
-                        new JoinLobby(game.lobbyName);
+                        new JoinLobby(game.lobbyName, Minecraft.getMinecraft().thePlayer);
                     }
                     MainGui.closeGui();
                     break;
