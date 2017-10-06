@@ -52,4 +52,11 @@ public class ConfigSettings implements Serializable {
      *******************/
 
     public List<String> enabledPartyCommands = new ArrayList<>();
+
+    /*******************
+     *    Swaplobby    *
+     *******************/
+
+    public boolean swapToLobbyOne = true;
+
 }

@@ -2,6 +2,7 @@ package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.Game;
 import co.bugg.quickplay.Icons;
+import co.bugg.quickplay.JoinLobby;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.gui.button.StarButton;
@@ -248,7 +249,7 @@ public class GameGui extends GuiScreen {
                     if (game.lobbyName.startsWith("/")) {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage(game.lobbyName);
                     } else {
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/lobby " + game.lobbyName);
+                        new JoinLobby(game.lobbyName);
                     }
                     MainGui.closeGui();
                     break;
