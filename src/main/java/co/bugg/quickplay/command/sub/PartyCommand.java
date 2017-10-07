@@ -1,8 +1,8 @@
 package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.ICommandSender;
@@ -10,7 +10,7 @@ import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-public class PartyCommand extends QpSubCommand {
+public class PartyCommand extends AbstractSubCommand {
 
     public PartyCommand(QpBaseCommand parent) {
         super(parent, "party", "Join a randomized game.", "");

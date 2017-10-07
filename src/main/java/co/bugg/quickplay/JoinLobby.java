@@ -19,7 +19,7 @@ public class JoinLobby {
         }
 
         // go to the lobby
-        player.sendChatMessage(lobbyName);
+        player.sendChatMessage("/lobby " + lobbyName);
     }
 
     @SubscribeEvent

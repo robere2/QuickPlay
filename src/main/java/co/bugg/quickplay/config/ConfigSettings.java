@@ -57,6 +57,11 @@ public class ConfigSettings implements Serializable {
      *    Swaplobby    *
      *******************/
 
+    @GuiOption(
+            name = "Lobby One Swap",
+            description = "Swap to lobby one when pressing the \"Go To Lobby\" button",
+            category = ConfigCategory.GENERAL
+    )
     public boolean swapToLobbyOne = true;
 
 }

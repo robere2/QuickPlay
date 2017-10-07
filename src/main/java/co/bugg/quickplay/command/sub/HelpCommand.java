@@ -1,11 +1,11 @@
 package co.bugg.quickplay.command.sub;
 
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.*;
 
-public class HelpCommand extends QpSubCommand {
+public class HelpCommand extends AbstractSubCommand {
 
     public HelpCommand(QpBaseCommand parent) {
         super(parent, "help", "Displays a list and explanation of all commands.", "[command]");
@@ -26,7 +26,7 @@ public class HelpCommand extends QpSubCommand {
             helpMessage.appendSibling(new ChatComponentTranslation("quickplay.command.help.title").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.GRAY)));
             helpMessage.appendText("\n");
 
-            for (QpSubCommand command : this.getParent().subCommands) {
+            for (AbstractSubCommand command : this.getParent().subCommands) {
                 helpMessage.appendSibling(command.getFormattedHelp());
             }
 
@@ -34,7 +34,7 @@ public class HelpCommand extends QpSubCommand {
 
             sender.addChatMessage(helpMessage);
         } else {
-            QpSubCommand command = getParent().getCommand(args[1]);
+            AbstractSubCommand command = getParent().getCommand(args[1]);
             if(command == null) {
                 sender.addChatMessage(new ChatComponentTranslation("quickplay.command.unknown").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
             } else {

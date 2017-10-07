@@ -17,10 +17,11 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class QpBaseCommand implements ICommand {
 
-    public LinkedList<QpSubCommand> subCommands = new LinkedList<>();
+    public LinkedList<AbstractSubCommand> subCommands = new LinkedList<>();
 
     public QpBaseCommand() {
         subCommands.add(new HelpCommand(this));
+        subCommands.add(new ConfigCommand(this));
         subCommands.add(new ColorCommand(this));
         subCommands.add(new PartyCommand(this));
         subCommands.add(new LimboCommand(this));
@@ -48,7 +49,7 @@ public class QpBaseCommand implements ICommand {
     @Override
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if(args.length > 0) {
-            QpSubCommand command = getCommand(args[0]);
+            AbstractSubCommand command = getCommand(args[0]);
             if(command != null) {
                 command.run(sender, args);
             } else {
@@ -57,7 +58,7 @@ public class QpBaseCommand implements ICommand {
             }
         } else {
             // No args provided, run the help command if possible
-            QpSubCommand helpCommand = getCommand("help");
+            AbstractSubCommand helpCommand = getCommand("help");
             if(helpCommand != null) {
                 helpCommand.run(sender, args);
             } else {
@@ -75,7 +76,7 @@ public class QpBaseCommand implements ICommand {
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         List<String> tabCompletions = new ArrayList<>();
 
-        for(QpSubCommand subCommand : this.subCommands) {
+        for(AbstractSubCommand subCommand : this.subCommands) {
             tabCompletions.add(subCommand.getName());
         }
 
@@ -97,8 +98,8 @@ public class QpBaseCommand implements ICommand {
      * @param name Name of the sub command
      * @return Sub command, null if command doesn't exist
      */
-    public QpSubCommand getCommand(String name) {
-        for(QpSubCommand command : subCommands) {
+    public AbstractSubCommand getCommand(String name) {
+        for(AbstractSubCommand command : subCommands) {
             if(command.name.equalsIgnoreCase(name)) {
                 return command;
             }

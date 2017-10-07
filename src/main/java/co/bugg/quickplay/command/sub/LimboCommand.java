@@ -1,15 +1,15 @@
 package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-public class LimboCommand extends QpSubCommand {
+public class LimboCommand extends AbstractSubCommand {
 
     public LimboCommand(QpBaseCommand parent) {
         super(parent, "limbo", "Send yourself to Limbo.", "");

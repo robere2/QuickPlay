@@ -2,8 +2,8 @@ package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import co.bugg.quickplay.util.GameUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
@@ -13,7 +13,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.input.Keyboard;
 
-public class DebugCommand extends QpSubCommand {
+public class DebugCommand extends AbstractSubCommand {
 
     public DebugCommand(QpBaseCommand parent) {
         super(parent, "debug", "View debugging information and mod status.", "");

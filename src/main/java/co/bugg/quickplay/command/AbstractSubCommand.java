@@ -8,7 +8,7 @@ import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
-public abstract class QpSubCommand {
+public abstract class AbstractSubCommand {
 
     QpBaseCommand parent;
 
@@ -16,7 +16,7 @@ public abstract class QpSubCommand {
     String help;
     String usage;
 
-    public QpSubCommand(QpBaseCommand parent, String name, String help, String usage) {
+    public AbstractSubCommand(QpBaseCommand parent, String name, String help, String usage) {
         this.parent = parent;
 
         this.name = name;

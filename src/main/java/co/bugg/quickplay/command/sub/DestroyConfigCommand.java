@@ -2,14 +2,14 @@ package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
 
-public class DestroyConfigCommand extends QpSubCommand {
+public class DestroyConfigCommand extends AbstractSubCommand {
 
     static String confirmWord = "yes";
 
