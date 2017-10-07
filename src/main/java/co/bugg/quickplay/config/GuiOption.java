@@ -12,7 +12,7 @@ public @interface GuiOption {
 
     String description() default "Undefined";
 
-    ConfigCategory category() default ConfigCategory.GENERAL;
+    ConfigElementType type() default ConfigElementType.STRING;
 
     double priority() default 0.0;
 }

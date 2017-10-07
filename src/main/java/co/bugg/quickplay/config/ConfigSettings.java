@@ -17,11 +17,6 @@ public class ConfigSettings implements Serializable {
     }
 
     /*******************
-     *     General     *
-     *******************/
-    public boolean anyKeyClosesGui = false;
-
-    /*******************
      *      Colors     *
      *******************/
     // Colors are added to the hashmap in the constructor
@@ -59,9 +54,36 @@ public class ConfigSettings implements Serializable {
 
     @GuiOption(
             name = "Lobby One Swap",
-            description = "Swap to lobby one when pressing the \"Go To Lobby\" button",
-            category = ConfigCategory.GENERAL
+            description = "Swap to lobby one when pressing the \"Go To Lobby\" button.",
+            type = ConfigElementType.BOOLEAN,
+            priority = 1.0
     )
     public boolean swapToLobbyOne = true;
 
+    /*******************
+     *     General     *
+     *******************/
+    @GuiOption(
+            name = "GUI Closing Limits",
+            description = "Any key pressed will close QuickPlay GUIs",
+            type = ConfigElementType.BOOLEAN,
+            priority = 5.0
+    )
+    public boolean anyKeyClosesGui = false;
+
+    @GuiOption(
+            name = "Update Notifications",
+            description = "Receive a message in chat when you join Hypixel if a new version is released.",
+            type = ConfigElementType.BOOLEAN,
+            priority = 1005.0
+    )
+    public boolean updateNotifications = true;
+
+    @GuiOption(
+            name = "Sync Settings",
+            description = "Sync your QuickPlay settings to an external server.",
+            type = ConfigElementType.BOOLEAN,
+            priority = 1000.0
+    )
+    public boolean syncSettings = true;
 }

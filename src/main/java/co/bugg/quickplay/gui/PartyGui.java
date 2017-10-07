@@ -148,7 +148,7 @@ public class PartyGui extends GuiScreen {
                     // is a play command (i.e. /qp limbo isn't a game, don't draw it)
                     for(Map.Entry<String, String> command : game.commands.entrySet()) {
                         if(!command.getValue().startsWith("/")) {
-                            buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getButtonTextWithEllipsis(buttonWidth, game.name)));
+                            buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getTextWithEllipsis(buttonWidth, game.name)));
                             // Register the button's ID
                             buttons.put(buttonId, game.name);
                             buttonId++;

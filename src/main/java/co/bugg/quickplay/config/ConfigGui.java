@@ -15,7 +15,7 @@ public class ConfigGui extends GuiScreen {
 
     @Override
     public void initGui() {
-        list = new ConfigList(Minecraft.getMinecraft(), width / 2, height, 0, height, 0, 20, width, height);
+        list = new ConfigList(Minecraft.getMinecraft(), width, (int) (height * 0.8), 0, (int) (height * 0.8), 0, 25, width, height);
 
         super.initGui();
     }

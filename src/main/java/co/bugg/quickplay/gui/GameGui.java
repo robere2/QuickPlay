@@ -181,7 +181,7 @@ public class GameGui extends GuiScreen {
                     buttonY += (defaultButtonHeight + buttonSpacing);
                 }
 
-                String shortenedString = GameUtil.getButtonTextWithEllipsis(buttonWidth, entry.getKey());
+                String shortenedString = GameUtil.getTextWithEllipsis(buttonWidth, entry.getKey());
 
                 // Whether check boxes or buttons should be displayed
                 if(partyMode) {
