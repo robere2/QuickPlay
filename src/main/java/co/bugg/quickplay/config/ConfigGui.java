@@ -3,10 +3,12 @@ package co.bugg.quickplay.config;
 import co.bugg.quickplay.Reference;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class ConfigGui extends GuiScreen {
 
@@ -17,7 +19,6 @@ public class ConfigGui extends GuiScreen {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        super.drawScreen(mouseX, mouseY, partialTicks);
 
         Tessellator tess = Tessellator.getInstance();
         WorldRenderer worldr = tess.getWorldRenderer();
@@ -39,6 +40,8 @@ public class ConfigGui extends GuiScreen {
 
         list.drawScreen(mouseX, mouseY, partialTicks);
         drawCenteredString(fontRendererObj, Reference.MOD_NAME + " Configuration", width / 2, listTop - 15, 0xFFFFFF);
+
+        super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
     @Override
@@ -48,6 +51,20 @@ public class ConfigGui extends GuiScreen {
         listBottom = (int) (height * 0.8);
 
         list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height);
+
+        int buttonWidth = 100;
+        int buttonHeight = 20;
+        int buttonY = (int) (height * 0.85);
+        int buttonMargin = 4;
+
+        String save = new ChatComponentTranslation("quickplay.config.save").getUnformattedText();
+        String cancel = new ChatComponentTranslation("quickplay.config.cancel").getUnformattedText();
+
+        GuiButton saveButton = new GuiButton(0, width / 2 - buttonWidth - buttonMargin / 2, buttonY, buttonWidth, buttonHeight, save);
+        GuiButton cancelButton = new GuiButton(1, width / 2 + buttonMargin / 2, buttonY, buttonWidth, buttonHeight, cancel);
+
+        buttonList.add(saveButton);
+        buttonList.add(cancelButton);
 
         super.initGui();
     }
