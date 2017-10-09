@@ -1,6 +1,5 @@
 package co.bugg.quickplay.config;
 
-import co.bugg.quickplay.Game;
 import co.bugg.quickplay.util.QuickPlayColor;
 import org.lwjgl.input.Keyboard;
 
@@ -40,7 +39,8 @@ public class ConfigSettings implements Serializable {
      *    Favorites    *
      *******************/
 
-    public Game favoriteGame = null;
+    //public Game favoriteGame = null;
+    public List<Favorite> favorites = new ArrayList<>();
 
     /*******************
      *   Party Mode    *

@@ -5,6 +5,10 @@ import co.bugg.quickplay.command.QpBaseCommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.*;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
 public class HelpCommand extends AbstractSubCommand {
 
     public HelpCommand(QpBaseCommand parent) {
@@ -41,5 +45,21 @@ public class HelpCommand extends AbstractSubCommand {
                 sender.addChatMessage(command.getFormattedUsage());
             }
         }
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos) {
+        List<String> tabCompletions = new ArrayList<>();
+
+        if(args.length < 3) {
+            for(AbstractSubCommand command : getParent().subCommands) {
+                if(command.getName().startsWith(args[args.length - 1])) {
+                    tabCompletions.add(command.getName());
+                }
+            }
+        }
+
+        return tabCompletions;
     }
 }

@@ -16,6 +16,8 @@ quickplay.config.save=Save
 quickplay.config.close=Close
 quickplay.config.cancel=Cancel
 quickplay.config.reset=Reset
+quickplay.config.favorites=Favorites
+quickplay.config.settings=Settings
 
 quickplay.command.destroyconfig.config_reset=Configuration reset! You may have to restart your game.
 quickplay.command.destroyconfig.config_reset_confirm=Are you sure you want to reset your %s configuration? Type "%s" if so.

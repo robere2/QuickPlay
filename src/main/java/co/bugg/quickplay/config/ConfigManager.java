@@ -1,5 +1,6 @@
 package co.bugg.quickplay.config;
 
+import co.bugg.quickplay.Game;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.FileUtil;
@@ -138,5 +139,15 @@ public class ConfigManager {
             }
         } else return null;
 
+    }
+
+    public void addFavorite(Game game) {
+        Favorite favorite = new Favorite(0, game);
+        getConfig().favorites.add(favorite);
+    }
+
+    public void removeFavorite(Game game) {
+
+        getConfig().favorites.removeIf(favorite -> favorite.getGame().name.equals(game.name));
     }
 }

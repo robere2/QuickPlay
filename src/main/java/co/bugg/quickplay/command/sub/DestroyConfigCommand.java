@@ -5,9 +5,14 @@ import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DestroyConfigCommand extends AbstractSubCommand {
 
@@ -33,5 +38,15 @@ public class DestroyConfigCommand extends AbstractSubCommand {
 
     public String getConfirmCommand() {
         return "/" + getParent().getCommandName() + " " + getName() + " " + confirmWord;
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos) {
+        List<String> tabCompletions = new ArrayList<>();
+        if(confirmWord.startsWith(args[args.length - 1])) {
+            tabCompletions.add(confirmWord);
+        }
+        return tabCompletions;
     }
 }

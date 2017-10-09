@@ -6,40 +6,30 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings({"DeprecatedIsStillUsed", "unused", "UnnecessaryLocalVariable", "deprecation", "ConstantConditions", "SameParameterValue"})
-public class ConfigList extends AbstractConfigList{
+public class FavoriteList extends AbstractConfigList {
 
-    List<Field> options = new ArrayList<>();
+    List<Favorite> favorites = new ArrayList<>();
 
     @Deprecated // We need to know screen size.
-    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, ConfigManager manager)
+    public FavoriteList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, ConfigManager manager)
     {
         this(client, width, height, top, bottom, left, entryHeight, width, height, manager);
     }
-    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, int screenWidth, int screenHeight, ConfigManager manager)
+    public FavoriteList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, int screenWidth, int screenHeight, ConfigManager manager)
     {
         super(client, width, height, top, bottom, left, entryHeight, screenWidth, screenHeight, manager);
 
-        // Add all annotated options to the list of config favorites
-        Field[] allOptions = manager.getConfig().getClass().getFields();
-        for(Field option : allOptions) {
-            if(option.getAnnotation(GuiOption.class) != null) {
-                options.add(option);
-            }
-        }
-
-        // Sort the list to be highest priority first
-        options.sort((o1, o2) -> (int) (o2.getAnnotation(GuiOption.class).priority() - o1.getAnnotation(GuiOption.class).priority()));
+        favorites = manager.getConfig().favorites;
 
         addButtons();
     }
 
     /**
-     * Go through the list of options and
+     * Go through the list of favorites and
      * add the buttons for each one
      */
     public void addButtons() {
@@ -51,11 +41,7 @@ public class ConfigList extends AbstractConfigList{
 
             // Create all the button instances
             GuiButton button = null;
-            try {
-                button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, (options.get(i).getBoolean(manager.getConfig())) ? enabled : disabled);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, Integer.toString((favorites.get(i).getKeyCode())));
             buttonList.put(i, button);
 
             GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, reset);
@@ -72,7 +58,7 @@ public class ConfigList extends AbstractConfigList{
     }
 
     protected int getSize() {
-        return options.size();
+        return favorites.size();
     }
 
     protected void elementClicked(int index, boolean doubleClick, int mouseX, int mouseY) {
@@ -97,16 +83,15 @@ public class ConfigList extends AbstractConfigList{
      * is rendered outside of the view box. Do not mess with SCISSOR unless you support this.
      */
     protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, int mouseX, int mouseY, Tessellator tess) {
-        GuiOption info = options.get(slotIdx).getAnnotation(GuiOption.class);
-
+        Favorite favorite = favorites.get(slotIdx);
         FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
 
         int stringX = 20;
         int stringY = slotTop + 5;
         int stringHeight = font.FONT_HEIGHT;
-        int stringWidth = font.getStringWidth(info.name());
+        int stringWidth = font.getStringWidth(favorite.getGame().name);
         // Draw the string
-        font.drawString(GameUtil.getTextWithEllipsis(listWidth, info.name()), stringX, stringY, 0xFFFFFF);
+        font.drawString(GameUtil.getTextWithEllipsis(listWidth, favorite.getGame().name), stringX, stringY, 0xFFFFFF);
 
         buttonX = (int) (listWidth * 0.55);
         buttonY = slotTop;
@@ -123,16 +108,13 @@ public class ConfigList extends AbstractConfigList{
         settingButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
         resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
 
-        // FIXME: Tooltips are drawn underneath other items that appear lower on the list
-        // Draw the description tooltip
-        if((buttonX < mouseX && mouseX < (buttonX + buttonWidth)) && (buttonY < mouseY && mouseY < (buttonY + buttonHeight))) {
-            List<String> hoverText = new ArrayList<>();
-            hoverText.add(info.description());
-            drawHoveringText(hoverText, mouseX, mouseY + 5, font);
-        }
-
-        // Draw the description
-        //font.drawString(GameUtil.getTextWithEllipsis(listWidth, info.description()), 5, slotTop + 10, 0xBBBBBB);
+//        // FIXME: Tooltips are drawn underneath other items that appear lower on the list
+//        // Draw the description tooltip
+//        if((buttonX < mouseX && mouseX < (buttonX + buttonWidth)) && (buttonY < mouseY && mouseY < (buttonY + buttonHeight))) {
+//            List<String> hoverText = new ArrayList<>();
+//            hoverText.add(favorite.getGame().name + " Favorite keybind");
+//            drawHoveringText(hoverText, mouseX, mouseY + 5, font);
+//        }
     }
 
     public void actionPerformed(GuiButton button)
@@ -141,36 +123,16 @@ public class ConfigList extends AbstractConfigList{
         {
 
             try {
-                Field option = options.get(button.id);
-                GuiOption annotation = option.getAnnotation(GuiOption.class);
+                Favorite favorite = favorites.get(button.id);
 
-                switch(annotation.type()) {
-                    default:
-                    case BOOLEAN:
-                        // If the button is a reset button
-                        if(button.displayString.equals(reset)) {
-                            // Set the value
-                            boolean defaultValue = (boolean) manager.getDefaultValue(options.get(button.id).getName());
-                            options.get(button.id).setBoolean(manager.getConfig(), defaultValue);
+                // If the button is a reset button
+                if(button.displayString.equals(reset)) {
+                    // Set the value
+                    favorite.setKeyCode(0);
 
-                            // Set the text
-                            buttonList.get(button.id).displayString = defaultValue ? enabled : disabled;
-
-                        } else {
-                            if(option.getBoolean(manager.getConfig())) {
-                                button.displayString = disabled;
-                                option.setBoolean(manager.getConfig(), false);
-                            } else {
-                                button.displayString = enabled;
-                                option.setBoolean(manager.getConfig(), true);
-                            }
-                        }
-
-                        break;
-
-                    case KEYBIND:
-
-                        break;
+                } else {
+                    // Listen for a key press & set it to the key code
+                    favorite.listen();
                 }
 
                 checkResetCapability(button.id);
@@ -188,9 +150,9 @@ public class ConfigList extends AbstractConfigList{
      * @throws IllegalAccessException when the field can't be accessed
      */
     public void checkResetCapability(int index) throws IllegalAccessException {
-        Field option = options.get(index);
+        Favorite favorite = favorites.get(index);
 
-        if(option.getBoolean(manager.getConfig()) == (boolean) manager.getDefaultValue(option.getName())) {
+        if(favorite.getKeyCode() == 0) {
             resetButtonList.get(index).enabled = false;
         } else {
             resetButtonList.get(index).enabled = true;

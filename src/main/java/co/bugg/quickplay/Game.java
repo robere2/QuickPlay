@@ -1,5 +1,6 @@
 package co.bugg.quickplay;
 
+import co.bugg.quickplay.config.Favorite;
 import co.bugg.quickplay.gui.button.GameButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.ChatComponentTranslation;
@@ -65,5 +66,17 @@ public class Game implements Serializable {
      */
     public GuiButton getButton(int buttonId, int x, int y) {
         return new GameButton(buttonId, x, y, this);
+    }
+
+    /**
+     * Whether or not this game is favorited
+     * @return bool if favorited or not
+     */
+    public boolean isFavorite() {
+        for(Favorite favorite : QuickPlay.configManager.getConfig().favorites) {
+            if(favorite.getGame().name.equals(name)) return true;
+        }
+
+        return false;
     }
 }

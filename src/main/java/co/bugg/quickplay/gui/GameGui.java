@@ -143,11 +143,7 @@ public class GameGui extends QuickPlayGui {
         // (i.e. whether this gamemode is the user's favorite)
         boolean starOn;
         //noinspection SimplifiableIfStatement
-        if(QuickPlay.configManager.getConfig().favoriteGame != null) {
-            starOn = game.name.equals(QuickPlay.configManager.getConfig().favoriteGame.name);
-        } else {
-            starOn = false;
-        }
+        starOn = game.isFavorite();
 
         // Star button should only be added if not party mode
         if(!partyMode) {
@@ -234,9 +230,9 @@ public class GameGui extends QuickPlayGui {
                     starButton.on = !starButton.on;
 
                     if (starButton.on) {
-                        QuickPlay.configManager.getConfig().favoriteGame = game;
+                        QuickPlay.configManager.addFavorite(game);
                     } else {
-                        QuickPlay.configManager.getConfig().favoriteGame = null;
+                        QuickPlay.configManager.removeFavorite(game);
                     }
 
                     QuickPlay.configManager.saveConfig();

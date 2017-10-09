@@ -76,8 +76,17 @@ public class QpBaseCommand implements ICommand {
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
         List<String> tabCompletions = new ArrayList<>();
 
-        for(AbstractSubCommand subCommand : this.subCommands) {
-            tabCompletions.add(subCommand.getName());
+        if(args.length > 1) {
+            AbstractSubCommand command = getCommand(args[0]);
+            if(command != null) {
+                tabCompletions.addAll(command.getTabCompletions(sender, args, pos));
+            }
+        } else {
+            for(AbstractSubCommand subCommand : this.subCommands) {
+                if(subCommand.getName().startsWith(args[args.length - 1])) {
+                    tabCompletions.add(subCommand.getName());
+                }
+            }
         }
 
         return tabCompletions;

@@ -1,6 +1,5 @@
 package co.bugg.quickplay;
 
-import co.bugg.quickplay.gui.GameGui;
 import co.bugg.quickplay.gui.MainGui;
 import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.QuickPlayColor;
@@ -51,7 +50,7 @@ public class QuickPlayEventHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 
-        if(QuickPlay.onHypixel) {
+        if(!QuickPlay.onHypixel) {
             // If open GUI key is pressed
             if (QuickPlay.openGui.isKeyDown()) {
                 System.out.println("Open GUI key pressed");
@@ -62,12 +61,11 @@ public class QuickPlayEventHandler {
                 System.out.println("Open Favorite key pressed");
 
                 // Check if the user even has a favorite game
-                if(QuickPlay.configManager.getConfig().favoriteGame == null) {
-                    // If not then open the main GUI
-                    QuickPlayGui.openGui(new MainGui());
+                if(QuickPlay.configManager.getConfig().favorites.size() > 0) {
+                    // If so then open the GUI
                 } else {
-                    // Otherwise open the game
-                    QuickPlayGui.openGui(new GameGui(QuickPlay.configManager.getConfig().favoriteGame));
+                    // Otherwise open main
+                    QuickPlayGui.openGui(new MainGui());
                 }
             }
         }

@@ -7,11 +7,12 @@ import co.bugg.quickplay.command.QpBaseCommand;
 import co.bugg.quickplay.util.GameUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.*;
 import org.lwjgl.input.Keyboard;
+
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DebugCommand extends AbstractSubCommand {
 
@@ -44,5 +45,13 @@ public class DebugCommand extends AbstractSubCommand {
         debugMsg.setChatStyle(new ChatStyle().setColor(EnumChatFormatting.AQUA));
 
         Minecraft.getMinecraft().thePlayer.addChatMessage(debugMsg);
+    }
+
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos) {
+        List<String> tabCompletions = new ArrayList<>();
+        return tabCompletions;
     }
 }

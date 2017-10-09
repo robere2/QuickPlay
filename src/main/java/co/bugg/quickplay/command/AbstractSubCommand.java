@@ -3,10 +3,10 @@ package co.bugg.quickplay.command;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.*;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public abstract class AbstractSubCommand {
 
@@ -25,6 +25,9 @@ public abstract class AbstractSubCommand {
     }
 
     public abstract void run(ICommandSender sender, String[] args);
+
+    @Nonnull
+    public abstract List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos);
 
     /**
      * Get a formatted help message (with the line return)
