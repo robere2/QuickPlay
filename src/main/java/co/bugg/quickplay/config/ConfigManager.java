@@ -3,11 +3,13 @@ package co.bugg.quickplay.config;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.FileUtil;
+import co.bugg.quickplay.util.ReflectUtil;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.io.*;
+import java.lang.reflect.Field;
 
 public class ConfigManager {
 
@@ -119,5 +121,22 @@ public class ConfigManager {
         }
 
         saveConfig();
+    }
+
+    public Object getDefaultValue(String fieldName) {
+        ConfigSettings defaultConfig = new ConfigSettings();
+        Field field = ReflectUtil.getField(ConfigSettings.class, fieldName);
+
+        if(field != null) {
+
+            field.setAccessible(true);
+            try {
+                return field.get(defaultConfig);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else return null;
+
     }
 }

@@ -1,6 +1,8 @@
 package co.bugg.quickplay.config;
 
+import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.gui.MainGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -10,12 +12,16 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatComponentTranslation;
 
+import java.io.IOException;
+
 public class ConfigGui extends GuiScreen {
 
     ConfigList list;
 
     int listTop;
     int listBottom;
+
+    int closeButtonId = 0;
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -50,21 +56,16 @@ public class ConfigGui extends GuiScreen {
         listTop = (int) (height * 0.1);
         listBottom = (int) (height * 0.8);
 
-        list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height);
+        list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
 
-        int buttonWidth = 100;
+        int buttonWidth = 200;
         int buttonHeight = 20;
         int buttonY = (int) (height * 0.85);
-        int buttonMargin = 4;
 
-        String save = new ChatComponentTranslation("quickplay.config.save").getUnformattedText();
-        String cancel = new ChatComponentTranslation("quickplay.config.cancel").getUnformattedText();
+        String close = new ChatComponentTranslation("quickplay.config.close").getUnformattedText();
 
-        GuiButton saveButton = new GuiButton(0, width / 2 - buttonWidth - buttonMargin / 2, buttonY, buttonWidth, buttonHeight, save);
-        GuiButton cancelButton = new GuiButton(1, width / 2 + buttonMargin / 2, buttonY, buttonWidth, buttonHeight, cancel);
-
-        buttonList.add(saveButton);
-        buttonList.add(cancelButton);
+        GuiButton closeButton = new GuiButton(closeButtonId, width / 2 - buttonWidth / 2, buttonY, buttonWidth, buttonHeight, close);
+        buttonList.add(closeButton);
 
         super.initGui();
     }
@@ -74,5 +75,12 @@ public class ConfigGui extends GuiScreen {
         return true;
     }
 
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException {
+        super.actionPerformed(button);
 
+        if(button.id == closeButtonId) {
+            MainGui.closeGui();
+        }
+    }
 }

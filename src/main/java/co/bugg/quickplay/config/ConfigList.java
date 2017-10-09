@@ -12,11 +12,11 @@
 
 /*
  * Modified by bugfroggy for use in QuickPlay
+ * Kind of bad practice, but ran out of options.
  */
 
 package co.bugg.quickplay.config;
 
-import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.util.GameUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -63,6 +63,7 @@ public class ConfigList {
     protected boolean captureMouse = true;
 
     List<Field> options = new ArrayList<>();
+    ConfigManager manager;
     HashMap<Integer, GuiButton> buttonList = new HashMap<>();
     HashMap<Integer, GuiButton> resetButtonList = new HashMap<>();
     int buttonX;
@@ -72,12 +73,19 @@ public class ConfigList {
     int resetButtonWidth = buttonWidth - 45;
     int resetButtonX = buttonX + buttonWidth + 5;
 
+    // Button texts
+    String enabled  = new ChatComponentTranslation("quickplay.config.enabled").getUnformattedText();
+    String disabled = new ChatComponentTranslation("quickplay.config.disabled").getUnformattedText();
+    String save =     new ChatComponentTranslation("quickplay.config.save").getUnformattedText();
+    String cancel =   new ChatComponentTranslation("quickplay.config.cancel").getUnformattedText();
+    String reset =    new ChatComponentTranslation("quickplay.config.reset").getUnformattedText();
+
     @Deprecated // We need to know screen size.
-    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight)
+    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, ConfigManager manager)
     {
-        this(client, width, height, top, bottom, left, entryHeight, width, height);
+        this(client, width, height, top, bottom, left, entryHeight, width, height, manager);
     }
-    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, int screenWidth, int screenHeight)
+    public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight, int screenWidth, int screenHeight, ConfigManager manager)
     {
         this.client = client;
         this.listWidth = width;
@@ -89,9 +97,10 @@ public class ConfigList {
         this.right = width + this.left;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        this.manager = manager;
 
         // Add all annotated options to the list of config options
-        Field[] allOptions = QuickPlay.configManager.getConfig().getClass().getFields();
+        Field[] allOptions = manager.getConfig().getClass().getFields();
         for(Field option : allOptions) {
             if(option.getAnnotation(GuiOption.class) != null) {
                 options.add(option);
@@ -101,6 +110,14 @@ public class ConfigList {
         // Sort the list to be highest priority first
         options.sort((o1, o2) -> (int) (o2.getAnnotation(GuiOption.class).priority() - o1.getAnnotation(GuiOption.class).priority()));
 
+        addButtons();
+    }
+
+    /**
+     * Go through the list of options and
+     * add the buttons for each one
+     */
+    public void addButtons() {
         // i represents the button ID. Same button ID is applied to
         // both the reset button and setting button, and a check is
         // performed whenever one of them is clicked.
@@ -110,13 +127,13 @@ public class ConfigList {
             // Create all the button instances
             GuiButton button = null;
             try {
-                button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, new ChatComponentTranslation((options.get(i).getBoolean(QuickPlay.configManager.getConfig()) ? "quickplay.config.enabled" : "quickplay.config.disabled")).getUnformattedText());
+                button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, (options.get(i).getBoolean(manager.getConfig())) ? enabled : disabled);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
             buttonList.put(i, button);
 
-            GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, new ChatComponentTranslation("quickplay.config.reset").getUnformattedText());
+            GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, reset);
             resetButtonList.put(i, resetButton);
 
             i++;
@@ -140,9 +157,21 @@ public class ConfigList {
         return options.size();
     }
 
-    protected void elementClicked(int index, boolean doubleClick) {
-        System.out.println(index);
-        selectedIndex = index;
+    protected void elementClicked(int index, boolean doubleClick, int mouseX, int mouseY) {
+        // Check if the mouse is over a button
+        // when the element was clicked. If so,
+        // then call actionPerformed(). Only
+        // checks within the element, as buttons
+        // shouldn't be outside of it.
+
+        GuiButton button = buttonList.get(index);
+        if((button.xPosition < mouseX && mouseX < button.xPosition + button.width) && (button.yPosition < mouseY && mouseY < button.yPosition + button.height)) {
+            actionPerformed(button);
+        }
+        GuiButton resetButton = resetButtonList.get(index);
+        if((resetButton.xPosition < mouseX && mouseX < resetButton.xPosition + resetButton.width) && (resetButton.yPosition < mouseY && mouseY < resetButton.yPosition + resetButton.height)) {
+            actionPerformed(resetButton);
+        }
     }
 
     protected boolean isSelected(int index) {
@@ -164,7 +193,6 @@ public class ConfigList {
      * is rendered outside of the view box. Do not mess with SCISSOR unless you support this.
      */
     protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, int mouseX, int mouseY, Tessellator tess) {
-        // TODO: Make hovering over slots with ellipsis display the whole thing. Will probably have to be split onto multiple lines on the tooltip
         GuiOption info = options.get(slotIdx).getAnnotation(GuiOption.class);
 
         FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
@@ -258,17 +286,41 @@ public class ConfigList {
     {
         if (button.enabled)
         {
-            if (button.id == this.scrollUpActionId)
-            {
-                this.scrollDistance -= (float)(this.slotHeight * 2 / 3);
-                this.initialMouseClickY = -2.0F;
-                this.applyScrollLimits();
-            }
-            else if (button.id == this.scrollDownActionId)
-            {
-                this.scrollDistance += (float)(this.slotHeight * 2 / 3);
-                this.initialMouseClickY = -2.0F;
-                this.applyScrollLimits();
+
+            Field option = options.get(button.id);
+            GuiOption annotation = option.getAnnotation(GuiOption.class);
+
+            switch(annotation.type()) {
+                default:
+                case BOOLEAN:
+                    try {
+                        // If the button is a reset button
+                        if(button.displayString.equals(reset)) {
+                            // Set the value
+                            boolean defaultValue = (boolean) manager.getDefaultValue(options.get(button.id).getName());
+                            options.get(button.id).setBoolean(manager.getConfig(), defaultValue);
+
+                            // Set the text
+                            buttonList.get(button.id).displayString = defaultValue ? enabled : disabled;
+
+                        } else {
+                            if(option.getBoolean(manager.getConfig())) {
+                                button.displayString = disabled;
+                                option.setBoolean(manager.getConfig(), false);
+                            } else {
+                                button.displayString = enabled;
+                                option.setBoolean(manager.getConfig(), true);
+                            }
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+
+                case KEYBIND:
+
+                    break;
             }
         }
     }
@@ -301,7 +353,7 @@ public class ConfigList {
 
                     if (mouseX >= entryLeft && mouseX <= entryRight && slotIndex >= 0 && mouseListY >= 0 && slotIndex < listLength)
                     {
-                        this.elementClicked(slotIndex, slotIndex == this.selectedIndex && System.currentTimeMillis() - this.lastClickTime < 250L);
+                        this.elementClicked(slotIndex, slotIndex == this.selectedIndex && System.currentTimeMillis() - this.lastClickTime < 250L, mouseX, mouseY);
                         this.selectedIndex = slotIndex;
                         this.lastClickTime = System.currentTimeMillis();
                     }

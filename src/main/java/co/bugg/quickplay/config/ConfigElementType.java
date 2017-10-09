@@ -1,10 +1,12 @@
 package co.bugg.quickplay.config;
 
+/**
+ * BOOLEAN and KEYBIND are always
+ * buttons.
+ * TODO: Add support for text boxes.
+ */
 public enum ConfigElementType {
     BOOLEAN("Boolean"),
-    INTEGER("Integer"),
-    FLOAT("Float"),
-    STRING("String"),
     KEYBIND("Keybind");
 
     public String name;

@@ -12,6 +12,7 @@ quickplay.color.chroma=Chroma
 quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
+quickplay.config.close=Close
 quickplay.config.cancel=Cancel
 quickplay.config.reset=Reset
 
