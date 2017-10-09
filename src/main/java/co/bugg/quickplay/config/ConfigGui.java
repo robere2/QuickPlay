@@ -2,6 +2,7 @@ package co.bugg.quickplay.config;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.gui.MainColorGui;
 import co.bugg.quickplay.gui.MainGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -22,6 +23,7 @@ public class ConfigGui extends GuiScreen {
     int listBottom;
 
     int closeButtonId = 0;
+    int colorButtonId = 1;
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -58,14 +60,19 @@ public class ConfigGui extends GuiScreen {
 
         list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
 
-        int buttonWidth = 200;
+        int buttonWidth = 100;
         int buttonHeight = 20;
         int buttonY = (int) (height * 0.85);
+        int buttonMargin = 4;
 
         String close = new ChatComponentTranslation("quickplay.config.close").getUnformattedText();
+        String colors = new ChatComponentTranslation("quickplay.color").getUnformattedText();
 
-        GuiButton closeButton = new GuiButton(closeButtonId, width / 2 - buttonWidth / 2, buttonY, buttonWidth, buttonHeight, close);
+        GuiButton colorButton = new GuiButton(colorButtonId, width / 2 - buttonWidth - buttonMargin / 2, buttonY, buttonWidth, buttonHeight, colors);
+        GuiButton closeButton = new GuiButton(closeButtonId, width / 2 + buttonMargin / 2, buttonY, buttonWidth, buttonHeight, close);
+
         buttonList.add(closeButton);
+        buttonList.add(colorButton);
 
         super.initGui();
     }
@@ -81,6 +88,14 @@ public class ConfigGui extends GuiScreen {
 
         if(button.id == closeButtonId) {
             MainGui.closeGui();
+        } else if(button.id == colorButtonId) {
+            Minecraft.getMinecraft().displayGuiScreen(new MainColorGui());
         }
+    }
+
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        QuickPlay.configManager.saveConfig();
     }
 }

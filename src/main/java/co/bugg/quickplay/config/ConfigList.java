@@ -136,6 +136,12 @@ public class ConfigList {
             GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, reset);
             resetButtonList.put(i, resetButton);
 
+            try {
+                checkResetCapability(i);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
             i++;
         }
     }
@@ -219,6 +225,7 @@ public class ConfigList {
         settingButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
         resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
 
+        // FIXME: Tooltips are drawn underneath other items that appear lower on the list
         // Draw the description tooltip
         if((buttonX < mouseX && mouseX < (buttonX + buttonWidth)) && (buttonY < mouseY && mouseY < (buttonY + buttonHeight))) {
             List<String> hoverText = new ArrayList<>();
@@ -287,13 +294,13 @@ public class ConfigList {
         if (button.enabled)
         {
 
-            Field option = options.get(button.id);
-            GuiOption annotation = option.getAnnotation(GuiOption.class);
+            try {
+                Field option = options.get(button.id);
+                GuiOption annotation = option.getAnnotation(GuiOption.class);
 
-            switch(annotation.type()) {
-                default:
-                case BOOLEAN:
-                    try {
+                switch(annotation.type()) {
+                    default:
+                    case BOOLEAN:
                         // If the button is a reset button
                         if(button.displayString.equals(reset)) {
                             // Set the value
@@ -312,16 +319,35 @@ public class ConfigList {
                                 option.setBoolean(manager.getConfig(), true);
                             }
                         }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    }
 
-                    break;
+                        break;
 
-                case KEYBIND:
+                    case KEYBIND:
 
-                    break;
+                        break;
+                }
+
+                checkResetCapability(button.id);
+
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Enable/disable the reset button depending on
+     * if the value is already at its default value
+     * @param index Index of buttons to check
+     * @throws IllegalAccessException when the field can't be accessed
+     */
+    public void checkResetCapability(int index) throws IllegalAccessException {
+        Field option = options.get(index);
+
+        if(option.getBoolean(manager.getConfig()) == (boolean) manager.getDefaultValue(option.getName())) {
+            resetButtonList.get(index).enabled = false;
+        } else {
+            resetButtonList.get(index).enabled = true;
         }
     }
 

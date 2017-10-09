@@ -22,7 +22,7 @@ public class QpBaseCommand implements ICommand {
     public QpBaseCommand() {
         subCommands.add(new HelpCommand(this));
         subCommands.add(new ConfigCommand(this));
-        subCommands.add(new ColorCommand(this));
+        // subCommands.add(new ColorCommand(this));
         subCommands.add(new PartyCommand(this));
         subCommands.add(new LimboCommand(this));
         subCommands.add(new DebugCommand(this));

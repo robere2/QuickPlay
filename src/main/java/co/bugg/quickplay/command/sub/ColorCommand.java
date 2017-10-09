@@ -8,6 +8,7 @@ import co.bugg.quickplay.util.TickDelay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 
+@Deprecated
 public class ColorCommand extends AbstractSubCommand {
 
     public ColorCommand(QpBaseCommand parent) {

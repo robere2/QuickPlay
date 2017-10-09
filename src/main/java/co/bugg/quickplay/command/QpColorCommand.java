@@ -12,6 +12,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @ParametersAreNonnullByDefault
 public class QpColorCommand implements ICommand {
 
