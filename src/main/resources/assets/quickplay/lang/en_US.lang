@@ -12,6 +12,7 @@ quickplay.color.chroma=Chroma
 quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
+quickplay.config.reset=Reset
 
 quickplay.command.destroyconfig.config_reset=Configuration reset! You may have to restart your game.
 quickplay.command.destroyconfig.config_reset_confirm=Are you sure you want to reset your %s configuration? Type "%s" if so.

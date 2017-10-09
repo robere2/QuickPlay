@@ -27,11 +27,13 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.util.ChatComponentTranslation;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @SuppressWarnings({"DeprecatedIsStillUsed", "unused", "UnnecessaryLocalVariable", "deprecation", "ConstantConditions", "SameParameterValue"})
@@ -61,6 +63,14 @@ public class ConfigList {
     protected boolean captureMouse = true;
 
     List<Field> options = new ArrayList<>();
+    HashMap<Integer, GuiButton> buttonList = new HashMap<>();
+    HashMap<Integer, GuiButton> resetButtonList = new HashMap<>();
+    int buttonX;
+    int buttonY;
+    int buttonHeight = 20;
+    int buttonWidth = 100;
+    int resetButtonWidth = buttonWidth - 45;
+    int resetButtonX = buttonX + buttonWidth + 5;
 
     @Deprecated // We need to know screen size.
     public ConfigList(Minecraft client, int width, int height, int top, int bottom, int left, int entryHeight)
@@ -91,6 +101,26 @@ public class ConfigList {
         // Sort the list to be highest priority first
         options.sort((o1, o2) -> (int) (o2.getAnnotation(GuiOption.class).priority() - o1.getAnnotation(GuiOption.class).priority()));
 
+        // i represents the button ID. Same button ID is applied to
+        // both the reset button and setting button, and a check is
+        // performed whenever one of them is clicked.
+        int i = 0;
+        while(i < getSize()) {
+
+            // Create all the button instances
+            GuiButton button = null;
+            try {
+                button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, new ChatComponentTranslation((options.get(i).getBoolean(QuickPlay.configManager.getConfig()) ? "quickplay.config.enabled" : "quickplay.config.disabled")).getUnformattedText());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            buttonList.put(i, button);
+
+            GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, new ChatComponentTranslation("quickplay.config.reset").getUnformattedText());
+            resetButtonList.put(i, resetButton);
+
+            i++;
+        }
     }
 
     public void func_27258_a(boolean p_27258_1_)
@@ -139,18 +169,36 @@ public class ConfigList {
 
         FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
 
-        int stringX = 5;
-        int stringY = slotTop;
+        int stringX = 20;
+        int stringY = slotTop + 5;
         int stringHeight = font.FONT_HEIGHT;
         int stringWidth = font.getStringWidth(info.name());
+        // Draw the string
         font.drawString(GameUtil.getTextWithEllipsis(listWidth, info.name()), stringX, stringY, 0xFFFFFF);
 
-        if((stringX < mouseX && mouseX < (stringX + stringWidth)) && (stringY < mouseY && mouseY < (stringY + stringHeight))) {
+        buttonX = (int) (listWidth * 0.55);
+        buttonY = slotTop;
+        resetButtonX = buttonX + buttonWidth + 5;
+
+        GuiButton settingButton = buttonList.get(slotIdx);
+        GuiButton resetButton = resetButtonList.get(slotIdx);
+
+        settingButton.xPosition = buttonX;
+        settingButton.yPosition = buttonY;
+        resetButton.xPosition = resetButtonX;
+        resetButton.yPosition = buttonY;
+
+        settingButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+        resetButton.drawButton(Minecraft.getMinecraft(), mouseX, mouseY);
+
+        // Draw the description tooltip
+        if((buttonX < mouseX && mouseX < (buttonX + buttonWidth)) && (buttonY < mouseY && mouseY < (buttonY + buttonHeight))) {
             List<String> hoverText = new ArrayList<>();
             hoverText.add(info.description());
             drawHoveringText(hoverText, mouseX, mouseY + 5, font);
         }
 
+        // Draw the description
         //font.drawString(GameUtil.getTextWithEllipsis(listWidth, info.description()), 5, slotTop + 10, 0xBBBBBB);
     }
 
