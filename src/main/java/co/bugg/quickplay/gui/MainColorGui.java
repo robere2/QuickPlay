@@ -2,16 +2,14 @@ package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.util.QuickPlayColor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatComponentTranslation;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class MainColorGui extends GuiScreen {
+public class MainColorGui extends QuickPlayGui {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -40,12 +38,13 @@ public class MainColorGui extends GuiScreen {
     @Override
     protected void actionPerformed(GuiButton button) throws IOException {
         QuickPlayColor color = buttonIds.get(button.id);
-        Minecraft.getMinecraft().displayGuiScreen(new ColorGui(button.id, color));
+        openGui(new ColorGui(button.id, color));
     }
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 
     @Override

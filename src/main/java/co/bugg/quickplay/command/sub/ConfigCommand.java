@@ -4,8 +4,8 @@ import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
 import co.bugg.quickplay.config.ConfigGui;
+import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.TickDelay;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 
 public class ConfigCommand extends AbstractSubCommand {
@@ -16,6 +16,6 @@ public class ConfigCommand extends AbstractSubCommand {
 
     @Override
     public void run(ICommandSender sender, String[] args) {
-        new TickDelay(() -> Minecraft.getMinecraft().displayGuiScreen(new ConfigGui()), 2);
+        new TickDelay(() -> QuickPlayGui.openGui(new ConfigGui()), 2);
     }
 }

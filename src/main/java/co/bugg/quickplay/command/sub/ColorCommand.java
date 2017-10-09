@@ -4,8 +4,8 @@ import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
 import co.bugg.quickplay.gui.MainColorGui;
+import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.TickDelay;
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 
 @Deprecated
@@ -17,6 +17,6 @@ public class ColorCommand extends AbstractSubCommand {
 
     @Override
     public void run(ICommandSender sender, String[] args) {
-        new TickDelay(() -> Minecraft.getMinecraft().displayGuiScreen(new MainColorGui()), 2);
+        new TickDelay(() -> QuickPlayGui.openGui(new MainColorGui()), 2);
     }
 }

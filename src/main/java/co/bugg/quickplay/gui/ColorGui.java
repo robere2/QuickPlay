@@ -3,9 +3,7 @@ package co.bugg.quickplay.gui;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.util.QuickPlayColor;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
@@ -15,7 +13,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.awt.*;
 import java.io.IOException;
 
-public class ColorGui extends GuiScreen {
+public class ColorGui extends QuickPlayGui {
 
     // An ID that is used in saving to point back
     // to the original color in MainColorGui.colors
@@ -109,7 +107,7 @@ public class ColorGui extends GuiScreen {
             } else
             // Probably the back button was pressed
             {
-                Minecraft.getMinecraft().displayGuiScreen(new MainColorGui());
+                openGui(new MainColorGui());
             }
 
         }
@@ -123,6 +121,8 @@ public class ColorGui extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
+        // This GUI does not obey key close settings
+        //obeySettings();
     }
 
     @Override

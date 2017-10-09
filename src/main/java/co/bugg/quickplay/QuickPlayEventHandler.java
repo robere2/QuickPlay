@@ -2,6 +2,7 @@ package co.bugg.quickplay;
 
 import co.bugg.quickplay.gui.GameGui;
 import co.bugg.quickplay.gui.MainGui;
+import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
@@ -54,7 +55,7 @@ public class QuickPlayEventHandler {
             // If open GUI key is pressed
             if (QuickPlay.openGui.isKeyDown()) {
                 System.out.println("Open GUI key pressed");
-                Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+                QuickPlayGui.openGui(new MainGui());
 
                 // If the open Favorite GUI key is pressed
             } else if(QuickPlay.openFavorite.isKeyDown()) {
@@ -63,10 +64,10 @@ public class QuickPlayEventHandler {
                 // Check if the user even has a favorite game
                 if(QuickPlay.configManager.getConfig().favoriteGame == null) {
                     // If not then open the main GUI
-                    Minecraft.getMinecraft().displayGuiScreen(new MainGui());
+                    QuickPlayGui.openGui(new MainGui());
                 } else {
                     // Otherwise open the game
-                    Minecraft.getMinecraft().displayGuiScreen(new GameGui(QuickPlay.configManager.getConfig().favoriteGame));
+                    QuickPlayGui.openGui(new GameGui(QuickPlay.configManager.getConfig().favoriteGame));
                 }
             }
         }

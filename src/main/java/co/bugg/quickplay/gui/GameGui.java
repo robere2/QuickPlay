@@ -10,7 +10,6 @@ import co.bugg.quickplay.util.GameUtil;
 import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
@@ -24,7 +23,7 @@ import java.util.Map;
 /**
  * GUI screen for individual games, as opposed to the main GUI screen for the mod that lists all games
  */
-public class GameGui extends GuiScreen {
+public class GameGui extends QuickPlayGui {
     /**
      * Which game this GUI screen instance is for
      */
@@ -215,7 +214,7 @@ public class GameGui extends GuiScreen {
             switch(button.id) {
                 // If the button is the back button
                 case 0:
-                    mc.displayGuiScreen(new PartyGui(cameFromPage));
+                    openGui(new PartyGui(cameFromPage));
                     break;
                 default:
                     String command = game.commands.get(buttons.get(button.id));
@@ -226,7 +225,7 @@ public class GameGui extends GuiScreen {
             switch (button.id) {
                 // If the button is the back button
                 case 0:
-                    mc.displayGuiScreen(new MainGui(cameFromPage));
+                    openGui(new MainGui(cameFromPage));
                     break;
 
                 // If the button is the star button
@@ -251,7 +250,7 @@ public class GameGui extends GuiScreen {
                     } else {
                         new JoinLobby(game.lobbyName, Minecraft.getMinecraft().thePlayer);
                     }
-                    MainGui.closeGui();
+                    closeGui();
                     break;
 
                 // Handle like a normal button
@@ -292,7 +291,7 @@ public class GameGui extends GuiScreen {
                     } else {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command[0]);
                     }
-                    MainGui.closeGui();
+                    closeGui();
                     break;
             }
         }
@@ -302,10 +301,8 @@ public class GameGui extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        // Close the GUI whenever a key is pressed.
-        MainGui.closeGui();
-
         super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 
     @Override

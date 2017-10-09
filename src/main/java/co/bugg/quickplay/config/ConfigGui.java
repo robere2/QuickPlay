@@ -3,11 +3,10 @@ package co.bugg.quickplay.config;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.gui.MainColorGui;
-import co.bugg.quickplay.gui.MainGui;
+import co.bugg.quickplay.gui.QuickPlayGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -15,7 +14,7 @@ import net.minecraft.util.ChatComponentTranslation;
 
 import java.io.IOException;
 
-public class ConfigGui extends GuiScreen {
+public class ConfigGui extends QuickPlayGui {
 
     ConfigList list;
 
@@ -87,9 +86,9 @@ public class ConfigGui extends GuiScreen {
         super.actionPerformed(button);
 
         if(button.id == closeButtonId) {
-            MainGui.closeGui();
+            closeGui();
         } else if(button.id == colorButtonId) {
-            Minecraft.getMinecraft().displayGuiScreen(new MainColorGui());
+            openGui(new MainColorGui());
         }
     }
 
@@ -97,5 +96,12 @@ public class ConfigGui extends GuiScreen {
     public void onGuiClosed() {
         super.onGuiClosed();
         QuickPlay.configManager.saveConfig();
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+        // This GUI does not obey key closing settings
+        //obeySettings();
     }
 }

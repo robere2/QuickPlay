@@ -8,13 +8,12 @@ import co.bugg.quickplay.gui.button.GameButton;
 import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class MainGui extends GuiScreen {
+public class MainGui extends QuickPlayGui {
 
     /**
      * When all the buttons don't fit on the page, multiple
@@ -292,22 +291,22 @@ public class MainGui extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         // Back button pressed
         if(backButtonExists && button.id == backButtonId) {
-            Minecraft.getMinecraft().displayGuiScreen(new MainGui(--pageNumber));
+            openGui(new MainGui(--pageNumber));
 
         // forward button pressed
         } else if(forwardButtonExists && button.id == forwardButtonId) {
-            Minecraft.getMinecraft().displayGuiScreen(new MainGui(++pageNumber));
+            openGui(new MainGui(++pageNumber));
 
         // Party Mode icon pressed
         } else if(partyModeButtonExists && button.id == partyModeId) {
-            Minecraft.getMinecraft().displayGuiScreen(new PartyGui(pageNumber));
+            openGui(new PartyGui(pageNumber));
 
         // (presumably) normal game button pressed
         } else {
             // Cast to GameButton so we can use getGame()
             GameButton gameButton = (GameButton) button;
             // Open a new GameGui for the game corresponding to the button clicked
-            Minecraft.getMinecraft().displayGuiScreen(new GameGui(gameButton.getGame(), pageNumber));
+            openGui(new GameGui(gameButton.getGame(), pageNumber));
         }
 
         super.actionPerformed(button);
@@ -315,22 +314,13 @@ public class MainGui extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        // Close the GUI whenever a key is pressed.
-        closeGui();
-
         super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 
     @Override
     public boolean doesGuiPauseGame() {
         return false;
-    }
-
-    /**
-     * Sets the open GUI to null, which is the equivalent of closing the GUI.
-     */
-    public static void closeGui() {
-        Minecraft.getMinecraft().displayGuiScreen(null);
     }
 
     @Override

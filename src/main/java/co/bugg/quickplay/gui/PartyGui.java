@@ -8,7 +8,6 @@ import co.bugg.quickplay.util.GameUtil;
 import co.bugg.quickplay.util.GlUtil;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumChatFormatting;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PartyGui extends GuiScreen {
+public class PartyGui extends QuickPlayGui {
 
     int cameFromPage;
 
@@ -173,7 +172,7 @@ public class PartyGui extends GuiScreen {
         switch(button.id) {
             // If the button is the back button
             case 0:
-                mc.displayGuiScreen(new MainGui(cameFromPage));
+                openGui(new MainGui(cameFromPage));
                 break;
 
             // If the button is the play button
@@ -184,15 +183,21 @@ public class PartyGui extends GuiScreen {
                 } else {
                     mc.thePlayer.addChatMessage(new ChatComponentTranslation("quickplay.party.no_games").setChatStyle(new ChatStyle().setColor(EnumChatFormatting.RED)));
                 }
-                MainGui.closeGui();
+                closeGui();
                 break;
 
             // Handle like a game button
             default:
-                mc.displayGuiScreen(new GameGui(Icons.getGame(buttons.get(button.id)), cameFromPage, true));
+                openGui(new GameGui(Icons.getGame(buttons.get(button.id)), cameFromPage, true));
                 break;
         }
 
         super.actionPerformed(button);
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 }
