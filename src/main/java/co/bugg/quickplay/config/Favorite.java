@@ -3,17 +3,20 @@ package co.bugg.quickplay.config;
 import co.bugg.quickplay.Game;
 import co.bugg.quickplay.gui.GameGui;
 import co.bugg.quickplay.gui.QuickPlayGui;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 
-public class Favorite extends KeyBinding {
+import java.io.Serializable;
 
-    public Game game;
+public class Favorite implements Serializable {
+
+    private int keyCode;
+    private Game game;
 
     public Favorite(int keyCode, Game game) {
-        super(game.name + " Keybind", keyCode, "key.categories.quickplay");
+        this.keyCode = keyCode;
         this.game = game;
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -22,6 +25,8 @@ public class Favorite extends KeyBinding {
     public Game getGame() {
         return game;
     }
+    public int getKeyCode() { return keyCode; }
+    public void setKeyCode(int keyCode) { this.keyCode = keyCode; }
 
     public void unfavorite() {
         MinecraftForge.EVENT_BUS.unregister(this);
@@ -29,7 +34,7 @@ public class Favorite extends KeyBinding {
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if(isKeyDown()) {
+        if(Keyboard.isKeyDown(keyCode)) {
             QuickPlayGui.openGui(new GameGui(getGame()));
         }
     }
