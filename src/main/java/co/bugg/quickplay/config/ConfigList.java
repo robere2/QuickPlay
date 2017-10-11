@@ -167,6 +167,7 @@ public class ConfigList extends AbstractConfigList{
 
                         break;
 
+                        // TODO: Implement keybinds here!
                     case KEYBIND:
 
                         break;
