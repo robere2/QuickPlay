@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -68,6 +69,13 @@ public class FavoriteList extends AbstractConfigList {
         return favorites.size();
     }
 
+    /**
+     * Fired whenever an element on the screen is clicked
+     * @param index Index of the element
+     * @param doubleClick Whether it was a double click
+     * @param mouseX Mouse X location
+     * @param mouseY Mouse Y location
+     */
     protected void elementClicked(int index, boolean doubleClick, int mouseX, int mouseY) {
         // Check if the mouse is over a button
         // when the element was clicked. If so,
@@ -124,28 +132,24 @@ public class FavoriteList extends AbstractConfigList {
 //        }
     }
 
+    /**
+     * Callback for when a button is pressed
+     * @param button Pressed button
+     */
     public void actionPerformed(GuiButton button)
     {
         if (button.enabled)
         {
+            Favorite favorite = favorites.get(button.id);
 
-            try {
-                Favorite favorite = favorites.get(button.id);
-
-                // If the button is a reset button
-                if(button.displayString.equals(reset)) {
-                    // Set the value
-                    favorite.setKeyCode(0);
-                    // Set the text
-                    buttonList.get(button.id).displayString = Keyboard.getKeyName(favorites.get(button.id).getKeyCode());
-                } else {
-                    listen(button);
-                }
-
-                checkResetCapability(button.id);
-
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            // If the button is a reset button
+            if(button.displayString.equals(reset)) {
+                // Set the value
+                favorite.setKeyCode(0);
+                // Reload all buttons
+                reloadButtons();
+            } else {
+                listen(button);
             }
         }
     }
@@ -166,35 +170,76 @@ public class FavoriteList extends AbstractConfigList {
         }
     }
 
+    /**
+     * Listen for key input for the provided button
+     * @param button Button that is listening
+     */
     public void listen(GuiButton button) {
         Favorite favorite = favorites.get(button.id);
 
-        // Stop listening
+        // Stop listening on all buttons
         for(int i = 0; i < buttonList.size(); i++) {
-            buttonList.get(i).displayString = Keyboard.getKeyName(favorites.get(i).getKeyCode());
             favorites.get(i).stopListening();
         }
 
-        // Listen for a key press & set it to the key code
-        favorite.listen(button);
+        // Listen for a key press & set it to
+        // the key code on the button specified
+        favorite.listen();
+
+        // Reload all buttons display texts and reset capability
+        reloadButtons();
+    }
+
+    /**
+     * Reload the display text, whether reset buttons
+     * are enabled, etc. for each button on screen.
+     */
+    public void reloadButtons() {
+        for(int i = 0; i < favorites.size(); i++) {
+            try {
+                // Double check the reset capability of
+                // each button
+                checkResetCapability(i);
+
+                if(favorites.get(i).isListening()) {
+                    buttonList.get(i).displayString = "> " + EnumChatFormatting.YELLOW  + Keyboard.getKeyName(favorites.get(i).getKeyCode()) + EnumChatFormatting.RESET +  " <";
+                } else {
+                    EnumChatFormatting color;
+                    color = (keyTaken(favorites.get(i))) ? EnumChatFormatting.RED : EnumChatFormatting.RESET;
+
+                    buttonList.get(i).displayString = color + "" + Keyboard.getKeyName(favorites.get(i).getKeyCode());
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Checks if the provided favorite's key
+     * is used somewhere else as well.
+     * @param favorite Favorite to check
+     * @return boolean Whether the key is used
+     */
+    public boolean keyTaken(Favorite favorite) {
+        if(favorite.getKeyCode() != 0) {
+            for (Favorite loopFavorite : favorites) {
+                if (!loopFavorite.equals(favorite) && loopFavorite.getKeyCode() == favorite.getKeyCode()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @SubscribeEvent
     public void onGameTick(TickEvent.ClientTickEvent event) {
+        reloadButtons();
         // If the current GUI isn't a config GUI
         // anymore, then we can stop listening
         if(!(Minecraft.getMinecraft().currentScreen instanceof ConfigGui)) {
             MinecraftForge.EVENT_BUS.unregister(this);
-        } else {
-            // Double check the reset capability of
-            // each button every game tick
-            for(int i = 0; i < favorites.size(); i++) {
-                try {
-                    checkResetCapability(i);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }
