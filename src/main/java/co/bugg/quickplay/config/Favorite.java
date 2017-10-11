@@ -53,8 +53,6 @@ public class Favorite implements Serializable {
     @SubscribeEvent
     public void onGameTick(TickEvent.ClientTickEvent event) {
         while (listening && Keyboard.next()) {
-            System.out.println("Hello");
-            System.out.println(Keyboard.getEventKey());
             setKeyCode(Keyboard.getEventKey());
             stopListening();
         }
