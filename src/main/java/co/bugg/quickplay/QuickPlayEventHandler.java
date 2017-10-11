@@ -50,23 +50,11 @@ public class QuickPlayEventHandler {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
 
-        if(!QuickPlay.onHypixel) {
+        if(QuickPlay.onHypixel) {
             // If open GUI key is pressed
             if (QuickPlay.openGui.isKeyDown()) {
                 System.out.println("Open GUI key pressed");
                 QuickPlayGui.openGui(new MainGui());
-
-                // If the open Favorite GUI key is pressed
-            } else if(QuickPlay.openFavorite.isKeyDown()) {
-                System.out.println("Open Favorite key pressed");
-
-                // Check if the user even has a favorite game
-                if(QuickPlay.configManager.getConfig().favorites.size() > 0) {
-                    // If so then open the GUI
-                } else {
-                    // Otherwise open main
-                    QuickPlayGui.openGui(new MainGui());
-                }
             }
         }
     }

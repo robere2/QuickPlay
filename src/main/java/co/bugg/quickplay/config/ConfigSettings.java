@@ -33,7 +33,6 @@ public class ConfigSettings implements Serializable {
     // TODO: Make this key not be the default, but instead
     // TODO: set the key to the key code
     public int openGuiKey = Keyboard.KEY_R;
-    public int openFavoriteKey = Keyboard.KEY_G;
 
     /*******************
      *    Favorites    *

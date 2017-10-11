@@ -26,7 +26,6 @@ import java.util.HashMap;
 public class QuickPlay {
 
     public static KeyBinding openGui;
-    public static KeyBinding openFavorite;
     public static boolean onHypixel = false;
 
     public static ConfigManager configManager;
@@ -45,9 +44,7 @@ public class QuickPlay {
         Icons.registerFiles();
 
         openGui = new KeyBinding("quickplay.controls.open", configManager.getConfig().openGuiKey, "key.categories.quickplay");
-        openFavorite = new KeyBinding("quickplay.controls.favorite", configManager.getConfig().openFavoriteKey, "key.categories.quickplay");
         ClientRegistry.registerKeyBinding(openGui);
-        ClientRegistry.registerKeyBinding(openFavorite);
 
         MinecraftForge.EVENT_BUS.register(new QuickPlayEventHandler());
     }

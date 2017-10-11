@@ -4,7 +4,12 @@ import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.config.ConfigGui;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.util.QuickPlayColor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
@@ -38,11 +43,32 @@ public class ColorGui extends QuickPlayGui {
     int sliderWidth = 200;
     int sliderHeight = 20;
 
+    /**
+     * Draw the Minecraft default dirt/block background
+     */
+    public void drawDirtBackground() {
+        Tessellator tess = Tessellator.getInstance();
+        WorldRenderer worldr = tess.getWorldRenderer();
 
+        // Draw the default dirt background
+        double scale = 32.0;
+        Minecraft.getMinecraft().renderEngine.bindTexture(Gui.optionsBackground);
+        worldr.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+
+        int left = 0;
+        int right = width;
+        int top = 0;
+        int bottom = height;
+        worldr.pos(left,  bottom, 0.0D).tex(left  / scale, bottom / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(right, bottom, 0.0D).tex(right / scale, bottom / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(right, top,    0.0D).tex(right / scale, top    / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(left,  top,    0.0D).tex(left  / scale, top    / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        tess.draw();
+    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
+        drawDirtBackground();
 
         // Get the colors from before it is updated to
         // see if the colors have been changed at all

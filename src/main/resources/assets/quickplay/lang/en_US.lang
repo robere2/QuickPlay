@@ -29,7 +29,6 @@ quickplay.command.separator=----------------------------------------------------
 quickplay.command.deprecated=This command is deprecated. Please use %s instead.
 
 quickplay.controls.open=Open Main GUI
-quickplay.controls.favorite=Open Favorite
 
 quickplay.party.start=Start
 quickplay.party.no_games=Party Mode has not been set up! Please select at least one game in the Party Mode menu.
