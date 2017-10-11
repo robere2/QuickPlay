@@ -1,6 +1,5 @@
 package co.bugg.quickplay.config;
 
-import co.bugg.quickplay.util.GameUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
@@ -106,7 +105,7 @@ public class ConfigList extends AbstractConfigList{
         int stringHeight = font.FONT_HEIGHT;
         int stringWidth = font.getStringWidth(info.name());
         // Draw the string
-        font.drawString(GameUtil.getTextWithEllipsis(listWidth, info.name()), stringX, stringY, 0xFFFFFF);
+        font.drawString(info.name(), stringX, stringY, 0xFFFFFF);
 
         buttonX = (int) (listWidth * 0.55);
         buttonY = slotTop;
