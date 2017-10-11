@@ -2,7 +2,6 @@ package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.config.ConfigGui;
-import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -88,7 +87,7 @@ public class ColorGui extends QuickPlayGui {
 
         // Draw the sample view
         drawRect((width / 2) - (sampleWidth / 2), (int) (height * 0.2) - (sampleHeight / 2), (width / 2) + (sampleWidth / 2), (int) (height * 0.2) + (sampleHeight / 2), drawColor.getRGB());
-        drawCenteredString(fontRendererObj, new ChatComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 12, drawColor.getRGB());
+        drawCenteredString(fontRendererObj, new ChatComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 15, 0xFFFFFF);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -97,7 +96,7 @@ public class ColorGui extends QuickPlayGui {
     public void initGui() {
         super.initGui();
 
-        int sliderSpacing = 5;
+        int sliderSpacing = 4;
         int buttonId = 0;
 
         buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new ChatComponentTranslation("quickplay.color.red").getFormattedText() + ": ", "", 0, 255, color.getRed(), false, true));
@@ -110,12 +109,18 @@ public class ColorGui extends QuickPlayGui {
         // Chroma Button
         buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new ChatComponentTranslation("quickplay.color.chroma").getFormattedText()+ ": " + (color.getIsChroma() ? new ChatComponentTranslation("quickplay.config.enabled").getFormattedText() : new ChatComponentTranslation("quickplay.config.disabled").getFormattedText())));
         buttonId++;
-        // Save button
-        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new ChatComponentTranslation("quickplay.config.save").getFormattedText()));
-        buttonId++;
 
-        // Create the back button
-        buttonList.add(new ArrowButton(buttonId, (width / 2) - (sampleWidth / 2) - ArrowButton.width - sliderSpacing, (int) (height * 0.2) - ArrowButton.height / 2, 0));
+        // Buttons on the bottom of the
+        // screen (save & cancel)
+        // Save button
+        int bottomButtonWidth = 100 - sliderSpacing / 2 ;
+        buttonList.add(new GuiButton(buttonId, width / 2 - bottomButtonWidth - sliderSpacing / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, bottomButtonWidth, 20, new ChatComponentTranslation("quickplay.config.cancel").getFormattedText()));
+        buttonId++;
+        // Button height is based on button ID, so to put
+        // the button on the same row, buttonId - 1 is used
+        // in this line of code.
+        buttonList.add(new GuiButton(buttonId, width / 2 + sliderSpacing / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * (buttonId - 1)) + sliderSpacing, bottomButtonWidth, 20, new ChatComponentTranslation("quickplay.config.save").getFormattedText()));
+
     }
 
     @Override
@@ -127,16 +132,17 @@ public class ColorGui extends QuickPlayGui {
                 color.setIsChroma(!color.getIsChroma());
                 buttonList.get(3).displayString = new ChatComponentTranslation("quickplay.color.chroma").getFormattedText() + ": " + (color.getIsChroma() ? new ChatComponentTranslation("quickplay.config.enabled").getFormattedText() : new ChatComponentTranslation("quickplay.config.disabled").getFormattedText());
             } else
-            // Save button was pressed
-            if(button.id == 4) {
-                QuickPlay.configManager.getConfig().colors.put(color.getUnlocalizedName(), color);
-                QuickPlay.configManager.saveConfig();
-            } else
-            // Probably the back button was pressed
-            {
+            // Save or Cancel button was pressed
+            if(button.id == 4 || button.id == 5) {
+
+                // If button was save button
+                if(button.id == 5) {
+                    QuickPlay.configManager.getConfig().colors.put(color.getUnlocalizedName(), color);
+                    QuickPlay.configManager.saveConfig();
+                }
+                // Close the GUI
                 openGui(new ConfigGui(2));
             }
-
         }
     }
 
