@@ -1,6 +1,7 @@
 package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.QuickPlay;
+import co.bugg.quickplay.config.ConfigGui;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.gui.GuiButton;
@@ -107,7 +108,7 @@ public class ColorGui extends QuickPlayGui {
             } else
             // Probably the back button was pressed
             {
-                openGui(new MainColorGui());
+                openGui(new ConfigGui(2));
             }
 
         }

@@ -2,7 +2,6 @@ package co.bugg.quickplay.config;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
-import co.bugg.quickplay.gui.MainColorGui;
 import co.bugg.quickplay.gui.QuickPlayGui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -25,15 +24,21 @@ public class ConfigGui extends QuickPlayGui {
     int colorButtonId = 1;
     int favoriteButtonId = 2;
 
-    boolean onFavorites = false;
+    /**
+     * Which list this GUI is currently on
+     * 0 : Settings
+     * 1 : Favorites
+     * 2 : Colors
+     */
+    int listType = 0;
 
     public ConfigGui() {
-        this(false);
+        this(0);
     }
 
-    public ConfigGui(boolean onFavorites) {
+    public ConfigGui(int listType) {
         super();
-        this.onFavorites = onFavorites;
+        this.listType = listType;
     }
 
     @Override
@@ -69,11 +74,18 @@ public class ConfigGui extends QuickPlayGui {
         listTop = (int) (height * 0.1);
         listBottom = (int) (height * 0.8);
 
-       if(onFavorites) {
-           list = new FavoriteList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
-       } else {
-           list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
-       }
+        // Determine which list to draw
+        switch(listType) {
+            case 0:
+                list = new ConfigList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
+                break;
+            case 1:
+                list = new FavoriteList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
+                break;
+            case 2:
+                list = new ColorList(Minecraft.getMinecraft(), width, listBottom - listTop, listTop, listBottom, 0, 25, width, height, QuickPlay.configManager);
+        }
+
         int buttonWidth = 100;
         int buttonHeight = 20;
         int buttonY = (int) (height * 0.85);
@@ -84,9 +96,9 @@ public class ConfigGui extends QuickPlayGui {
         String favorites = new ChatComponentTranslation("quickplay.config.favorites").getUnformattedText();
         String settings = new ChatComponentTranslation("quickplay.config.settings").getUnformattedText();
 
-        GuiButton colorButton = new GuiButton(colorButtonId, width / 2 - buttonWidth - buttonWidth / 2 - buttonMargin, buttonY, buttonWidth, buttonHeight, colors);
+        GuiButton colorButton = new GuiButton(colorButtonId, width / 2 - buttonWidth - buttonWidth / 2 - buttonMargin, buttonY, buttonWidth, buttonHeight, (listType == 2) ? settings : colors);
         GuiButton closeButton = new GuiButton(closeButtonId, width / 2 - buttonWidth / 2, buttonY, buttonWidth, buttonHeight, close);
-        GuiButton favoriteButton = new GuiButton(favoriteButtonId, width / 2 + buttonMargin + buttonWidth / 2, buttonY, buttonWidth, buttonHeight, (onFavorites) ? settings : favorites);
+        GuiButton favoriteButton = new GuiButton(favoriteButtonId, width / 2 + buttonMargin + buttonWidth / 2, buttonY, buttonWidth, buttonHeight, (listType == 1) ? settings : favorites);
 
         buttonList.add(closeButton);
         buttonList.add(colorButton);
@@ -107,9 +119,13 @@ public class ConfigGui extends QuickPlayGui {
         if(button.id == closeButtonId) {
             closeGui();
         } else if(button.id == colorButtonId) {
-            openGui(new MainColorGui());
+            // If already on the colors list,
+            // then go back to main list.
+            openGui(new ConfigGui((listType == 2) ? 0 : 2));
         } else if(button.id == favoriteButtonId) {
-            openGui(new ConfigGui(!onFavorites));
+            // If already on the favorites list,
+            // then go back to main list.
+            openGui(new ConfigGui((listType == 1) ? 0 : 1));
         }
     }
 
