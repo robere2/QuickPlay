@@ -5,6 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,10 @@ public class FavoriteList extends AbstractConfigList {
         favorites = manager.getConfig().favorites;
 
         addButtons();
+
+        // Register this as an event listener, so it
+        // updates relevant information every tick
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     /**
@@ -41,7 +49,7 @@ public class FavoriteList extends AbstractConfigList {
 
             // Create all the button instances
             GuiButton button = null;
-            button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, Integer.toString((favorites.get(i).getKeyCode())));
+            button = new GuiButton(i, 0, 0, buttonWidth, buttonHeight, Keyboard.getKeyName(favorites.get(i).getKeyCode()));
             buttonList.put(i, button);
 
             GuiButton resetButton = new GuiButton(i, 0, 0, resetButtonWidth, buttonHeight, reset);
@@ -129,10 +137,10 @@ public class FavoriteList extends AbstractConfigList {
                 if(button.displayString.equals(reset)) {
                     // Set the value
                     favorite.setKeyCode(0);
-
+                    // Set the text
+                    buttonList.get(button.id).displayString = Keyboard.getKeyName(favorites.get(button.id).getKeyCode());
                 } else {
-                    // Listen for a key press & set it to the key code
-                    favorite.listen();
+                    listen(button);
                 }
 
                 checkResetCapability(button.id);
@@ -156,6 +164,38 @@ public class FavoriteList extends AbstractConfigList {
             resetButtonList.get(index).enabled = false;
         } else {
             resetButtonList.get(index).enabled = true;
+        }
+    }
+
+    public void listen(GuiButton button) {
+        Favorite favorite = favorites.get(button.id);
+
+        // Stop listening
+        for(int i = 0; i < buttonList.size(); i++) {
+            buttonList.get(i).displayString = Keyboard.getKeyName(favorites.get(i).getKeyCode());
+            favorites.get(i).stopListening();
+        }
+
+        // Listen for a key press & set it to the key code
+        favorite.listen(button);
+    }
+
+    @SubscribeEvent
+    public void onGameTick(TickEvent.ClientTickEvent event) {
+        // If the current GUI isn't a config GUI
+        // anymore, then we can stop listening
+        if(!(Minecraft.getMinecraft().currentScreen instanceof ConfigGui)) {
+            MinecraftForge.EVENT_BUS.unregister(this);
+        } else {
+            // Double check the reset capability of
+            // each button every game tick
+            for(int i = 0; i < favorites.size(); i++) {
+                try {
+                    checkResetCapability(i);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

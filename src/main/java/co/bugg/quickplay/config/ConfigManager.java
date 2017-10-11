@@ -42,6 +42,11 @@ public class ConfigManager {
 
                 configFileInputStream.close();
                 configObjectInputStream.close();
+
+                // Re-register all the favorites to the Forge event bus
+                for(Favorite favorite : config.favorites) {
+                    MinecraftForge.EVENT_BUS.register(favorite);
+                }
             } catch (FileNotFoundException e) {
 
                 // Config file wasn't found, so let's try creating it.
