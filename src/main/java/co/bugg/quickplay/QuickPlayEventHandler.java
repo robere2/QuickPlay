@@ -90,10 +90,12 @@ public class QuickPlayEventHandler {
         // Only run if this is the first time the player
         // is loading the world on tne network
         if(justJoined) {
-            // Get the version information and spit it out into chat
-            // if there's an update.
-            int delayInSeconds = 2;
-            new TickDelay(() -> Version.checkForUpdates(Minecraft.getMinecraft().player), delayInSeconds * 40);
+            if(QuickPlay.configManager.getConfig().updateNotifications) {
+                // Get the version information and spit it out into chat
+                // if there's an update.
+                int delayInSeconds = 2;
+                new TickDelay(() -> Version.checkForUpdates(Minecraft.getMinecraft().player), delayInSeconds * 40);
+            }
             // Join has been handled
             justJoined = false;
         }

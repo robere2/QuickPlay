@@ -1,6 +1,5 @@
 package co.bugg.quickplay.version;
 
-import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.GameUtil;
 import com.google.gson.Gson;
@@ -97,7 +96,7 @@ public class Version implements Comparable<Version> {
                 Version local = new Version(Reference.VERSION);
                 // If local is older than remote &
                 // player has update notifications on
-                if(local.compareTo(remote) < 0 && QuickPlay.configManager.getConfig().updateNotifications) {
+                if(local.compareTo(remote) < 0) {
                     player.sendMessage(createChatMessage(remote));
                 }
             });
