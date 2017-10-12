@@ -97,7 +97,7 @@ public class Version implements Comparable<Version> {
                 Version local = new Version(Reference.VERSION);
                 // If local is older than remote &
                 // player has update notifications on
-                if(local.compareTo(remote) < 0 && QuickPlay.configManager.getConfig().updateNotifications) {
+                if(local.compareTo(remote) < 0) {
                     player.addChatMessage(createChatMessage(remote));
                 }
             });
