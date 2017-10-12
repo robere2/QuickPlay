@@ -68,7 +68,13 @@ public class Version implements Comparable<Version> {
 
                 JsonObject json = new Gson().fromJson(IOUtils.toString(stream), JsonElement.class).getAsJsonObject();
 
-                String remoteString = json.get("promos").getAsJsonObject().get(GameUtil.getMCVersion() + "-recommended").getAsString();
+                // Check that things aren't null, just to avoid crashes.
+                String remoteString;
+                if(json != null && json.get("promos") != null && json.get("promos").getAsJsonObject() !=  null && json.get("promos").getAsJsonObject().get(GameUtil.getMCVersion() + "-recommended") != null) {
+                    remoteString = json.get("promos").getAsJsonObject().get(GameUtil.getMCVersion() + "-recommended").getAsString();
+                } else {
+                    remoteString = null;
+                }
 
                 if(remoteString != null) {
                     Version remote = new Version(remoteString);
