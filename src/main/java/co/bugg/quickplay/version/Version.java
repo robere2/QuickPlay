@@ -1,6 +1,5 @@
 package co.bugg.quickplay.version;
 
-import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.GameUtil;
 import com.google.gson.Gson;
@@ -92,9 +91,7 @@ public class Version implements Comparable<Version> {
      * @param player Player to send message to
      */
     public static void checkForUpdates(EntityPlayerSP player) {
-        // If player isn't null & player
-        // has update notifications on
-        if(player != null && QuickPlay.configManager.getConfig().updateNotifications) {
+        if(player != null) {
             getVersionInfo((remote) -> {
                 Version local = new Version(Reference.VERSION);
                 // If local is older than remote
