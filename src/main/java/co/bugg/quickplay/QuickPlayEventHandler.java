@@ -3,8 +3,11 @@ package co.bugg.quickplay;
 import co.bugg.quickplay.gui.MainGui;
 import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.QuickPlayColor;
+import co.bugg.quickplay.util.TickDelay;
+import co.bugg.quickplay.version.Version;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -15,6 +18,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QuickPlayEventHandler {
+
+    /**
+     * Used to communicate between onJoin and
+     * onWorldLoad to determine whether version
+     * update message should be sent or not.
+     */
+    private boolean justJoined = false;
 
     @SubscribeEvent
     public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
@@ -36,6 +46,8 @@ public class QuickPlayEventHandler {
             if (matcher.find()) {
                 QuickPlay.onHypixel = true;
                 System.out.println("Currently on Hypixel!");
+
+                justJoined = true;
             } else {
                 QuickPlay.onHypixel = false;
             }
@@ -70,6 +82,20 @@ public class QuickPlayEventHandler {
                     entry.setValue(new QuickPlayColor(rgb, entry.getValue().getUnlocalizedName(), entry.getValue().getIsChroma()));
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onJoinWorld(WorldEvent.Load event) {
+        // Only run if this is the first time the player
+        // is loading the world on tne network
+        if(justJoined) {
+            // Get the version information and spit it out into chat
+            // if there's an update.
+            int delayInSeconds = 2;
+            new TickDelay(() -> Version.checkForUpdates(Minecraft.getMinecraft().thePlayer), delayInSeconds * 40);
+            // Join has been handled
+            justJoined = false;
         }
     }
 }

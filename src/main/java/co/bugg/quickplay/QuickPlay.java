@@ -21,7 +21,7 @@ import java.util.HashMap;
         version = Reference.VERSION,
         acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
         clientSideOnly = true,
-        updateJSON = "https://raw.githubusercontent.com/bugfroggy/QuickPlay/master/versions.json"
+        updateJSON = Reference.UPDATE_JSON
 )
 public class QuickPlay {
 
