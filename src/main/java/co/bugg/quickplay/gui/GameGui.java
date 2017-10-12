@@ -142,7 +142,6 @@ public class GameGui extends QuickPlayGui {
         // Set whether or not the star is toggled on
         // (i.e. whether this gamemode is the user's favorite)
         boolean starOn;
-        //noinspection SimplifiableIfStatement
         starOn = game.isFavorite();
 
         // Star button should only be added if not party mode
