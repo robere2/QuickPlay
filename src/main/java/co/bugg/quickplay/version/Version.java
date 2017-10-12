@@ -92,12 +92,13 @@ public class Version implements Comparable<Version> {
      * @param player Player to send message to
      */
     public static void checkForUpdates(EntityPlayerSP player) {
-        if(player != null) {
+        // If player isn't null & player
+        // has update notifications on
+        if(player != null && QuickPlay.configManager.getConfig().updateNotifications) {
             getVersionInfo((remote) -> {
                 Version local = new Version(Reference.VERSION);
-                // If local is older than remote &
-                // player has update notifications on
-                if(local.compareTo(remote) < 0 && QuickPlay.configManager.getConfig().updateNotifications) {
+                // If local is older than remote
+                if(local.compareTo(remote) < 0) {
                     player.addChatMessage(createChatMessage(remote));
                 }
             });
