@@ -1,6 +1,7 @@
 package co.bugg.quickplay.command;
 
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -8,7 +9,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
 
-public abstract class QpSubCommand {
+import javax.annotation.Nonnull;
+import java.util.List;
+
+public abstract class AbstractSubCommand {
 
     QpBaseCommand parent;
 
@@ -16,7 +20,7 @@ public abstract class QpSubCommand {
     String help;
     String usage;
 
-    public QpSubCommand(QpBaseCommand parent, String name, String help, String usage) {
+    public AbstractSubCommand(QpBaseCommand parent, String name, String help, String usage) {
         this.parent = parent;
 
         this.name = name;
@@ -25,6 +29,10 @@ public abstract class QpSubCommand {
     }
 
     public abstract void run(ICommandSender sender, String[] args);
+
+    @Nonnull
+    public abstract List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos);
+
 
     /**
      * Get a formatted help message (with the line return)

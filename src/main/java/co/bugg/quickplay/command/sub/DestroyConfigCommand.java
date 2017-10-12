@@ -2,14 +2,19 @@ package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 
-public class DestroyConfigCommand extends QpSubCommand {
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DestroyConfigCommand extends AbstractSubCommand {
 
     static String confirmWord = "yes";
 
@@ -33,5 +38,15 @@ public class DestroyConfigCommand extends QpSubCommand {
 
     public String getConfirmCommand() {
         return "/" + getParent().getCommandName() + " " + getName() + " " + confirmWord;
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos) {
+        List<String> tabCompletions = new ArrayList<>();
+        if(confirmWord.startsWith(args[args.length - 1])) {
+            tabCompletions.add(confirmWord);
+        }
+        return tabCompletions;
     }
 }

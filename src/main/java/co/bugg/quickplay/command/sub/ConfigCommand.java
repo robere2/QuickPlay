@@ -13,16 +13,15 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
-public class ColorCommand extends AbstractSubCommand {
+public class ConfigCommand extends AbstractSubCommand {
 
-    public ColorCommand(QpBaseCommand parent) {
-        super(parent, "color", "Customize your " + Reference.MOD_NAME + " colors.", "");
+    public ConfigCommand(QpBaseCommand parent) {
+        super(parent, "config", "Open the main " + Reference.MOD_NAME + " configuration.", "");
     }
 
     @Override
     public void run(ICommandSender sender, String[] args) {
-        new TickDelay(() -> QuickPlayGui.openGui(new ConfigGui(2)), 2);
+        new TickDelay(() -> QuickPlayGui.openGui(new ConfigGui()), 2);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")

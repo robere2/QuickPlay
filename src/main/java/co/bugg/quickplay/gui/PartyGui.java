@@ -8,7 +8,6 @@ import co.bugg.quickplay.util.GameUtil;
 import co.bugg.quickplay.util.GlUtil;
 import co.bugg.quickplay.util.PartyUtil;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PartyGui extends GuiScreen {
+public class PartyGui extends QuickPlayGui {
 
     int cameFromPage;
 
@@ -148,7 +147,7 @@ public class PartyGui extends GuiScreen {
                     // is a play command (i.e. /qp limbo isn't a game, don't draw it)
                     for(Map.Entry<String, String> command : game.commands.entrySet()) {
                         if(!command.getValue().startsWith("/")) {
-                            buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getButtonTextWithEllipsis(buttonWidth, game.name)));
+                            buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, GameUtil.getTextWithEllipsis(buttonWidth, game.name)));
                             // Register the button's ID
                             buttons.put(buttonId, game.name);
                             buttonId++;
@@ -184,15 +183,21 @@ public class PartyGui extends GuiScreen {
                 } else {
                     mc.thePlayer.addChatMessage(new TextComponentTranslation("quickplay.party.no_games").setStyle(new Style().setColor(TextFormatting.RED)));
                 }
-                MainGui.closeGui();
+                closeGui();
                 break;
 
             // Handle like a game button
             default:
-                mc.displayGuiScreen(new GameGui(Icons.getGame(buttons.get(button.id)), cameFromPage, true));
+                openGui(new GameGui(Icons.getGame(buttons.get(button.id)), cameFromPage, true));
                 break;
         }
 
         super.actionPerformed(button);
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 }

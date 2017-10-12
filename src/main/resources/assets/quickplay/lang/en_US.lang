@@ -3,6 +3,7 @@ quickplay.buttons.home=Go Home
 
 quickplay.color.name.primary=Primary Color
 quickplay.color.name.secondary=Secondary Color
+quickplay.color=Colors
 
 quickplay.color.red=Red
 quickplay.color.green=Green
@@ -12,6 +13,11 @@ quickplay.color.chroma=Chroma
 quickplay.config.enabled=Enabled
 quickplay.config.disabled=Disabled
 quickplay.config.save=Save
+quickplay.config.close=Close
+quickplay.config.cancel=Cancel
+quickplay.config.reset=Reset
+quickplay.config.favorites=Favorites
+quickplay.config.settings=Settings
 
 quickplay.command.destroyconfig.config_reset=Configuration reset! You may have to restart your game.
 quickplay.command.destroyconfig.config_reset_confirm=Are you sure you want to reset your %s configuration? Type "%s" if so.
@@ -23,7 +29,8 @@ quickplay.command.separator=----------------------------------------------------
 quickplay.command.deprecated=This command is deprecated. Please use %s instead.
 
 quickplay.controls.open=Open Main GUI
-quickplay.controls.favorite=Open Favorite
+
+quickplay.version.notification=has been released! Click here to download it.
 
 quickplay.party.start=Start
 quickplay.party.no_games=Party Mode has not been set up! Please select at least one game in the Party Mode menu.

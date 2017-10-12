@@ -2,6 +2,7 @@ package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.Game;
 import co.bugg.quickplay.Icons;
+import co.bugg.quickplay.JoinLobby;
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.gui.button.ArrowButton;
 import co.bugg.quickplay.gui.button.StarButton;
@@ -9,7 +10,6 @@ import co.bugg.quickplay.util.GameUtil;
 import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * GUI screen for individual games, as opposed to the main GUI screen for the mod that lists all games
  */
-public class GameGui extends GuiScreen {
+public class GameGui extends QuickPlayGui {
     /**
      * Which game this GUI screen instance is for
      */
@@ -142,12 +142,7 @@ public class GameGui extends GuiScreen {
         // Set whether or not the star is toggled on
         // (i.e. whether this gamemode is the user's favorite)
         boolean starOn;
-        //noinspection SimplifiableIfStatement
-        if(QuickPlay.configManager.getConfig().favoriteGame != null) {
-            starOn = game.name.equals(QuickPlay.configManager.getConfig().favoriteGame.name);
-        } else {
-            starOn = false;
-        }
+        starOn = game.isFavorite();
 
         // Star button should only be added if not party mode
         if(!partyMode) {
@@ -180,7 +175,7 @@ public class GameGui extends GuiScreen {
                     buttonY += (defaultButtonHeight + buttonSpacing);
                 }
 
-                String shortenedString = GameUtil.getButtonTextWithEllipsis(buttonWidth, entry.getKey());
+                String shortenedString = GameUtil.getTextWithEllipsis(buttonWidth, entry.getKey());
 
                 // Whether check boxes or buttons should be displayed
                 if(partyMode) {
@@ -196,7 +191,6 @@ public class GameGui extends GuiScreen {
                 } else {
                     buttonList.add(new GuiButton(buttonId, buttonX, buttonY, buttonWidth, defaultButtonHeight, shortenedString));
                 }
-
                 // Register the button's ID
                 buttons.put(buttonId, entry.getKey());
                 buttonId++;
@@ -215,7 +209,7 @@ public class GameGui extends GuiScreen {
             switch(button.id) {
                 // If the button is the back button
                 case 0:
-                    mc.displayGuiScreen(new PartyGui(cameFromPage));
+                    openGui(new PartyGui(cameFromPage));
                     break;
                 default:
                     String command = game.commands.get(buttons.get(button.id));
@@ -226,7 +220,7 @@ public class GameGui extends GuiScreen {
             switch (button.id) {
                 // If the button is the back button
                 case 0:
-                    mc.displayGuiScreen(new MainGui(cameFromPage));
+                    openGui(new MainGui(cameFromPage));
                     break;
 
                 // If the button is the star button
@@ -235,9 +229,9 @@ public class GameGui extends GuiScreen {
                     starButton.on = !starButton.on;
 
                     if (starButton.on) {
-                        QuickPlay.configManager.getConfig().favoriteGame = game;
+                        QuickPlay.configManager.addFavorite(game);
                     } else {
-                        QuickPlay.configManager.getConfig().favoriteGame = null;
+                        QuickPlay.configManager.removeFavorite(game);
                     }
 
                     QuickPlay.configManager.saveConfig();
@@ -249,9 +243,9 @@ public class GameGui extends GuiScreen {
                     if (game.lobbyName.startsWith("/")) {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage(game.lobbyName);
                     } else {
-                        Minecraft.getMinecraft().thePlayer.sendChatMessage("/lobby " + game.lobbyName);
+                        new JoinLobby(game.lobbyName, Minecraft.getMinecraft().thePlayer);
                     }
-                    MainGui.closeGui();
+                    closeGui();
                     break;
 
                 // Handle like a normal button
@@ -292,7 +286,7 @@ public class GameGui extends GuiScreen {
                     } else {
                         Minecraft.getMinecraft().thePlayer.sendChatMessage("/play " + command[0]);
                     }
-                    MainGui.closeGui();
+                    closeGui();
                     break;
             }
         }
@@ -302,10 +296,8 @@ public class GameGui extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        // Close the GUI whenever a key is pressed.
-        MainGui.closeGui();
-
         super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 
     @Override

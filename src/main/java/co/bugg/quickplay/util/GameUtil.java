@@ -91,23 +91,24 @@ public final class GameUtil {
 
     /**
      * Get a string that is shortened to the proper length to fit
-     * on a button of the provided width
-     * @param buttonWidth Width of the button
+     * inside a given width without falling off
+     * @param width Width of the button
      * @param text Text to be shortened
      * @return A string that is cut off with ellipsis at the end.
      */
-    public static String getButtonTextWithEllipsis(int buttonWidth, String text) {
+    // TODO: Implement custom margins
+    public static String getTextWithEllipsis(int width, String text) {
         StringBuilder builder = new StringBuilder();
         String ellipsis = "...";
-        int buttonMargins = (int) (buttonWidth * 0.1);
+        int margins = (int) (width * 0.1);
 
-        // If the string can fit on the button within the margins without the ellipsis then just return the string
-        if(buttonWidth > Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) + buttonMargins) return text;
+        // If the string can fit within the margins without the ellipsis then just return the string
+        if(width > Minecraft.getMinecraft().fontRendererObj.getStringWidth(text) + margins) return text;
 
         // Otherwise we gotta loop, adding a character each time, until we find a string length
         // that doesn't fit within the margins anymore (with the ellipsis appended).
         int charIndex = 0;
-        while(buttonWidth > Minecraft.getMinecraft().fontRendererObj.getStringWidth(builder.toString() + ellipsis) + buttonMargins) {
+        while(width > Minecraft.getMinecraft().fontRendererObj.getStringWidth(builder.toString() + ellipsis) + margins) {
             builder.append(text.charAt(charIndex));
             charIndex++;
         }

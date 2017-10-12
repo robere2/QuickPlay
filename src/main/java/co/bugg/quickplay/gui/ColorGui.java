@@ -1,11 +1,14 @@
 package co.bugg.quickplay.gui;
 
 import co.bugg.quickplay.QuickPlay;
-import co.bugg.quickplay.gui.button.ArrowButton;
+import co.bugg.quickplay.config.ConfigGui;
 import co.bugg.quickplay.util.QuickPlayColor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.VertexBuffer;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
@@ -15,7 +18,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import java.awt.*;
 import java.io.IOException;
 
-public class ColorGui extends GuiScreen {
+public class ColorGui extends QuickPlayGui {
 
     // An ID that is used in saving to point back
     // to the original color in MainColorGui.colors
@@ -39,11 +42,32 @@ public class ColorGui extends GuiScreen {
     int sliderWidth = 200;
     int sliderHeight = 20;
 
+    /**
+     * Draw the Minecraft default dirt/block background
+     */
+    public void drawDirtBackground() {
+        Tessellator tess = Tessellator.getInstance();
+        VertexBuffer worldr = tess.getBuffer();
 
+        // Draw the default dirt background
+        double scale = 32.0;
+        Minecraft.getMinecraft().renderEngine.bindTexture(Gui.OPTIONS_BACKGROUND);
+        worldr.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+
+        int left = 0;
+        int right = width;
+        int top = 0;
+        int bottom = height;
+        worldr.pos(left,  bottom, 0.0D).tex(left  / scale, bottom / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(right, bottom, 0.0D).tex(right / scale, bottom / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(right, top,    0.0D).tex(right / scale, top    / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        worldr.pos(left,  top,    0.0D).tex(left  / scale, top    / scale).color(0x40, 0x40, 0x40, 0xFF).endVertex();
+        tess.draw();
+    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        drawDefaultBackground();
+        drawDirtBackground();
 
         // Get the colors from before it is updated to
         // see if the colors have been changed at all
@@ -63,7 +87,7 @@ public class ColorGui extends GuiScreen {
 
         // Draw the sample view
         drawRect((width / 2) - (sampleWidth / 2), (int) (height * 0.2) - (sampleHeight / 2), (width / 2) + (sampleWidth / 2), (int) (height * 0.2) + (sampleHeight / 2), drawColor.getRGB());
-        drawCenteredString(fontRendererObj, new TextComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 12, drawColor.getRGB());
+        drawCenteredString(fontRendererObj, new TextComponentTranslation("quickplay.color.name." + color.getUnlocalizedName()).getFormattedText(), width / 2, (int) (height * 0.2) - (sampleHeight / 2) - 15, 0xFFFFFF);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -72,7 +96,7 @@ public class ColorGui extends GuiScreen {
     public void initGui() {
         super.initGui();
 
-        int sliderSpacing = 5;
+        int sliderSpacing = 4;
         int buttonId = 0;
 
         buttonList.add(new GuiSlider(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, sliderWidth, sliderHeight, new TextComponentTranslation("quickplay.color.red").getFormattedText() + ": ", "", 0, 255, color.getRed(), false, true));
@@ -85,12 +109,18 @@ public class ColorGui extends GuiScreen {
         // Chroma Button
         buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new TextComponentTranslation("quickplay.color.chroma").getFormattedText()+ ": " + (color.getIsChroma() ? new TextComponentTranslation("quickplay.config.enabled").getFormattedText() : new TextComponentTranslation("quickplay.config.disabled").getFormattedText())));
         buttonId++;
-        // Save button
-        buttonList.add(new GuiButton(buttonId, width / 2 - sliderWidth / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, new TextComponentTranslation("quickplay.config.save").getFormattedText()));
-        buttonId++;
 
-        // Create the back button
-        buttonList.add(new ArrowButton(buttonId, (width / 2) - (sampleWidth / 2) - ArrowButton.width - sliderSpacing, (int) (height * 0.2) - ArrowButton.height / 2, 0));
+        // Buttons on the bottom of the
+        // screen (save & cancel)
+        // Save button
+        int bottomButtonWidth = 100 - sliderSpacing / 2 ;
+        buttonList.add(new GuiButton(buttonId, width / 2 - bottomButtonWidth - sliderSpacing / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * buttonId) + sliderSpacing, bottomButtonWidth, 20, new TextComponentTranslation("quickplay.config.cancel").getFormattedText()));
+        buttonId++;
+        // Button height is based on button ID, so to put
+        // the button on the same row, buttonId - 1 is used
+        // in this line of code.
+        buttonList.add(new GuiButton(buttonId, width / 2 + sliderSpacing / 2, (int) (height * 0.2) + (sampleHeight / 2) + ((sliderHeight + sliderSpacing) * (buttonId - 1)) + sliderSpacing, bottomButtonWidth, 20, new TextComponentTranslation("quickplay.config.save").getFormattedText()));
+
     }
 
     @Override
@@ -102,14 +132,16 @@ public class ColorGui extends GuiScreen {
                 color.setIsChroma(!color.getIsChroma());
                 buttonList.get(3).displayString = new TextComponentTranslation("quickplay.color.chroma").getFormattedText() + ": " + (color.getIsChroma() ? new TextComponentTranslation("quickplay.config.enabled").getFormattedText() : new TextComponentTranslation("quickplay.config.disabled").getFormattedText());
             } else
-            // Save button was pressed
-            if(button.id == 4) {
-                QuickPlay.configManager.getConfig().colors.put(color.getUnlocalizedName(), color);
-                QuickPlay.configManager.saveConfig();
-            } else
-            // Probably the back button was pressed
-            {
-                Minecraft.getMinecraft().displayGuiScreen(new MainColorGui());
+            // Save or Cancel button was pressed
+            if(button.id == 4 || button.id == 5) {
+
+                // If button was save button
+                if(button.id == 5) {
+                    QuickPlay.configManager.getConfig().colors.put(color.getUnlocalizedName(), color);
+                    QuickPlay.configManager.saveConfig();
+                }
+                // Close the GUI
+                openGui(new ConfigGui(2));
             }
 
         }
@@ -123,6 +155,8 @@ public class ColorGui extends GuiScreen {
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
+        // This GUI does not obey key close settings
+        //obeySettings();
     }
 
     @Override

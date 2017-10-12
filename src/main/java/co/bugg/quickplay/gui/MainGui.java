@@ -8,7 +8,6 @@ import co.bugg.quickplay.gui.button.GameButton;
 import co.bugg.quickplay.util.GlUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 @ParametersAreNonnullByDefault
-public class MainGui extends GuiScreen {
+public class MainGui extends QuickPlayGui {
 
     /**
      * When all the buttons don't fit on the page, multiple
@@ -272,12 +271,21 @@ public class MainGui extends GuiScreen {
      * @return int of how many icons are in the row
      */
     public int getIconCountInRow(int row, HashMap<String, Integer> grid) {
-        // If not on the last row
-        if(grid.get("rows") > row) {
-            return grid.get("columns");
+
+        int columnCount = grid.get("columns");
+        int leftoverIcons = iconCount % columnCount;
+
+        if(leftoverIcons == 0) {
+            // All rows are full, there are no rows that have missing icons
+            return columnCount;
         } else {
-            int iconModulus = iconCount % grid.get("columns");
-            return (iconModulus == 0) ? iconCount : iconModulus;
+            // The last row contains an uneven number of icons
+            // If not on the last row
+            if(grid.get("rows") > row) {
+                return columnCount;
+            } else {
+                return leftoverIcons;
+            }
         }
     }
 
@@ -285,22 +293,22 @@ public class MainGui extends GuiScreen {
     protected void actionPerformed(GuiButton button) throws IOException {
         // Back button pressed
         if(backButtonExists && button.id == backButtonId) {
-            Minecraft.getMinecraft().displayGuiScreen(new MainGui(--pageNumber));
+            openGui(new MainGui(--pageNumber));
 
         // forward button pressed
         } else if(forwardButtonExists && button.id == forwardButtonId) {
-            Minecraft.getMinecraft().displayGuiScreen(new MainGui(++pageNumber));
+            openGui(new MainGui(++pageNumber));
 
         // Party Mode icon pressed
         } else if(partyModeButtonExists && button.id == partyModeId) {
-            Minecraft.getMinecraft().displayGuiScreen(new PartyGui(pageNumber));
+            openGui(new PartyGui(pageNumber));
 
         // (presumably) normal game button pressed
         } else {
             // Cast to GameButton so we can use getGame()
             GameButton gameButton = (GameButton) button;
             // Open a new GameGui for the game corresponding to the button clicked
-            Minecraft.getMinecraft().displayGuiScreen(new GameGui(gameButton.getGame(), pageNumber));
+            openGui(new GameGui(gameButton.getGame(), pageNumber));
         }
 
         super.actionPerformed(button);
@@ -308,22 +316,13 @@ public class MainGui extends GuiScreen {
 
     @Override
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
-        // Close the GUI whenever a key is pressed.
-        closeGui();
-
         super.keyTyped(typedChar, keyCode);
+        obeySettings();
     }
 
     @Override
     public boolean doesGuiPauseGame() {
         return false;
-    }
-
-    /**
-     * Sets the open GUI to null, which is the equivalent of closing the GUI.
-     */
-    public static void closeGui() {
-        Minecraft.getMinecraft().displayGuiScreen(null);
     }
 
     @Override
