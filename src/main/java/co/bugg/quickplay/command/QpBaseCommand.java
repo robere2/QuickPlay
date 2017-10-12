@@ -21,11 +21,12 @@ import java.util.List;
 @MethodsReturnNonnullByDefault
 public class QpBaseCommand implements ICommand {
 
-    public LinkedList<QpSubCommand> subCommands = new LinkedList<>();
+    public LinkedList<AbstractSubCommand> subCommands = new LinkedList<>();
 
     public QpBaseCommand() {
         subCommands.add(new HelpCommand(this));
-        subCommands.add(new ColorCommand(this));
+        subCommands.add(new ConfigCommand(this));
+        // subCommands.add(new ColorCommand(this));
         subCommands.add(new PartyCommand(this));
         subCommands.add(new LimboCommand(this));
         subCommands.add(new DebugCommand(this));
@@ -52,7 +53,7 @@ public class QpBaseCommand implements ICommand {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(args.length > 0) {
-            QpSubCommand command = getCommand(args[0]);
+            AbstractSubCommand command = getCommand(args[0]);
             if(command != null) {
                 command.run(sender, args);
             } else {
@@ -61,7 +62,7 @@ public class QpBaseCommand implements ICommand {
             }
         } else {
             // No args provided, run the help command if possible
-            QpSubCommand helpCommand = getCommand("help");
+            AbstractSubCommand helpCommand = getCommand("help");
             if(helpCommand != null) {
                 helpCommand.run(sender, args);
             } else {
@@ -79,8 +80,17 @@ public class QpBaseCommand implements ICommand {
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         List<String> tabCompletions = new ArrayList<>();
 
-        for(QpSubCommand subCommand : this.subCommands) {
-            tabCompletions.add(subCommand.getName());
+        if(args.length > 1) {
+            AbstractSubCommand command = getCommand(args[0]);
+            if(command != null) {
+                tabCompletions.addAll(command.getTabCompletions(sender, args, targetPos));
+            }
+        } else {
+            for (AbstractSubCommand subCommand : this.subCommands) {
+                if (subCommand.getName().startsWith(args[args.length - 1])) {
+                    tabCompletions.add(subCommand.getName());
+                }
+            }
         }
 
         return tabCompletions;
@@ -102,8 +112,8 @@ public class QpBaseCommand implements ICommand {
      * @return Sub command, null if command doesn't exist
      */
     @Nullable
-    public QpSubCommand getCommand(String name) {
-        for(QpSubCommand command : subCommands) {
+    public AbstractSubCommand getCommand(String name) {
+        for(AbstractSubCommand command : subCommands) {
             if(command.name.equalsIgnoreCase(name)) {
                 return command;
             }

@@ -17,6 +17,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@Deprecated
 public class QpColorCommand implements ICommand {
 
     @Override

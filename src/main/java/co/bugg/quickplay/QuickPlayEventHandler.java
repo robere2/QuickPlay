@@ -1,11 +1,13 @@
 package co.bugg.quickplay;
 
-import co.bugg.quickplay.gui.GameGui;
 import co.bugg.quickplay.gui.MainGui;
+import co.bugg.quickplay.gui.QuickPlayGui;
 import co.bugg.quickplay.util.QuickPlayColor;
+import co.bugg.quickplay.util.TickDelay;
+import co.bugg.quickplay.version.Version;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -16,6 +18,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QuickPlayEventHandler {
+
+    /**
+     * Used to communicate between onJoin and
+     * onWorldLoad to determine whether version
+     * update message should be sent or not.
+     */
+    private boolean justJoined = false;
 
     @SubscribeEvent
     public void onJoin(FMLNetworkEvent.ClientConnectedToServerEvent event) {
@@ -31,12 +40,14 @@ public class QuickPlayEventHandler {
                 ip = serverData.serverIP;
             }
 
-            Pattern hypixelPattern = Pattern.compile("^(?:(?:(?:\\w+\\.)?hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|99)))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
+            Pattern hypixelPattern = Pattern.compile("^(?:(?:(?:\\w+\\.)?hypixel\\.net)|(?:209\\.222\\.115\\.(?:18|27|8|40|36|33|19|38|16|43|10|46|48|47|39|20|30|23|21|22|99)))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = hypixelPattern.matcher(ip);
 
             if (matcher.find()) {
                 QuickPlay.onHypixel = true;
                 System.out.println("Currently on Hypixel!");
+
+                justJoined = true;
             } else {
                 QuickPlay.onHypixel = false;
             }
@@ -55,20 +66,7 @@ public class QuickPlayEventHandler {
             // If open GUI key is pressed
             if (QuickPlay.openGui.isKeyDown()) {
                 System.out.println("Open GUI key pressed");
-                Minecraft.getMinecraft().displayGuiScreen(new MainGui());
-
-            // If the open Favorite GUI key is pressed
-            } else if(QuickPlay.openFavorite.isKeyDown()) {
-                System.out.println("Open Favorite key pressed");
-
-                // Check if the user even has a favorite game
-                if(QuickPlay.configManager.getConfig().favoriteGame == null) {
-                    // If not then open the main GUI
-                    Minecraft.getMinecraft().displayGuiScreen(new MainGui());
-                } else {
-                    // Otherwise open the game
-                    Minecraft.getMinecraft().displayGuiScreen(new GameGui(QuickPlay.configManager.getConfig().favoriteGame));
-                }
+                QuickPlayGui.openGui(new MainGui());
             }
         }
     }
@@ -84,6 +82,20 @@ public class QuickPlayEventHandler {
                     entry.setValue(new QuickPlayColor(rgb, entry.getValue().getUnlocalizedName(), entry.getValue().getIsChroma()));
                 }
             }
+        }
+    }
+
+    @SubscribeEvent
+    public void onJoinWorld(WorldEvent.Load event) {
+        // Only run if this is the first time the player
+        // is loading the world on tne network
+        if(justJoined) {
+            // Get the version information and spit it out into chat
+            // if there's an update.
+            int delayInSeconds = 2;
+            new TickDelay(() -> Version.checkForUpdates(Minecraft.getMinecraft().player), delayInSeconds * 40);
+            // Join has been handled
+            justJoined = false;
         }
     }
 }

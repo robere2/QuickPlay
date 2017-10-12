@@ -17,6 +17,7 @@ public final class ReflectUtil {
      * @return Field that was requested
      */
     public static Field getField(Class<?> theClass, String fieldName) {
+        // TODO: This should not return null unless it is truly null.
         try {
             Field field = theClass.getField(fieldName);
             field.setAccessible(true);
@@ -34,6 +35,7 @@ public final class ReflectUtil {
      * @return Method that was requested
      */
     public static Method getMethod(Class<?> theClass, String methodName, Class<?>... args) {
+        // TODO: This should not return null unless it is truly null.
         try {
             Method method = theClass.getMethod(methodName, args);
             method.setAccessible(true);

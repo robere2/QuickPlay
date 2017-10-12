@@ -2,18 +2,23 @@ package co.bugg.quickplay.command.sub;
 
 import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
+import co.bugg.quickplay.command.AbstractSubCommand;
 import co.bugg.quickplay.command.QpBaseCommand;
-import co.bugg.quickplay.command.QpSubCommand;
 import co.bugg.quickplay.util.GameUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
-public class DebugCommand extends QpSubCommand {
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DebugCommand extends AbstractSubCommand {
 
     public DebugCommand(QpBaseCommand parent) {
         super(parent, "debug", "View debugging information and mod status.", "");
@@ -44,5 +49,13 @@ public class DebugCommand extends QpSubCommand {
         debugMsg.setStyle(new Style().setColor(TextFormatting.AQUA));
 
         Minecraft.getMinecraft().player.sendMessage(debugMsg);
+    }
+
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(ICommandSender sender, String[] args, BlockPos pos) {
+        List<String> tabCompletions = new ArrayList<>();
+        return tabCompletions;
     }
 }
