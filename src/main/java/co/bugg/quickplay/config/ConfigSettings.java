@@ -78,11 +78,11 @@ public class ConfigSettings implements Serializable {
     )
     public boolean updateNotifications = true;
 
-    @GuiOption(
-            name = "Sync Settings",
-            description = "Sync your QuickPlay settings to an external server.",
-            type = ConfigElementType.BOOLEAN,
-            priority = 1000.0
-    )
-    public boolean syncSettings = true;
+//    @GuiOption(
+//            name = "Sync Settings",
+//            description = "Sync your QuickPlay settings to an external server.",
+//            type = ConfigElementType.BOOLEAN,
+//            priority = 1000.0
+//    )
+//    public boolean syncSettings = true;
 }
