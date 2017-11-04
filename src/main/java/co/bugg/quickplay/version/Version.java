@@ -1,6 +1,5 @@
 package co.bugg.quickplay.version;
 
-import co.bugg.quickplay.QuickPlay;
 import co.bugg.quickplay.Reference;
 import co.bugg.quickplay.util.GameUtil;
 import com.google.gson.Gson;
