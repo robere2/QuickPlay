@@ -40,7 +40,7 @@ public class QuickPlayEventHandler {
                 ip = serverData.serverIP;
             }
 
-            Pattern hypixelPattern = Pattern.compile("^(?:(?:(?:\\w+\\.)?hypixel\\.net)|(?:209\\.222\\.115\\.\\d{1,3}))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
+            Pattern hypixelPattern = Pattern.compile("^(?:(?:(?:\\w+\\.)?hypixel\\.net)|(?:(?:209\\.222\\.115\\.| 99\\.198\\.123\\.)\\d{1,3}))(?::\\d{1,5})?$", Pattern.CASE_INSENSITIVE);
             Matcher matcher = hypixelPattern.matcher(ip);
 
             if (matcher.find()) {
