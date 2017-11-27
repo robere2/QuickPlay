@@ -113,6 +113,7 @@ public class Icons {
         murder_mysteryCommands.put("Classic", "murder_classic");
         murder_mysteryCommands.put("Assassins", "murder_assassins");
         murder_mysteryCommands.put("Hardcore", "murder_hardcore");
+        murder_mysteryCommands.put("Infection", "murder_infection");
     }
     public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murder_mysteryCommands);
     /* -------------------------------- *
