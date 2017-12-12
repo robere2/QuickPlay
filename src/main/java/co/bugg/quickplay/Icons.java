@@ -139,7 +139,8 @@ public class Icons {
         prototypeCommands.put("Zombies - Endless (Hard)", "prototype_zombies_endless_hard");
         prototypeCommands.put("Zombies - Endless (RIP)", "prototype_zombies_endless_rip");
 
-        prototypeCommands.put("Hide and Seek", "prototype_hide_and_seek");
+        prototypeCommands.put("Hide and Seek - Party Pooper", "prototype_hide_and_seek_party_pooper");
+        prototypeCommands.put("Hide and Seek - Prop Hunt", "prototype_hide_and_seek_prop_hunt");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
