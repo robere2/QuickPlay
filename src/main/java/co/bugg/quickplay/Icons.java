@@ -121,10 +121,14 @@ public class Icons {
      * -------------------------------- */
     public static LinkedHashMap<String, String> prototypeCommands = new LinkedHashMap<>();
     static {
+
         prototypeCommands.put("Duels - Classic", "prototype_duels:classic_duel");
+        prototypeCommands.put("Duels - Skywars", "prototype_duels:sw_duel");
         prototypeCommands.put("Duels - Bow", "prototype_duels:bow_duel");
-        prototypeCommands.put("Duels - Potion", "prototype_duels:potion_duel");
-        prototypeCommands.put("Duels - OP", "prototype_duels:op_duel");
+        prototypeCommands.put("Duels - NoDebuffs", "prototype_duels:potion_duel");
+        prototypeCommands.put("Duels - Combo", "prototype_duels:combo_duel");
+        prototypeCommands.put("Duels - OP 1v1", "prototype_duels:op_duel");
+        prototypeCommands.put("Duels - OP 2v2", "prototype_duels:op_doubles");
         prototypeCommands.put("Duels - MW 1v1", "prototype_duels:mw_duel");
         prototypeCommands.put("Duels - MW 2v2", "prototype_duels:mw_doubles");
         prototypeCommands.put("Duels - MW 4v4", "prototype_duels:mw_four");
