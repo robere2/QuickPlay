@@ -62,6 +62,18 @@ public class Icons {
     public static final Game SURVIVAL_GAMES = new Game("Blitz SG",1,0, 128, "blitz", survival_gamesCommands);
 
     /* -------------------------------- *
+     *           Build Battle           *
+     * -------------------------------- */
+    public static LinkedHashMap<String, String> build_battleCommands = new LinkedHashMap<>();
+    static {
+        build_battleCommands.put("Solo", "build_battle_solo_normal");
+        build_battleCommands.put("Teams", "build_battle_teams_normal");
+        build_battleCommands.put("Pro", "build_battle_solo_pro");
+        build_battleCommands.put("Guess the Build", "build_battle_guess_the_build");
+    }
+    public static final Game BUILD_BATTLE = new Game("Build Battle",2,192, 0, "build", build_battleCommands);
+
+    /* -------------------------------- *
      *             Classic              *
      * -------------------------------- */
     public static LinkedHashMap<String, String> classicCommands = new LinkedHashMap<>();
@@ -244,24 +256,25 @@ public class Icons {
 
         list.add(ARCADE);
         list.add(BEDWARS);
+        list.add(BUILD_BATTLE);
         list.add(SURVIVAL_GAMES);
-        list.add(LEGACY);
 
+        list.add(LEGACY);
         list.add(TRUE_COMBAT);
         list.add(MCGO);
         list.add(HOUSING);
-        list.add(WALLS3);
 
+        list.add(WALLS3);
         list.add(MURDER_MYSTERY);
         list.add(PARTY);
         list.add(PROTOTYPE);
-        list.add(SKYCLASH);
 
+        list.add(SKYCLASH);
         list.add(SKYWARS);
         list.add(SUPER_SMASH);
         list.add(SPEED_UHC);
-        list.add(TNTGAMES);
 
+        list.add(TNTGAMES);
         list.add(UHC);
         list.add(BATTLEGROUND);
     }
