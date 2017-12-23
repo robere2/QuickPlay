@@ -115,7 +115,13 @@ public class Icons {
     /* -------------------------------- *
      *           Mega Walls             *
      * -------------------------------- */
-    public static final Game WALLS3 = new Game("Mega Walls",1,128, 64,  "megawalls", null);
+    public static LinkedHashMap<String, String> megawallsCommands = new LinkedHashMap<>();
+    static {
+        megawallsCommands.put("1v1 Duels", "prototype_duels:mw_duel");
+        megawallsCommands.put("2v2 Duels", "prototype_duels:mw_doubles");
+        megawallsCommands.put("4v4 Duels", "prototype_duels:mw_four");
+    }
+    public static final Game WALLS3 = new Game("Mega Walls",1,128, 64,  "megawalls", megawallsCommands);
 
     /* -------------------------------- *
      *         Murder Mystery           *
@@ -136,7 +142,8 @@ public class Icons {
     static {
 
         prototypeCommands.put("Duels - Classic", "prototype_duels:classic_duel");
-        prototypeCommands.put("Duels - Skywars", "prototype_duels:sw_duel");
+        prototypeCommands.put("Duels - Skywars 1v1", "prototype_duels:sw_duel");
+        prototypeCommands.put("Duels - Skywars 2v2", "prototype_duels:sw_doubles");
         prototypeCommands.put("Duels - Bow", "prototype_duels:bow_duel");
         prototypeCommands.put("Duels - NoDebuffs", "prototype_duels:potion_duel");
         prototypeCommands.put("Duels - Combo", "prototype_duels:combo_duel");
@@ -198,6 +205,9 @@ public class Icons {
         skywarsCommands.put("Teams TNT Madness", "teams_insane_tnt_madness");
         skywarsCommands.put("Teams Rush", "teams_insane_rush");
         skywarsCommands.put("Teams Slime", "teams_insane_slime");
+
+        skywarsCommands.put("1v1 Duels", "prototype_duels:sw_duel");
+        skywarsCommands.put("2v2 Duels", "prototype_duels:sw_doubles");
     }
     public static final Game SKYWARS = new Game("SkyWars",1,128, 128,  "skywars", skywarsCommands);
 
@@ -243,7 +253,13 @@ public class Icons {
     /* -------------------------------- *
      *          UHC Champions           *
      * -------------------------------- */
-    public static final Game UHC = new Game("UHC Champions",1,128, 192, "uhc", null);
+    public static LinkedHashMap<String, String> uhcChampionsCommands = new LinkedHashMap<>();
+    static {
+        uhcChampionsCommands.put("1v1 Duels", "prototype_duels:uhc_duel");
+        uhcChampionsCommands.put("2v2 Duels", "prototype_duels:uhc_doubles");
+        uhcChampionsCommands.put("4v4 Duels", "prototype_duels:uhc_four");
+    }
+    public static final Game UHC = new Game("UHC Champions",1,128, 192, "uhc", uhcChampionsCommands);
 
     /* -------------------------------- *
      *             Warlords             *
