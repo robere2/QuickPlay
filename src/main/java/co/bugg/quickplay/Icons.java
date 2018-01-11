@@ -130,7 +130,7 @@ public class Icons {
     static {
         murder_mysteryCommands.put("Classic", "murder_classic");
         murder_mysteryCommands.put("Assassins", "murder_assassins");
-        murder_mysteryCommands.put("Hardcore", "murder_hardcore");
+        murder_mysteryCommands.put("Showdown", "murder_showdown");
         murder_mysteryCommands.put("Infection", "murder_infection");
     }
     public static final Game MURDER_MYSTERY = new Game("Murder Mystery",2,64, 0, "mm", murder_mysteryCommands);
@@ -164,6 +164,10 @@ public class Icons {
 
         prototypeCommands.put("Hide and Seek - Party Pooper", "prototype_hide_and_seek_party_pooper");
         prototypeCommands.put("Hide and Seek - Prop Hunt", "prototype_hide_and_seek_prop_hunt");
+
+        prototypeCommands.put("Battle Royale - Solo", "prototype_royale:solo");
+        prototypeCommands.put("Battle Royale - Doubles", "prototype_royale:doubles");
+        prototypeCommands.put("Battle Royale - Squad", "pprototype_royale:squad");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
