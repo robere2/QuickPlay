@@ -167,7 +167,7 @@ public class Icons {
 
         prototypeCommands.put("Battle Royale - Solo", "prototype_royale:solo");
         prototypeCommands.put("Battle Royale - Doubles", "prototype_royale:doubles");
-        prototypeCommands.put("Battle Royale - Squad", "pprototype_royale:squad");
+        prototypeCommands.put("Battle Royale - Squad", "prototype_royale:squad");
     }
     public static final Game PROTOTYPE = new Game("Prototype",1,192, 64, "prototype", prototypeCommands);
 
