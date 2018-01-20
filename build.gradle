@@ -15,7 +15,7 @@ jar {
     from "LICENSE"
 }
 
-version = "1.2.8"
+version = "1.2.9"
 group = "co.bugg.quickplay" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "QuickPlay-1.12"
 
@@ -31,7 +31,7 @@ idea {
 }
 
 minecraft {
-    version = "1.12-14.21.1.2387"
+    version = "1.12.2-14.23.1.2598"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
