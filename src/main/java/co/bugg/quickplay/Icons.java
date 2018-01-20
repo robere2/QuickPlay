@@ -203,10 +203,12 @@ public class Icons {
 
         skywarsCommands.put("Solo TNT Madness", "solo_insane_tnt_madness");
         skywarsCommands.put("Solo Rush", "solo_insane_rush");
+        skywarsCommands.put("Solo Lucky", "solo_insane_lucky");
         skywarsCommands.put("Solo Slime", "solo_insane_slime");
 
         skywarsCommands.put("Teams TNT Madness", "teams_insane_tnt_madness");
         skywarsCommands.put("Teams Rush", "teams_insane_rush");
+        skywarsCommands.put("Teams Lucky", "teams_insane_lucky");
         skywarsCommands.put("Teams Slime", "teams_insane_slime");
 
         skywarsCommands.put("1v1 Duels", "prototype_duels:sw_duel");
