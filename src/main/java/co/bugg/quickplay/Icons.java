@@ -47,6 +47,10 @@ public class Icons {
         bedwarsCommands.put("Doubles", "bedwars_eight_two");
         bedwarsCommands.put("3v3v3v3", "bedwars_four_three");
         bedwarsCommands.put("4v4v4v4", "bedwars_four_four");
+        bedwarsCommands.put("Doubles (Beta)", "bedwars_eight_two_beta");
+        bedwarsCommands.put("4v4v4v4 (Beta)", "bedwars_four_four_beta");
+        bedwarsCommands.put("Capture (Party)", "bedwars_capture");
+        bedwarsCommands.put("Capture (Solo)", "bedwars_capture_solo");
     }
     public static final Game BEDWARS = new Game("Bed Wars",1, 64,  0, "bedwars", bedwarsCommands);
 
