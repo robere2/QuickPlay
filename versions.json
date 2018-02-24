@@ -25,7 +25,8 @@
     "1.2.7": "Added SW Doubles duel, added duels to respective game menus",
     "1.2.8": "Added MM Showdown / Battle Royale",
     "1.2.9": "Added Skywars Lucky Blocks mode",
-    "1.2.10": "Added Bedwars Capture & Beta modes"
+    "1.2.10": "Added Bedwars Capture & Beta modes",
+    "2.0.0-beta": "Revamp from the ground up - Bugs expected, 1.8.9 only"
   },
   "1.9": {
     "0.1": "Initial Release",
