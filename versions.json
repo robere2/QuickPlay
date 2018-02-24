@@ -26,7 +26,7 @@
     "1.2.8": "Added MM Showdown / Battle Royale",
     "1.2.9": "Added Skywars Lucky Blocks mode",
     "1.2.10": "Added Bedwars Capture & Beta modes",
-    "2.0.0-beta": "Revamp from the ground up - Bugs expected, 1.8.9 only"
+    "2.0.0": "Revamp from the ground up - Bugs expected, 1.8.9 only"
   },
   "1.9": {
     "0.1": "Initial Release",
@@ -381,8 +381,8 @@
     "1.2.10": "Added Bedwars Capture & Beta modes"
   },
   "promos": {
-    "1.8.9-latest": "2.0.0-beta",
-    "1.8.9-recommended": "2.0.0-beta",
+    "1.8.9-latest": "2.0.0",
+    "1.8.9-recommended": "2.0.0",
     "1.9-latest": "1.2.10",
     "1.9-recommended": "1.2.10",
     "1.9.1-latest": "1.2.10",
