@@ -1,3 +1,9 @@
+
+# Deprecation Notice
+This Minecraft mod is deprecated in favor of [Quickplay 2.0](https://bugg.co/quickplay). You can visit its source at [bugfroggy/Quickplay2.0](https://github.com/bugfroggy/Quickplay2.0)
+
+<hr>
+
 # QuickPlay
 Minecraft mod designed for quickly joining games on the Hypixel Network.
 This is the source code for 1.12 through 1.12.2. Please check other branches for other versions.
