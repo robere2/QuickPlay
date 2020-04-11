@@ -1,6 +1,6 @@
 
 # Deprecation Notice
-This Minecraft mod is deprecated in favor of [Quickplay 2.0](https://bugg.co/quickplay). You can visit its source at [bugfroggy/Quickplay2.0](https://github.com/bugfroggy/Quickplay2.0)
+This Minecraft mod is deprecated in favor of [Quickplay 2.0](https://bugg.co/quickplay). You can visit its source at [robere2/Quickplay2.0](https://github.com/robere2/Quickplay2.0)
 
 <hr>
 
